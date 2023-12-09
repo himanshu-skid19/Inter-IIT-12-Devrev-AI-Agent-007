@@ -51,7 +51,7 @@ If according to your response, the task cannot be solved then return an empty li
 ' ' '
 '''
 
-reprompt_template = '''You are an AI Assistant that specializes in Agile Software Development and Product Management that answers developer queries and your task is to assist developers by providing a solution to their queries using only the APIs given below.
+reprompt_template = '''You are an AI Assistant that specializes in Agile Software Development and Product Management that answers product manager queries and your task is to assist product managers by providing a solution to their queries using only the APIs given below.
 
 Below is a list of API's with their descriptions. Each API is represented as a dictionary with key value pairs where the keys are “name”, “description”, “arguments”. The value corresponding to the “arguments” key is a list of dictionaries where each dictionary represents an argument. Each argument is represented in the form of a dictionary with key value pairs where the keys are "argument name", "argument description", "argument type".
 
@@ -60,10 +60,6 @@ LIST OF API BEGINS
 {API_LIST}
 
 LIST OF API ENDS
-
-Here are some examples of developer query and their appropriate solutions.
-
-{RAG}
 
 {QUERY}
 
@@ -86,7 +82,7 @@ Keep in mind that:
 4. Each API can have multiple arguments being used.
 5. To reference the value of the ith API in the list, use $$PREV[i] as argument value. i = 0, 1,  ..  j-1;  j = current API’s index in the list.
 
-A few examples of a query are:
+Few examples of a queries are:
 
 {FEW_SHOT}
 

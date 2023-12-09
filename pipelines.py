@@ -27,7 +27,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
   print(f"##################")
   print(f"Reprompt Number: {cntr} #################")
 
-  json_response = json.loads(resp_formatted)
+  json_response = ast.literal_eval(resp_formatted)
   print(f"3. JSON decoded output- {cntr} ##################")
   print(json_response)
   print(type(json_response))
@@ -53,11 +53,13 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
     print(f"##################")
 
     json_response = reprompt_chain.run(QUERY = query, API_LIST = API_LIST, CORRECTION_PROMPT = Correction_prompt)
-    json_response = json.loads(json_response)
+    json_response = ast.literal_eval(json_response)
     cntr+=1
     print(f"4. JSON decoded output- {cntr} ##################")
     print(json_response)
     print(type(json_response))
     print(len(json_response))
     print(f"##################")
+    if placeholder_check(json_response):
+      return []
   return json_response

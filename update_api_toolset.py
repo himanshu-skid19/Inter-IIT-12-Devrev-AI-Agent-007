@@ -13,9 +13,10 @@ def API_CHOICE(n, tool_name):
     l.append(choice)
   return l
 
-def generate_examples(tool_name, FEW_SHOT, generation_chain, API_LIST):
+def generate_examples(tool_name, FEW_SHOT):
+  global API_LIST
   APIs = API_CHOICE(2, tool_name)
-  example = generation_chain.run(API_LIST = API_LIST, FEW_SHOT = FEW_SHOT, APIs = APIs, tool_name = tool_name)
+  example = generation_chain.run(API_LIST = API_LIST, FEW_SHOT = FEW_SHOT, APIS = APIs, TOOL_NAME = tool_name)
   return example
 
 
@@ -49,19 +50,23 @@ def update_tool(tool, updated_tool, store):
             API_LIST[i] = updated_tool
     example = generate_examples(tool_name, FEW_SHOT)
     add_to_vector_store(store, example)
-    FEW_SHOT.extend(example)
+    FEW_SHOT.append(example)
 
 
-def delete_tool(tool_name, apis, store):
+def delete_tool(tool_name, store):
+  global API_LIST
+  global FEW_SHOT
   delete_tool_examples(store, tool_name)
   delete_tool_from_allowed_tools(tool_name)
-  for i in range(len(apis)):
-    if apis[i]['name'] == tool_name:
-      apis.remove(API_LIST[i])
+  for i in range(len(API_LIST)):
+    if API_LIST[i]['name'] == tool_name:
+      API_LIST.remove(API_LIST[i])
       break
+  to_remove = []
   for i in range(len(FEW_SHOT)):
     if tool_name in FEW_SHOT[i]['ANSWER']:
-      FEW_SHOT.remove(FEW_SHOT[i])
+      to_remove = FEW_SHOT[i]
+  FEW_SHOT = [item for item in to_remove if item not in FEW_SHOT]
 
 def add_tool(tool, store):
   global FEW_SHOT
@@ -69,15 +74,15 @@ def add_tool(tool, store):
   add_tool_to_allowed_tools(tool)
   example = generate_examples(tool, FEW_SHOT)
   add_to_vector_store(store, example)
-  FEW_SHOT.extend(example)
-def manage_tools(operation, tool, apis, updated_tool, store):
+  FEW_SHOT.append(example)
+def manage_tools(operation, tool, store, updated_tool = None):
     memory.clear()
     if operation == 'add':
         add_tool(tool, store)
         print("add")
     elif operation == 'delete':
         tool_name = tool['name']
-        delete_tool(tool_name, apis, store)
+        delete_tool(tool_name, store)
         print("delete")
     elif operation == 'update':
         update_tool(tool, updated_tool, store)
