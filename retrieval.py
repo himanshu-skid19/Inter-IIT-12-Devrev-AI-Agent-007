@@ -1,6 +1,6 @@
 from imports import *
 
-loader = CSVLoader(file_path="C:\\Users\\himan\\Downloads\\code\\generated_queries - output.csv", source_column = 'Queries')
+loader = CSVLoader(file_path="Untitled spreadsheet - Sheet1.csv", source_column = 'Queries')
 data = loader.load()
 
 embeddings = HuggingFaceEmbeddings()
