@@ -10,6 +10,7 @@ from transformers import StoppingCriteria, StoppingCriteriaList
 import warnings
 import simplejson as json
 import pandas as pd
+import regex
 
 from langchain.prompts import (
     PromptTemplate,
