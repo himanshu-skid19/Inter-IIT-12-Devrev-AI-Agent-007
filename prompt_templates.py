@@ -20,7 +20,7 @@ generation_prompt = PromptTemplate(
   )
 
 memory = ConversationBufferWindowMemory(
-    memory_key="chat_history", input_key = "QUERY", k = 10,
+    memory_key="chat_history", input_key = "QUERY", k = 2,
     return_messages=True
 )
 llm = ChatOpenAI(temperature = 0.0, model =  "gpt-3.5-turbo-1106")

@@ -1,0 +1,3118 @@
+QUERY,EXPLANATION
+Query:Summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1,"1. API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing issues.
+
+2. Argument Completion:
+Objects to Summarize:
+API: get_similar_work_items
+Extract the argument work_id from the context: Value - ""don:core:dvrv-us-1:devo/0:issue/1""
+Now, the required argument for summarize_objects is partially filled, with the objects array containing the reference to the issue to be summarized.
+
+3. Argument Completion for Internal Selected APIs:
+Work ID:
+API: get_similar_work_items
+Extract the argument work_id from the context: Value - ""don:core:dvrv-us-1:devo/0:issue/1""
+All required arguments for get_similar_work_items are filled, and the API is ready to be executed.
+As a result, the argument for objects in the summarize_objects API is now filled successfully.
+
+Final Explanation:
+The query is to summarize issues similar to a specific issue (don:core:dvrv-us-1:devo/0:issue/1).
+The get_similar_work_items API is used to find issues similar to the specified issue.
+The obtained work_id is then used as an argument for the summarize_objects API to generate a summary of the similar issues.
+"
+Query: Prioritize my P0 issues and add them to the current sprint,"1. API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint.
+2. Argument Completion:
+Sprint ID:
+API: get_sprint_id
+Extract the sprint ID.
+Work IDs for Prioritization:
+API: prioritize_objects
+Extract the argument work_ids from the output of the prioritize_objects API.
+3. Argument Completion for Internal Selected APIs:
+Objects for Prioritize Objects:
+API: works_list
+Extract the arguments:
+issue.priority with value ""P0"" (directly from the query)
+owned_by to identify issues owned by the current user (using who_am_i API)
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+
+"
+"Query: Summarize high severity tickets from the customer UltimateCustomer
+","1. API Selection:
+The ultimate API identified for the task is summarize_objects.
+
+2. Argument Completion:
+Objects to Summarize:
+API: search_object_by_name
+Extract the argument query from the context: Value - ""UltimateCustomer""
+Now, the required argument for search_object_by_name is filled, with the search query for the customer ""UltimateCustomer.""
+
+3. Argument Completion for Internal Selected APIs:
+High Severity Tickets:
+API: works_list
+Extract the arguments:
+ticket.severity with value ""high""
+ticket.rev-org with value ""UltimateCustomer"" from the output of the search_object_by_name API.
+
+"
+"Query:        What are my all issues in the triage stage under part FEAT-123? Summarize them. 
+
+","1. API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing issues.
+2. Argument Completion:
+Objects to Summarize:
+API: works_list
+Work IDs for Summarization:
+API: summarize_objects
+Extract the argument objects from the output of the works_list API.
+Now, the required arguments for summarize_objects are filled, with the list of issues in the triage stage under part ""FEAT-123"" owned by the user.
+3. Argument Completion for Internal Selected APIs:
+Objects to Summarize:
+API: works_list
+Extract the arguments:
+stage.name with value ""triage""
+applies_to_part with value ""FEAT-123""
+owned_by to identify issues owned by the current user (using who_am_i API)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+"
+"Query:List all high severity tickets coming in from slack from customer Cust123 and generate a summary of them. 
+","1. API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of generating a summary of high severity tickets.
+2. Argument Completion:
+Objects to Summarize:
+API: works_list
+3. Argument Completion for Internal Selected APIs:
+Objects to Summarize:
+API: works_list
+Extract the arguments:
+ticket.severity with value ""high"" (directly from the query)
+ticket.source_channel with value ""slack"" (directly from the query)
+ticket.rev_org from the output of the search_object_by_name API.
+
+
+API:search_object_by_name 
+argument_name"": ""query"",
+""argument_value"": ""Cust123"" (from query directly)
+
+
+"
+"
+
+Query: Given a customer meeting transcript T, create action items and add them to my current sprint 
+","1. API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of creating action items and adding them to the current sprint.
+2. Argument Completion:
+Work IDs from Transcript:
+API:create_actionable_tasks_from_text.
+Argument value: T (directly from query)
+Sprint ID:
+API: get_sprint_id
+
+
+"
+Prioritize all the similar issues coming in from discord under part CAPL-123.,"API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of prioritizing similar issues.
+
+Argument Completion:
+Objects to Prioritize:
+API: get_similar_work_items
+Extract the argument objects from the context: Value - Discord messages related to part ""CAPL-123""
+Now, the required argument for prioritize_objects is partially filled, with the objects array containing references to similar issues from Discord.
+
+Argument Completion for Internal Selected APIs:
+Similar Work Items:
+API: get_similar_work_items
+Extract the arguments:
+applies_to_part with value ""CAPL-123"" (directly from the query)
+source with value ""discord"" to filter issues originating from Discord.
+All required arguments for get_similar_work_items are filled, and the API is ready to be executed. As a result, the argument for objects in the prioritize_objects API is now filled successfully.
+
+Final Explanation:
+The query is to prioritize all similar issues from Discord under part ""CAPL-123.""
+The get_similar_work_items API is used to find issues similar to those coming from Discord, specifically related to part ""CAPL-123.""
+The obtained list of similar work items is then used as an argument for the prioritize_objects API to prioritize these issues."
+What are all the low severity tickets created by InferiorCustomer which needs a response? Generate a summary of them.,"API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of generating a summary of low severity tickets that require a response.
+
+Argument Completion:
+
+Objects to Summarize:
+API: search_object_by_name
+Extract the argument query from the context: Value - ""InferiorCustomer""
+Now, the required argument for search_object_by_name is filled, specifying the customer ""InferiorCustomer.""
+Low Severity Tickets for Summarization:
+API: works_list
+Extract the arguments:
+ticket.severity with value ""low"" (directly from the query)
+ticket.needs_response with value ""true"" to filter tickets requiring a response.
+Argument Completion for Internal Selected APIs:
+
+Low Severity Tickets:
+API: works_list
+Extracted arguments:
+ticket.severity with value ""low"" (directly from the query)
+ticket.needs_response with value ""true"" (directly from the query)
+ticket.rev-org with value ""InferiorCustomer"" from the output of the search_object_by_name API.
+Final Explanation:
+The query is to retrieve all low severity tickets created by ""InferiorCustomer"" that require a response and generate a summary of them.
+The search_object_by_name API is used to find the customer ""InferiorCustomer.""
+The obtained customer reference is then used as an argument for the works_list API, filtering low severity tickets that require a response.
+The resulting list of low severity tickets is then used as an argument for the summarize_objects API to generate a summary of these tickets."
+"Find work items that need a response and are associated with Rev organizations ""Walter LTD"" and ""Hank Products."" List them and summarize their details.","API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of generating a summary of work items that need a response and are associated with specific Rev organizations.
+
+Argument Completion:
+
+Work Items to Summarize:
+API: works_list
+Extract the arguments:
+work_item.needs_response with value ""true"" (directly from the query)
+work_item.rev-orgs with values ""Walter LTD"" and ""Hank Products"" to filter work items associated with these Rev organizations.
+Argument Completion for Internal Selected APIs:
+
+Work Items Needing Response:
+API: works_list
+Extracted arguments:
+work_item.needs_response with value ""true"" (directly from the query)
+work_item.rev-orgs with values ""Walter LTD"" and ""Hank Products"" (directly from the query)."
+I want to search for work items similar to issues created by me. Summarize them for me and create tasks for them.,"API Selection:
+The ultimate API identified for the task is create_actionable_tasks_from_text, based on the context of searching for work items similar to issues created by the user, summarizing them, and creating tasks.
+
+Argument Completion:
+
+Work Items to Summarize:
+API: get_similar_work_items
+Extract the arguments:
+created_by with the user's ID (using the who_am_i API)
+applies_to_tasks with value ""true"" to filter tasks.
+Argument Completion for Internal Selected APIs:
+
+Similar Work Items:
+API: get_similar_work_items
+Extracted arguments:
+created_by with the user's ID (from the output of the who_am_i API)
+applies_to_tasks with value ""true"" (directly from the query).
+Task Creation:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the get_similar_work_items API, containing the summarized details of similar work items.
+Final Explanation:
+The query is to search for work items similar to issues created by the user, summarize them, and create tasks based on the summarized details.
+The who_am_i API is used to get the current user's ID.
+The obtained user ID is then used as an argument for the get_similar_work_items API to find work items similar to those created by the user.
+The resulting list of similar work items is then used as an argument for the create_actionable_tasks_from_text API to generate tasks based on the summarized details."
+"List all work items that need a response and are associated with Rev organizations ""Stark Industries"" and ""Luthor Corp"". Summarize these work items and create actionable tasks from the summaries, then add the tasks to the current sprint.","API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of adding actionable tasks from summarized work items to the current sprint.
+
+Argument Completion:
+
+Work Items to Summarize:
+API: works_list
+Extract the arguments:
+work_item.needs_response with value ""true"" (directly from the query)
+work_item.rev-orgs with values ""Stark Industries"" and ""Luthor Corp"" to filter work items associated with these Rev organizations.
+Argument Completion for Internal Selected APIs:
+
+Work Items Needing Response:
+API: works_list
+Extracted arguments:
+work_item.needs_response with value ""true"" (directly from the query)
+work_item.rev-orgs with values ""Stark Industries"" and ""Luthor Corp"" (directly from the query).
+Summarize Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of work items that need a response and are associated with the specified Rev organizations.
+Task Creation:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the summarize_objects API, containing the summarized details of the work items.
+Add Tasks to Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument tasks from the output of the create_actionable_tasks_from_text API, containing the actionable tasks generated from the summarized work items.
+Final Explanation:
+The query is to list work items that need a response and are associated with the Rev organizations ""Stark Industries"" and ""Luthor Corp,"" summarize these work items, create actionable tasks from the summaries, and add the tasks to the current sprint.
+The works_list API is used to filter work items based on the criteria of needing a response and being associated with the specified Rev organizations.
+The resulting list of work items is then used as an argument for the summarize_objects API to generate a summary of these work items.
+The summarized details are then used as an argument for the create_actionable_tasks_from_text API to generate actionable tasks.
+Finally, the generated tasks are added to the current sprint using the add_work_items_to_sprint API."
+"Get the ID of the current sprint and add the work items with IDs ""WK-123"" and ""WK-456"" to it.
+","API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of adding specific work items to the current sprint.
+
+Argument Completion:
+
+Current Sprint ID:
+API: get_sprint_id
+Extract the argument sprint_id from the context.
+Argument Completion for Internal Selected APIs:
+
+Work Items to Add to Sprint:
+Directly from the query: ""WK-123"" and ""WK-456.""
+Add Work Items to Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the value obtained from the get_sprint_id API.
+work_items with values ""WK-123"" and ""WK-456"" from the query.
+Final Explanation:
+The query is to get the ID of the current sprint and add specific work items (""WK-123"" and ""WK-456"") to it.
+The get_sprint_id API is used to obtain the ID of the current sprint.
+The obtained sprint ID is then used as an argument for the add_work_items_to_sprint API along with the specific work items to add (""WK-123"" and ""WK-456"")."
+"List the first 10 work items owned by user Jonathan in the ""Development"" stage and summarize them.","API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing the first 10 work items owned by the user Jonathan in the ""Development"" stage.
+
+Argument Completion:
+
+Work Items to Summarize:
+API: works_list
+Extract the arguments:
+owned_by with the value ""Jonathan"" (directly from the query)
+stage.name with the value ""Development"" to filter work items in the specified stage.
+limit with the value 10 to retrieve the first 10 work items.
+Summarize Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of the first 10 work items owned by Jonathan in the ""Development"" stage.
+Final Explanation:
+The query is to list the first 10 work items owned by the user Jonathan in the ""Development"" stage and summarize them.
+The works_list API is used to filter work items based on the criteria of ownership by Jonathan, being in the ""Development"" stage, and limiting the result to the first 10 items.
+The resulting list of work items is then used as an argument for the summarize_objects API to generate a summary of these work items."
+"Get the first 5 work items of type ""task"" in the ""Planning"" stage,  and create tasks from their descriptions.","API Selection:
+The ultimate API identified for the task is create_actionable_tasks_from_text, based on the context of creating tasks from the descriptions of the first 5 work items of type ""task"" in the ""Planning"" stage.
+
+Argument Completion:
+
+Work Items to Extract Descriptions:
+API: works_list
+Extract the arguments:
+type with the value ""task"" (directly from the query)
+stage.name with the value ""Planning"" to filter work items in the specified stage.
+limit with the value 5 to retrieve the first 5 work items.
+Create Tasks from Descriptions:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the descriptions of the first 5 work items obtained from the works_list API.
+Final Explanation:
+The query is to get the first 5 work items of type ""task"" in the ""Planning"" stage, extract their descriptions, and create tasks from these descriptions.
+The works_list API is used to filter work items based on the criteria of being of type ""task"" and being in the ""Planning"" stage, limiting the result to the first 5 items.
+The descriptions of these work items are then used as an argument for the create_actionable_tasks_from_text API to generate tasks."
+List all tickets owned by user Bob Smith in the Customer Support stage where the work item needs a response and provide a summary of these tickets.,"API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing tickets owned by user Bob Smith in the Customer Support stage where the work item needs a response.
+
+Argument Completion:
+
+Tickets to Summarize:
+API: works_list
+Extract the arguments:
+owned_by with the value ""Bob Smith"" (directly from the query)
+stage.name with the value ""Customer Support"" to filter tickets in the specified stage.
+work_item.needs_response with value ""true"" to filter tickets needing a response.
+Summarize Tickets:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tickets owned by Bob Smith in the Customer Support stage that need a response.
+Final Explanation:
+The query is to list all tickets owned by user Bob Smith in the Customer Support stage where the work item needs a response and provide a summary of these tickets.
+The works_list API is used to filter tickets based on the criteria of ownership by Bob Smith, being in the Customer Support stage, and needing a response.
+The resulting list of tickets is then used as an argument for the summarize_objects API to generate a summary of these tickets.
+
+
+
+
+
+"
+"Filter out work items associated with Rev organizations ""Apache""  and ""Nvidia,"" which do not need a response and generate a summary for them. Using this summary, create actions from them and add them to my current sprint.","API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of adding actionable tasks from summarized work items to the current sprint.
+
+Argument Completion:
+
+Work Items to Summarize:
+API: works_list
+Extract the arguments:
+work_item.rev-orgs with values ""Apache"" and ""Nvidia"" to filter work items associated with these Rev organizations.
+work_item.needs_response with value ""false"" to filter out work items that do not need a response.
+Summarize Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of work items associated with ""Apache"" and ""Nvidia"" that do not need a response.
+Create Actions from Summaries:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the summarize_objects API, containing the summarized details of work items.
+Add Tasks to Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument tasks from the output of the create_actionable_tasks_from_text API, containing the actionable tasks generated from the summarized work items.
+Final Explanation:
+The query is to filter out work items associated with Rev organizations ""Apache"" and ""Nvidia"" that do not need a response, generate a summary for them, create actionable tasks from the summaries, and add the tasks to the current sprint.
+The works_list API is used to filter work items based on the criteria of being associated with ""Apache"" and ""Nvidia"" and not needing a response.
+The resulting list of work items is then used as an argument for the summarize_objects API to generate a summary of these work items.
+The summarized details are then used as an argument for the create_actionable_tasks_from_text API to generate actionable tasks.
+Finally, the generated tasks are added to the current sprint using the add_work_items_to_sprint API.
+
+
+
+
+
+"
+"Begin by listing the first 15 work items owned by user ""Eve"" in the ""Testing"" stage. Then, iteratively filter the list to include only those of type ""issue"" and ""task"" separately, and summarize each subset.","
+API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of iteratively filtering and summarizing work items owned by user ""Eve"" in the ""Testing"" stage.
+
+Argument Completion:
+
+Work Items to Summarize:
+API: works_list
+Extract the arguments:
+owned_by with the value ""Eve"" (directly from the query)
+stage.name with the value ""Testing"" to filter work items in the specified stage.
+limit with the value 15 to retrieve the first 15 work items.
+Summarize Initial Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the initial works_list API, containing the list of the first 15 work items owned by Eve in the ""Testing"" stage.
+Filter and Summarize Type: ""Issue"":
+
+API: works_list
+
+Extract the arguments:
+owned_by with the value ""Eve"" (directly from the query)
+stage.name with the value ""Testing"" to filter work items in the specified stage.
+type with the value ""issue"" to filter work items of type ""issue.""
+API: summarize_objects
+
+Extract the argument objects from the output of the filtered works_list API, containing the list of work items owned by Eve in the ""Testing"" stage of type ""issue.""
+Filter and Summarize Type: ""Task"":
+
+API: works_list
+
+Extract the arguments:
+owned_by with the value ""Eve"" (directly from the query)
+stage.name with the value ""Testing"" to filter work items in the specified stage.
+type with the value ""task"" to filter work items of type ""task.""
+API: summarize_objects
+
+Extract the argument objects from the output of the filtered works_list API, containing the list of work items owned by Eve in the ""Testing"" stage of type ""task.""
+Final Explanation:
+The query is to list the first 15 work items owned by user ""Eve"" in the ""Testing"" stage and iteratively filter and summarize subsets of these work items based on their types (""issue"" and ""task"").
+The initial works_list API is used to retrieve the first 15 work items owned by Eve in the ""Testing"" stage.
+Subsequent works_list APIs are then used to filter the list based on the type of work items, and the summarize_objects API is used to generate summaries for each subset.
+
+
+
+
+
+"
+"Find and summarize any urgent issues related to my project ""Gladeus""?","API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of finding and summarizing urgent issues related to the project ""Gladeus.""
+
+Argument Completion:
+
+Urgent Issues to Summarize:
+API: works_list
+Extract the arguments:
+project.name with the value ""Gladeus"" to filter work items related to the specified project.
+type with the value ""issue"" to filter work items of type ""issue.""
+Additional filters based on urgency criteria (e.g., issue.urgency with value ""urgent"").
+Summarize Urgent Issues:
+
+API: summarize_objects
+Extract the argument objects from the output of the filtered works_list API, containing the list of urgent issues related to the project ""Gladeus.""
+Final Explanation:
+The query is to find and summarize urgent issues related to the project ""Gladeus.""
+The works_list API is used to filter issues based on the criteria of being related to the project ""Gladeus"" and having urgency classified as ""urgent.""
+The resulting list of urgent issues is then used as an argument for the summarize_objects API to generate a summary of these issues."
+Identify and generate a summary of high-severity tickets originating from 'Slack' by customers with the tag 'VIP'.,"API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of identifying and summarizing high-severity tickets originating from 'Slack' by customers with the tag 'VIP.'
+
+Argument Completion:
+
+High-Severity Tickets to Summarize:
+API: works_list
+Extract the arguments:
+source with the value ""Slack"" to filter tickets originating from Slack.
+ticket.severity with the value ""high"" to filter high-severity tickets.
+Additional filters based on customer tags, e.g., customer.tag with value ""VIP.""
+Summarize High-Severity Tickets:
+
+API: summarize_objects
+Extract the argument objects from the output of the filtered works_list API, containing the list of high-severity tickets originating from 'Slack' by customers with the tag 'VIP.'
+Final Explanation:
+The query is to identify and generate a summary of high-severity tickets originating from 'Slack' by customers with the tag 'VIP.'
+The works_list API is used to filter tickets based on the criteria of originating from 'Slack,' having high severity, and being associated with customers tagged as 'VIP.'
+The resulting list of high-severity tickets is then used as an argument for the summarize_objects API to generate a summary of these tickets."
+Identify the Rev organizations associated with high priority issues in the 'Development' stage. Summarize these issues.,"API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of identifying the Rev organizations associated with high-priority issues in the 'Development' stage and summarizing these issues.
+
+Argument Completion:
+
+High-Priority Issues to Summarize:
+API: works_list
+Extract the arguments:
+stage.name with the value ""Development"" to filter issues in the specified stage.
+issue.priority with the value ""high"" to filter high-priority issues.
+Additional filters if needed, such as extracting the associated Rev organizations.
+Summarize High-Priority Issues:
+
+API: summarize_objects
+Extract the argument objects from the output of the filtered works_list API, containing the list of high-priority issues in the 'Development' stage.
+Final Explanation:
+The query is to identify the Rev organizations associated with high-priority issues in the 'Development' stage and summarize these issues.
+The works_list API is used to filter issues based on the criteria of being in the 'Development' stage and having high priority.
+The resulting list of high-priority issues is then used as an argument for the summarize_objects API to generate a summary of these issues."
+Identify the most common severity level for tickets associated with the parts 'HW-001' and 'HW-002'. Summarize the tickets for each severity.,"API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of identifying the most common severity level for tickets associated with the parts 'HW-001' and 'HW-002' and summarizing the tickets for each severity.
+
+Argument Completion:
+
+Tickets to Summarize:
+API: works_list
+Extract the arguments:
+part.name with the values ""HW-001"" and ""HW-002"" to filter tickets associated with these parts.
+Additional filters if needed, such as extracting the severity levels.
+Summarize Tickets for Each Severity:
+
+API: summarize_objects
+Extract the argument objects from the output of the filtered works_list API, containing the list of tickets associated with the parts 'HW-001' and 'HW-002.'
+Final Explanation:
+The query is to identify the most common severity level for tickets associated with the parts 'HW-001' and 'HW-002' and summarize the tickets for each severity.
+The works_list API is used to filter tickets based on the criteria of being associated with the specified parts.
+The resulting list of tickets is then used as an argument for the summarize_objects API to generate a summary of these tickets, and the summary can be further analyzed to determine the most common severity level.
+
+
+
+
+
+"
+Find all tasks created by me and generate a summary. Add the summarized tasks to the current sprint.,"API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of finding tasks created by you, generating a summary, and adding the summarized tasks to the current sprint.
+
+Argument Completion:
+
+Tasks to Summarize:
+API: works_list
+Extract the arguments:
+created_by with your user ID (using the appropriate API to obtain your ID).
+type with the value ""task"" to filter tasks.
+Summarize Tasks:
+
+API: summarize_objects
+Extract the argument objects from the output of the filtered works_list API, containing the list of tasks created by you.
+Add Summarized Tasks to Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument tasks from the output of the summarize_objects API, containing the summarized details of the tasks.
+Final Explanation:
+The query is to find all tasks created by you, generate a summary of these tasks, and add the summarized tasks to the current sprint.
+The works_list API is used to filter tasks based on the criteria of being created by you.
+The resulting list of tasks is then used as an argument for the summarize_objects API to generate a summary of these tasks.
+Finally, the summarized tasks are added to the current sprint using the add_work_items_to_sprint API."
+" Search for objects related to the keyword 'security' and return their IDs. If multiple matches are found, prioritize them based on relevance.","API Selection:
+The ultimate API identified for the task is search_objects, based on the context of searching for objects related to the keyword 'security' and returning their IDs, with a prioritization based on relevance.
+
+Argument Completion:
+
+Objects to Search:
+API: search_objects
+Extract the argument query with the value ""security"" to search for objects related to the keyword.
+Prioritize Based on Relevance:
+
+The search_objects API may provide a relevance score for each matched object. If available, use this information to prioritize the results. Alternatively, prioritize based on the type of object or any other relevant criteria.
+Return Object IDs:
+
+Extract the relevant information, such as the IDs of the matched objects, from the output of the search_objects API.
+Final Explanation:
+The query is to search for objects related to the keyword 'security' and return their IDs, prioritizing them based on relevance.
+The search_objects API is used with the argument query set to ""security"" to retrieve objects related to the keyword.
+The prioritization can be based on relevance scores if provided by the API or other criteria specified in the context.
+The final output includes the IDs of the matched objects, prioritized based on the defined criteria."
+" Get the top 3 source channels for high-severity tickets created by me, summarize them, and prioritize for the upcoming sprint.","API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of getting the top 3 source channels for high-severity tickets created by you, summarizing them, and prioritizing for the upcoming sprint.
+
+Argument Completion:
+
+High-Severity Tickets to Summarize:
+API: works_list
+Extract the arguments:
+created_by with your user ID (using the appropriate API to obtain your ID).
+ticket.severity with the value ""high"" to filter high-severity tickets.
+Additional filters if needed, such as extracting the source channels.
+Summarize Tickets by Source Channels:
+
+API: summarize_objects
+Extract the argument objects from the output of the filtered works_list API, containing the list of high-severity tickets created by you.
+Prioritize for Upcoming Sprint:
+
+Based on the summaries or any additional relevant criteria, prioritize the source channels for the upcoming sprint. This may involve considering the severity, impact, or urgency of the issues reported through each channel.
+Final Explanation:
+The query is to get the top 3 source channels for high-severity tickets created by you, summarize them, and prioritize for the upcoming sprint.
+The works_list API is used to filter tickets based on the criteria of being created by you and having high severity.
+The resulting list of high-severity tickets is then used as an argument for the summarize_objects API to generate a summary.
+Based on the summaries or other relevant criteria, the source channels are prioritized for the upcoming sprint.
+
+
+
+
+
+"
+Get the most common priority of all issues created by users in the 'Engineering' team and add the ones with a higher priority than the most common priority to the current sprint.,"API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of getting the most common priority of issues created by users in the 'Engineering' team and adding those with a higher priority than the most common priority to the current sprint.
+
+Argument Completion:
+
+Issues to Analyze:
+API: works_list
+Extract the arguments:
+created_by with the value of users in the 'Engineering' team (using the appropriate API to obtain user IDs).
+type with the value ""issue"" to filter issues.
+Additional filters if needed, such as extracting the priority levels.
+Determine Most Common Priority:
+
+Analyze the output of the works_list API to determine the most common priority among the issues created by users in the 'Engineering' team.
+Filter Issues with Higher Priority:
+
+Use the determined most common priority to filter issues with a higher priority.
+Add Filtered Issues to Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument issues from the output of the filtering step, containing the issues with a higher priority than the most common priority.
+Final Explanation:
+The query is to get the most common priority of issues created by users in the 'Engineering' team and add those with a higher priority than the most common priority to the current sprint.
+The works_list API is used to filter issues based on the criteria of being created by users in the 'Engineering' team.
+The most common priority is determined from the analyzed issues, and then issues with a higher priority are filtered.
+Finally, the filtered issues are added to the current sprint using the add_work_items_to_sprint API."
+ Find the most common source channel for tickets that are both high severity and assigned to the current user. Create actionable tasks from the text of these tickets and prioritize them.,"
+API Selection:
+The ultimate API identified for the task is create_actionable_tasks_from_text, based on the context of finding the most common source channel for high-severity tickets assigned to the current user, creating actionable tasks from the text of these tickets, and prioritizing them.
+
+Argument Completion:
+
+High-Severity Tickets Assigned to Current User:
+API: works_list
+Extract the arguments:
+assigned_to with the value of the current user (using the appropriate API to obtain the user ID).
+ticket.severity with the value ""high"" to filter high-severity tickets.
+Additional filters if needed, such as extracting the source channels.
+Determine Most Common Source Channel:
+
+Analyze the output of the works_list API to determine the most common source channel among high-severity tickets assigned to the current user.
+Create Actionable Tasks from Ticket Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the text of the identified high-severity tickets, creating actionable tasks.
+Prioritize Actionable Tasks:
+
+Based on the generated tasks or other relevant criteria, prioritize the actionable tasks.
+Final Explanation:
+The query is to find the most common source channel for high-severity tickets assigned to the current user, create actionable tasks from the text of these tickets, and prioritize them.
+The works_list API is used to filter tickets based on the criteria of being high severity and assigned to the current user.
+The most common source channel is determined from the analyzed tickets, and then actionable tasks are created from the text of these tickets using the create_actionable_tasks_from_text API.
+Finally, the generated tasks are prioritized based on the defined criteria."
+"Get the IDs of all sprints, then prioritize the sprints based on the number of work items they contain. Add the work items from the highest priority sprint to the current sprint.
+","API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of getting the IDs of all sprints, prioritizing them based on the number of work items they contain, and adding the work items from the highest priority sprint to the current sprint.
+
+Argument Completion:
+
+Get IDs of All Sprints:
+API: get_all_sprints
+Extract the argument sprint_ids from the output, containing the IDs of all sprints.
+Prioritize Sprints Based on Work Items:
+
+Iterate through each sprint ID obtained in the previous step.
+For each sprint ID, use the get_sprint_details API to retrieve information about the number of work items it contains.
+Prioritize the sprints based on the number of work items, either in ascending or descending order.
+Add Work Items from Highest Priority Sprint to Current Sprint:
+
+Use the ID of the highest priority sprint to retrieve the list of work items from that sprint using the get_sprint_work_items API.
+API: add_work_items_to_sprint
+Extract the argument work_items from the output of the get_sprint_work_items API, containing the work items from the highest priority sprint.
+Final Explanation:
+The query is to get the IDs of all sprints, prioritize them based on the number of work items they contain, and add the work items from the highest priority sprint to the current sprint.
+The get_all_sprints API is used to obtain the IDs of all sprints.
+Sprints are prioritized based on the number of work items using the get_sprint_details API.
+The work items from the highest priority sprint are then added to the current sprint using the add_work_items_to_sprint API.
+
+
+
+
+
+"
+"Summarize work items in stage 'Review' across all projects, identify the unique users who have created them, and prioritize their other open work items.","API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing work items in the 'Review' stage across all projects, identifying the unique users who have created them, and prioritizing their other open work items.
+
+Argument Completion:
+
+Work Items in 'Review' Stage:
+API: works_list
+Extract the arguments:
+stage.name with the value ""Review"" to filter work items in the specified stage.
+Additional filters if needed, such as extracting information across all projects.
+Summarize Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the filtered works_list API, containing the summarized details of work items in the 'Review' stage.
+Identify Unique Users Who Created Work Items:
+
+Analyze the output of the works_list API to identify the unique users who have created the work items in the 'Review' stage.
+Prioritize Other Open Work Items of Identified Users:
+
+API: works_list
+Extract the arguments:
+created_by with the value of the identified unique users.
+Additional filters if needed, such as filtering for open work items.
+Prioritize the work items based on the defined criteria.
+Final Explanation:
+The query is to summarize work items in the 'Review' stage across all projects, identify the unique users who have created them, and prioritize their other open work items.
+The works_list API is used to filter work items based on the criteria of being in the 'Review' stage.
+The summarized details of these work items are obtained using the summarize_objects API.
+The unique users who created the work items are identified from the output, and their other open work items are prioritized using additional calls to the works_list API.
+
+
+
+
+
+"
+"For each user in the system, retrieve their open issues and tickets, count the total number of items, and prioritize them based on severity.","API Selection:
+The ultimate API identified for the task is works_list, based on the context of retrieving open issues and tickets for each user, counting the total number of items, and prioritizing them based on severity.
+
+Argument Completion:
+
+Retrieve Open Issues and Tickets for Each User:
+API: works_list
+Extract the arguments:
+created_by for each user in the system.
+Additional filters if needed, such as filtering for open issues and tickets.
+Count Total Number of Items for Each User:
+
+Analyze the output of the works_list API for each user to count the total number of open issues and tickets.
+Prioritize Items Based on Severity:
+
+For each user, use the works_list API again to retrieve detailed information about their open issues and tickets, including severity.
+Prioritize the items based on severity, either in ascending or descending order.
+Final Explanation:
+The query is to retrieve open issues and tickets for each user in the system, count the total number of items, and prioritize them based on severity.
+The works_list API is used for each user to filter open issues and tickets and retrieve relevant details.
+The total number of items is counted for each user based on the output of the works_list API.
+The items are then prioritized based on severity using additional calls to the works_list API."
+Identify the top 3 source channels for tickets created by users who have open issues in the 'Review' stage. Prioritize tickets from these channels.,"API Selection:
+The ultimate API identified for the task is works_list, based on the context of identifying the top 3 source channels for tickets created by users with open issues in the 'Review' stage and prioritizing tickets from these channels.
+
+Argument Completion:
+
+Identify Users with Open Issues in 'Review' Stage:
+API: works_list
+Extract the arguments:
+stage.name with the value ""Review"" to filter for open issues in the specified stage.
+Additional filters if needed, such as extracting user information.
+Identify Top 3 Source Channels for Tickets:
+
+Analyze the output of the works_list API to identify the top 3 source channels for tickets created by users with open issues in the 'Review' stage.
+Prioritize Tickets from Top 3 Source Channels:
+
+For each of the identified top 3 source channels, use the works_list API to retrieve detailed information about the tickets, and prioritize them based on relevant criteria.
+Final Explanation:
+The query is to identify the top 3 source channels for tickets created by users with open issues in the 'Review' stage and prioritize tickets from these channels.
+The works_list API is used to filter users with open issues in the 'Review' stage and obtain relevant details.
+The analysis of the output helps identify the top 3 source channels for tickets created by these users.
+Additional calls to the works_list API are used to retrieve detailed information about tickets from the top 3 source channels, and tickets are prioritized based on relevant criteria.
+
+
+
+
+
+"
+List all work items in the 'Testing' stage that have more than 5 tasks associated with them. Summarize these items and prioritize them based on the severity of the associated tasks.,"
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing all work items in the 'Testing' stage with more than 5 tasks associated with them, summarizing these items, and prioritizing them based on the severity of the associated tasks.
+
+Argument Completion:
+
+List Work Items in 'Testing' Stage with More Than 5 Tasks:
+API: works_list
+Extract the arguments:
+stage.name with the value ""Testing"" to filter for work items in the specified stage.
+Additional filters if needed, such as counting the number of associated tasks.
+Summarize Items and Prioritize Based on Severity of Associated Tasks:
+
+For each work item identified in the output of the works_list API, use the works_list API again to retrieve detailed information about the associated tasks, including severity.
+Summarize the work items and prioritize them based on the severity of the associated tasks.
+Final Explanation:
+The query is to list all work items in the 'Testing' stage with more than 5 tasks associated with them, summarize these items, and prioritize them based on the severity of the associated tasks.
+The works_list API is used to filter work items based on the criteria of being in the 'Testing' stage and having more than 5 associated tasks.
+For each identified work item, additional calls to the works_list API are made to retrieve detailed information about the associated tasks, including severity. Work items are then summarized and prioritized based on the severity of the associated tasks."
+"Get the IDs of work items created by 'Bruce'. For each work item, find similar items and create a summary. ","API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of getting the IDs of work items created by 'Bruce,' finding similar items for each work item, and creating a summary.
+
+Argument Completion:
+
+Get IDs of Work Items Created by 'Bruce':
+API: works_list
+Extract the arguments:
+created_by with the value ""Bruce"" to filter for work items created by 'Bruce.'
+Additional filters if needed.
+Find Similar Items and Create Summary for Each Work Item:
+
+For each work item identified in the output of the works_list API, use the appropriate API (e.g., get_similar_work_items) to find similar items.
+Extract the IDs of similar items and use the summarize_objects API to create a summary for each work item and its similar items.
+Final Explanation:
+The query is to get the IDs of work items created by 'Bruce,' find similar items for each work item, and create a summary.
+The works_list API is used to filter work items based on the criteria of being created by 'Bruce.'
+For each identified work item, an appropriate API is used to find similar items, and the summarize_objects API is used to create a summary for each work item and its similar items."
+Identify the most common severity level for issues created by 'Alice' and 'Bob'. Summarize the issues of this severity and prioritize them based on the total number of open tasks.,"API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of identifying the most common severity level for issues created by 'Alice' and 'Bob,' summarizing issues of this severity, and prioritizing them based on the total number of open tasks.
+
+Argument Completion:
+
+Identify Most Common Severity for Issues Created by 'Alice' and 'Bob':
+API: works_list
+Extract the arguments:
+created_by with the values ""Alice"" and ""Bob"" to filter for issues created by them.
+Additional filters if needed, such as extracting the severity levels.
+Determine Most Common Severity Level:
+
+Analyze the output of the works_list API to determine the most common severity level among issues created by 'Alice' and 'Bob.'
+Summarize Issues of Most Common Severity:
+
+Use the works_list API again to retrieve detailed information about issues of the determined most common severity level.
+Prioritize Issues Based on Total Number of Open Tasks:
+
+For each identified issue, use the appropriate API (e.g., get_open_tasks) to retrieve the total number of open tasks.
+Prioritize the summarized issues based on the total number of open tasks.
+Final Explanation:
+The query is to identify the most common severity level for issues created by 'Alice' and 'Bob,' summarize issues of this severity, and prioritize them based on the total number of open tasks.
+The works_list API is used to filter issues based on the criteria of being created by 'Alice' and 'Bob.'
+The most common severity level is determined from the output, and then detailed information about issues of this severity is retrieved using additional calls to the works_list API.
+For each identified issue, the total number of open tasks is obtained using the appropriate API, and issues are prioritized based on this information.
+
+
+
+
+
+"
+List all tasks created by user DEVU-567 in the last sprint.,"API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing all tasks created by the user with the ID 'DEVU-567' in the last sprint.
+
+Argument Completion:
+
+List Tasks Created by User 'DEVU-567' in the Last Sprint:
+API: works_list
+Extract the arguments:
+created_by with the value ""DEVU-567"" to filter for tasks created by this user.
+sprint with the appropriate value to filter for tasks created in the last sprint.
+type with the value ""task"" to specifically filter for tasks.
+Final Explanation:
+The query is to list all tasks created by the user with the ID 'DEVU-567' in the last sprint.
+The works_list API is used to filter tasks based on the criteria of being created by the specified user and within the last sprint. Additionally, the type is specified as ""task"" to narrow down the results to tasks specifically.
+
+
+
+
+
+"
+Get the ID of the current sprint and add all tasks assigned to user DEVU-789 to it.,"API Selection:
+The ultimate API identified for the task is get_current_sprint_id to retrieve the ID of the current sprint, and add_work_items_to_sprint to add all tasks assigned to the user with the ID 'DEVU-789' to the current sprint.
+
+Argument Completion:
+
+Get ID of the Current Sprint:
+API: get_current_sprint_id
+Extract the argument sprint_id from the output.
+Add Tasks Assigned to User 'DEVU-789' to the Current Sprint:
+
+API: works_list
+Extract the arguments:
+assigned_to with the value ""DEVU-789"" to filter for tasks assigned to this user.
+type with the value ""task"" to specifically filter for tasks.
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the value obtained from the get_current_sprint_id API.
+tasks with the list of tasks obtained from the filtered works_list API.
+Final Explanation:
+The query is to get the ID of the current sprint and add all tasks assigned to the user with the ID 'DEVU-789' to it.
+The get_current_sprint_id API is used to retrieve the ID of the current sprint.
+The works_list API is then used to filter tasks based on the criteria of being assigned to the specified user and having the type ""task.""
+Finally, the add_work_items_to_sprint API is used to add the identified tasks to the current sprint using the retrieved sprint ID."
+Find similar work items for a given task ID (TASK-123).,"API Selection:
+The ultimate API identified for the task is get_similar_work_items, based on the context of finding similar work items for a given task ID (e.g., ""TASK-123"").
+
+Argument Completion:
+
+Find Similar Work Items for Task ID 'TASK-123':
+API: get_similar_work_items
+Extract the arguments:
+task_id with the value ""TASK-123"" to find similar work items for the specified task.
+Final Explanation:
+The query is to find similar work items for a given task ID, such as ""TASK-123.""
+The get_similar_work_items API is used to retrieve work items that are similar to the specified task ID. The task ID is provided as an argument to the API for accurate results."
+"Search for objects related to ""customer feedback"" and create actionable tasks from the extracted insights.","API Selection:
+The ultimate API identified for the task is search_objects to retrieve objects related to ""customer feedback,"" and create_actionable_tasks_from_text to create actionable tasks from the extracted insights.
+
+Argument Completion:
+
+Search for Objects Related to ""Customer Feedback"":
+API: search_objects
+Extract the argument query with the value ""customer feedback"" to search for objects related to customer feedback.
+Create Actionable Tasks from Extracted Insights:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the insights extracted from the objects related to ""customer feedback.""
+Final Explanation:
+The query is to search for objects related to ""customer feedback"" and create actionable tasks from the extracted insights.
+The search_objects API is used to retrieve objects related to the specified query. The insights obtained from these objects are then used as input to the create_actionable_tasks_from_text API to generate actionable tasks."
+"Summarize 10 tasks that need a response and are associated with Rev organizations ""ORG-1"" and ""ORG-2"".","API Selection:
+The ultimate API identified for the task is works_list, based on the context of summarizing tasks that need a response and are associated with Rev organizations ""ORG-1"" and ""ORG-2.""
+
+Argument Completion:
+
+Summarize Tasks Needing Response Associated with Rev Organizations ""ORG-1"" and ""ORG-2"":
+API: works_list
+Extract the arguments:
+organization with the values ""ORG-1"" and ""ORG-2"" to filter for tasks associated with these organizations.
+type with the value ""task"" to specifically filter for tasks.
+Additional filters if needed, such as identifying tasks that need a response.
+Final Explanation:
+The query is to summarize tasks that need a response and are associated with Rev organizations ""ORG-1"" and ""ORG-2.""
+The works_list API is used to filter tasks based on the criteria of being associated with the specified organizations, having the type ""task,"" and potentially identifying tasks that need a response."
+Prioritize tasks in the current sprint by their severity for a specific part (PART-456).,"API Selection:
+The ultimate API identified for the task is get_sprint_work_items, based on the context of prioritizing tasks in the current sprint by their severity for a specific part (e.g., ""PART-456"").
+
+Argument Completion:
+
+Prioritize Tasks in the Current Sprint by Severity for Part ""PART-456"":
+API: get_sprint_work_items
+Extract the arguments:
+sprint_id with the value obtained from the get_current_sprint_id API.
+part with the value ""PART-456"" to filter for tasks associated with this specific part.
+type with the value ""task"" to specifically filter for tasks.
+Additional filters if needed, such as prioritizing tasks by severity.
+Final Explanation:
+The query is to prioritize tasks in the current sprint by their severity for a specific part, such as ""PART-456.""
+The get_current_sprint_id API may be used to obtain the ID of the current sprint, and then the get_sprint_work_items API is utilized to retrieve tasks associated with the specified part in the current sprint. Additional filters, such as prioritizing tasks by severity, can be applied as needed."
+List all tasks created by the current user and summarize them.,"API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing all tasks created by the current user and summarizing them.
+
+Argument Completion:
+
+List Tasks Created by the Current User and Summarize:
+API: works_list
+Extract the arguments:
+created_by with the value of the current user (using the appropriate API to obtain the user ID).
+type with the value ""task"" to specifically filter for tasks.
+Final Explanation:
+The query is to list all tasks created by the current user and summarize them.
+The works_list API is used to filter tasks based on the criteria of being created by the current user and having the type ""task."" The output can then be further processed to generate summaries for each task."
+"Get the current user's ID and find issues with priority ""p1"" owned by that user.","API Selection:
+The ultimate API identified for the task is who_am_i to get the current user's ID, and works_list to find issues with priority ""p1"" owned by that user.
+
+Argument Completion:
+
+Get Current User's ID:
+API: who_am_i
+Extract the argument user_id from the output.
+**Find Issues with Priority ""p1"" Owned by Current User:
+
+API: works_list
+Extract the arguments:
+owned_by with the value obtained from the who_am_i API.
+priority with the value ""p1"" to filter for issues with this priority.
+Additional filters if needed.
+Final Explanation:
+The query is to get the current user's ID and find issues with priority ""p1"" owned by that user.
+The who_am_i API is used to obtain the ID of the current user, and then the works_list API is utilized to filter issues based on the criteria of being owned by the current user and having the priority ""p1."" Additional filters can be applied as needed."
+Create actionable tasks from a given text and add them to the sprint.,"API Selection:
+The ultimate APIs identified for the task are create_actionable_tasks_from_text to create actionable tasks from the given text and add_work_items_to_sprint to add the created tasks to the sprint.
+
+Argument Completion:
+
+Create Actionable Tasks from Given Text:
+API: create_actionable_tasks_from_text
+Extract the argument text from the provided text to generate actionable tasks.
+**Add Actionable Tasks to the Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the value of the desired sprint ID.
+tasks with the list of actionable tasks obtained from the create_actionable_tasks_from_text API.
+Final Explanation:
+The query is to create actionable tasks from a given text and add them to the sprint.
+The create_actionable_tasks_from_text API is used to generate actionable tasks from the provided text. These tasks can then be added to the desired sprint using the add_work_items_to_sprint API, with the sprint ID and the list of actionable tasks as arguments.
+
+
+
+
+
+"
+"Search for objects related to ""bug report"" and summarize them.","API Selection:
+The ultimate API identified for the task is search_objects, based on the context of searching for objects related to ""bug report"" and summarizing them.
+
+Argument Completion:
+
+Search for Objects Related to ""Bug Report"":
+API: search_objects
+Extract the argument query with the value ""bug report"" to search for objects related to bug reports.
+**Summarize the Found Objects:
+
+API: summarize_objects
+Extract the argument objects from the output of the search_objects API, containing the found objects related to bug reports.
+Final Explanation:
+The query is to search for objects related to ""bug report"" and summarize them.
+The search_objects API is used to retrieve objects related to the specified query. Subsequently, the summarize_objects API is utilized to create a summary of the found objects, providing an overview of the bug reports."
+"List all issues and tasks in the ""In Progress"" stage owned by user DEVU-876.","API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing all issues and tasks in the ""In Progress"" stage owned by the user with the ID 'DEVU-876.'
+
+Argument Completion:
+
+List Issues and Tasks in ""In Progress"" Stage Owned by User 'DEVU-876':
+API: works_list
+Extract the arguments:
+owned_by with the value ""DEVU-876"" to filter for issues and tasks owned by this user.
+stage.name with the value ""In Progress"" to specifically filter for items in this stage.
+type with the values ""issue"" and ""task"" to include both issues and tasks.
+Final Explanation:
+The query is to list all issues and tasks in the ""In Progress"" stage owned by the user with the ID 'DEVU-876.'
+The works_list API is used to filter items based on the criteria of being owned by the specified user, being in the ""In Progress"" stage, and having the type ""issue"" or ""task."""
+Find the current sprint ID and retrieve the details of all work items assigned to it.,"API Selection:
+The ultimate API identified for the task is get_current_sprint_id to retrieve the ID of the current sprint, and get_sprint_work_items to retrieve the details of all work items assigned to that sprint.
+
+Argument Completion:
+
+Get ID of the Current Sprint:
+API: get_current_sprint_id
+Extract the argument sprint_id from the output.
+**Retrieve Details of Work Items Assigned to the Current Sprint:
+
+API: get_sprint_work_items
+Extract the argument sprint_id with the value obtained from the get_current_sprint_id API.
+Final Explanation:
+The query is to find the current sprint ID and retrieve the details of all work items assigned to it.
+The get_current_sprint_id API is used to obtain the ID of the current sprint, and then the get_sprint_work_items API is utilized to retrieve the details of all work items assigned to that sprint, using the obtained sprint ID as an argument."
+"Search for objects related to ""user feedback"" and prioritize them based on the severity.","API Selection:
+The ultimate APIs identified for the task are search_objects to retrieve objects related to ""user feedback"" and works_list to prioritize them based on severity.
+
+Argument Completion:
+
+Search for Objects Related to ""User Feedback"":
+API: search_objects
+Extract the argument query with the value ""user feedback"" to search for objects related to user feedback.
+**Prioritize Objects Based on Severity:
+
+API: works_list
+Extract the arguments:
+severity to prioritize the retrieved objects based on severity.
+Additional filters if needed.
+Final Explanation:
+The query is to search for objects related to ""user feedback"" and prioritize them based on severity.
+The search_objects API is used to retrieve objects related to the specified query. Subsequently, the works_list API is utilized to prioritize the found objects based on their severity. Additional filters can be applied if needed to further refine the prioritization."
+"Get the ID of the current user and list all tickets with severity ""high"" that need a response.","API Selection:
+The ultimate APIs identified for the task are who_am_i to get the ID of the current user and works_list to list all tickets with severity ""high"" that need a response.
+
+Argument Completion:
+
+Get ID of the Current User:
+API: who_am_i
+Extract the argument user_id from the output.
+**List Tickets with Severity ""High"" Needing a Response:
+
+API: works_list
+Extract the arguments:
+severity with the value ""high"" to filter for tickets with this severity.
+needs_response or similar criteria to identify tickets that need a response.
+assigned_to or owned_by with the value obtained from the who_am_i API to filter for tickets assigned or owned by the current user.
+Final Explanation:
+The query is to get the ID of the current user and list all tickets with severity ""high"" that need a response.
+The who_am_i API is used to obtain the ID of the current user, and then the works_list API is utilized to filter tickets based on the criteria of having severity ""high"" and needing a response. Additional filters can be applied to include tickets assigned or owned by the current user."
+Summarize work items created by user DEVU-999 in the last two sprints.,"API Selection:
+The ultimate API identified for the task is get_user_id or an equivalent API to obtain the ID of user 'DEVU-999,' and get_sprints along with get_sprint_work_items to retrieve and summarize work items created by this user in the last two sprints.
+
+Argument Completion:
+
+Get ID of User 'DEVU-999':
+API: get_user_id or an equivalent API to obtain the user ID for 'DEVU-999.'
+Get Sprints and Their IDs:
+API: get_sprints
+Extract the last two sprint IDs.
+Summarize Work Items Created by 'DEVU-999' in Last Two Sprints:
+API: get_sprint_work_items
+Extract the arguments:
+user_id with the value obtained from the get_user_id API.
+sprint_id with the IDs of the last two sprints obtained from get_sprints.
+Final Explanation:
+The query is to summarize work items created by user 'DEVU-999' in the last two sprints.
+The user ID is obtained using an appropriate API, and then the IDs of the last two sprints are retrieved using the get_sprints API. The get_sprint_work_items API is used to summarize the work items created by 'DEVU-999' in the specified sprints."
+"Add tasks with IDs ""TASK-001"" and ""TASK-002"" to the current sprint.","API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint to add tasks with IDs ""TASK-001"" and ""TASK-002"" to the current sprint.
+
+Argument Completion:
+
+Add Tasks with IDs ""TASK-001"" and ""TASK-002"" to the Current Sprint:
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects with the values ""TASK-001"" and ""TASK-002"" to specify the tasks to be added to the sprint.
+Final Explanation:
+The query is to add tasks with IDs ""TASK-001"" and ""TASK-002"" to the current sprint. The add_work_items_to_sprint API is used with specific arguments for the sprint ID and the IDs of the tasks to be added.
+
+User
+"
+"List all issues associated with Rev organizations ""ORG-A"" and ""ORG-B"" that are in the ""Backlog"" stage.","API Selection:
+The ultimate API identified for the task is works_list to list all issues associated with Rev organizations ""ORG-A"" and ""ORG-B"" that are in the ""Backlog"" stage.
+
+Argument Completion:
+
+List Issues Associated with ""ORG-A"" and ""ORG-B"" in the ""Backlog"" Stage:
+API: works_list
+Extract the arguments:
+organizations with the values ""ORG-A"" and ""ORG-B"" to filter for issues associated with these organizations.
+stage.name with the value ""Backlog"" to filter for issues in this stage.
+type with the value ""issue"" to specifically filter for issues.
+Final Explanation:
+The query is to list all issues associated with Rev organizations ""ORG-A"" and ""ORG-B"" that are in the ""Backlog"" stage. The works_list API is used with specific filters for organizations, stage, and issue type.
+
+
+
+
+
+"
+"Search for objects related to ""customer inquiry"" and create actionable tasks from the extracted insights.","API Selection:
+The ultimate APIs identified for the task are search_objects to retrieve objects related to ""customer inquiry"" and create_actionable_tasks_from_text to create actionable tasks from the extracted insights.
+
+Argument Completion:
+
+Search for Objects Related to ""Customer Inquiry"":
+API: search_objects
+Extract the argument query with the value ""customer inquiry"" to search for objects related to customer inquiries.
+**Create Actionable Tasks from Extracted Insights:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the search_objects API, containing insights related to customer inquiries.
+Final Explanation:
+The query is to search for objects related to ""customer inquiry"" and create actionable tasks from the extracted insights. The search_objects API is used to retrieve objects, and the create_actionable_tasks_from_text API is employed to generate actionable tasks based on the insights obtained from the search results.
+
+
+
+
+
+"
+Summarize tasks in the current sprint with the highest priority.,"API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing tasks in the current sprint with the highest priority.
+
+Argument Completion:
+
+Objects to Summarize:
+API: get_tasks_in_current_sprint
+Extract the argument sprint_id from the context: Value - ""current_sprint_id"" (directly from the query)
+Extract the argument priority from the context: Value - ""highest_priority"" (directly from the query)
+Now, the required arguments for summarize_objects are partially filled, with the list of tasks in the current sprint with the highest priority.
+Argument Completion for Internal Selected APIs:
+
+Task IDs in Current Sprint:
+
+API: get_tasks_in_current_sprint
+Extract the argument sprint_id from the context: Value - ""current_sprint_id"" (directly from the query)
+Extract the argument priority from the context: Value - ""highest_priority"" (directly from the query)
+All required arguments for get_tasks_in_current_sprint are filled, and the API is ready to be executed.
+Objects to Summarize:
+
+API: get_tasks_in_current_sprint
+Extract the argument sprint_id from the context: Value - ""current_sprint_id"" (directly from the query)
+Extract the argument priority from the context: Value - ""highest_priority"" (directly from the query)
+All required arguments for get_tasks_in_current_sprint are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to summarize tasks in the current sprint with the highest priority.
+The get_tasks_in_current_sprint API is used to retrieve tasks in the current sprint with the highest priority.
+The obtained task IDs are then used as arguments for the summarize_objects API to generate a summary of tasks in the current sprint with the highest priority"
+"List all issues under part ""PART-789"" that are assigned to the current user.",".API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing issues under a specific part assigned to the current user.
+
+Argument Completion:
+
+Issues to List:
+API: works_list
+Extract the arguments:
+applies_to_part with value ""PART-789"" (directly from the query)
+owned_by to identify issues assigned to the current user (using who_am_i API)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Argument Completion for Internal Selected APIs:
+
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API.
+Final Explanation:
+The query is to list all issues under part ""PART-789"" that are assigned to the current user.
+The who_am_i API is used to obtain the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API, along with the specified part (""PART-789"").
+The works_list API is ready to be executed, providing a list of issues under ""PART-789"" assigned to the current user."
+"Get the ID of the current sprint and find work items with severity ""medium"" and ""high"" in that sprint. Summarize the results.","API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing work items with specific severities in the current sprint.
+
+Argument Completion:
+
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+This ID is then used as an argument for subsequent APIs.
+Work Items to Summarize:
+
+API: get_work_items_in_sprint
+Extract the arguments:
+sprint_id with the value obtained from get_sprint_id
+severity with values ""medium"" and ""high"" (directly from the query)
+All required arguments for get_work_items_in_sprint are filled, and the API is ready to be executed.
+Argument Completion for Internal Selected APIs:
+
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+All required arguments for get_sprint_id are filled, and the API is ready to be executed.
+Work Items to Summarize:
+
+API: get_work_items_in_sprint
+Extract the arguments:
+sprint_id with the value obtained from get_sprint_id
+severity with values ""medium"" and ""high"" (directly from the query)
+All required arguments for get_work_items_in_sprint are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to get the ID of the current sprint, find work items with severity ""medium"" and ""high"" in that sprint, and summarize the results.
+The get_sprint_id API is used to obtain the current sprint ID.
+This ID is then used as an argument for the get_work_items_in_sprint API along with the specified severities (""medium"" and ""high"").
+The get_work_items_in_sprint API is ready to be executed, providing a list of work items with the specified severities in the current sprint.
+The results can then be summarized using the summarize_objects API"
+Create actionable tasks from a given text containing user suggestions and add them to the current sprint.,"API Selection:
+The ultimate API identified for the task is add_actionable_tasks_to_sprint, based on the context of creating actionable tasks from given text and adding them to the current sprint.
+
+Argument Completion:
+
+Actionable Tasks from Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the query.
+All required arguments for create_actionable_tasks_from_text are filled, and the API is ready to be executed.
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+This ID is then used as an argument for the add_actionable_tasks_to_sprint API.
+Argument Completion for Internal Selected APIs:
+
+Actionable Tasks from Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the query.
+All required arguments for create_actionable_tasks_from_text are filled, and the API is ready to be executed.
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+All required arguments for get_sprint_id are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to create actionable tasks from a given text containing user suggestions and add them to the current sprint.
+The create_actionable_tasks_from_text API is used to generate actionable tasks from the provided text.
+The get_sprint_id API is used to obtain the current sprint ID.
+The obtained actionable tasks and the current sprint ID are then used as arguments for the add_actionable_tasks_to_sprint API to add the generated tasks to the current sprin"
+"List all tickets created by user DEVU-111 that are associated with Rev organizations ""ORG-X"" and ""ORG-Y"".","API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing tickets created by a specific user associated with specific Rev organizations.
+
+Argument Completion:
+
+Tickets to List:
+API: works_list
+Extract the arguments:
+created_by_user with value ""DEVU-111"" (directly from the query)
+rev_orgs with values ""ORG-X"" and ""ORG-Y"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to list all tickets created by user DEVU-111 that are associated with Rev organizations ""ORG-X"" and ""ORG-Y.""
+The works_list API is used to retrieve tickets based on the specified criteria.
+The extracted values from the query (""DEVU-111,"" ""ORG-X,"" and ""ORG-Y"") are directly used as arguments for the works_list API, making it ready to be executed to provide the list of tickets that meet the specified conditions."
+Find similar work items for a specific task ID (TASK-456) and prioritize them based on severity.,"API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of finding similar work items for a specific task ID and prioritizing them based on severity.
+
+Argument Completion:
+
+Similar Work Items:
+
+API: get_similar_work_items
+Extract the argument task_id from the query: Value - ""TASK-456"" (directly from the query)
+All required arguments for get_similar_work_items are filled, and the API is ready to be executed.
+Work Items to Prioritize:
+
+API: prioritize_objects
+Extract the argument work_ids from the output of the get_similar_work_items API.
+Extract the argument priority_criteria based on severity (directly from the query)
+All required arguments for prioritize_objects are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to find similar work items for a specific task ID (TASK-456) and prioritize them based on severity.
+The get_similar_work_items API is used to find work items similar to the specified task ID.
+The obtained work IDs are then used as arguments for the prioritize_objects API, along with the specified severity criteria.
+The prioritize_objects API is ready to be executed, providing a prioritized list of similar work items based on severity."
+"Search for objects related to ""urgent tasks"" and summarize them, then prioritize the summarized tasks.","API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of searching for objects related to ""urgent tasks,"" summarizing them, and then prioritizing the summarized tasks.
+
+Argument Completion:
+
+Objects to Summarize:
+
+API: search_objects
+Extract the argument query from the context: Value - ""urgent tasks"" (directly from the query)
+All required arguments for search_objects are filled, and the API is ready to be executed.
+Summarized Objects:
+
+API: summarize_objects
+Extract the argument objects from the output of the search_objects API.
+All required arguments for summarize_objects are filled, and the API is ready to be executed.
+Prioritized Objects:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API.
+Extract the argument priority_criteria based on urgency (directly from the query)
+All required arguments for prioritize_objects are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to search for objects related to ""urgent tasks,"" summarize them, and then prioritize the summarized tasks.
+The search_objects API is used to find objects related to the specified query (""urgent tasks"").
+The obtained objects are then used as arguments for the summarize_objects API to generate a summary.
+The summarized objects are then used as arguments for the prioritize_objects API, along with the specified urgency criteria.
+The prioritize_objects API is ready to be executed, providing a prioritized list of summarized tasks related to ""urgent tasks"
+"List all tasks under part ""PART-XYZ"" that are owned by the current user and need a response.","API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing tasks under a specific part owned by the current user and requiring a response.
+
+Argument Completion:
+
+Tasks to List:
+API: works_list
+Extract the arguments:
+applies_to_part with value ""PART-XYZ"" (directly from the query)
+owned_by to identify tasks owned by the current user (using who_am_i API)
+needs_response with value true (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Argument Completion for Internal Selected APIs:
+
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API.
+Final Explanation:
+The query is to list all tasks under part ""PART-XYZ"" that are owned by the current user and need a response.
+The who_am_i API is used to obtain the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API, along with the specified part (""PART-XYZ"") and the need for a response.
+The works_list API is ready to be executed, providing a list of tasks meeting the specified conditions."
+"Get the current sprint ID and add all tasks with priority ""p0"" to that sprint.","API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of getting the current sprint ID and adding tasks with priority ""p0"" to that sprint.
+
+Argument Completion:
+
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+This ID is then used as an argument for the add_work_items_to_sprint API.
+Tasks to Add to Sprint:
+
+API: get_tasks_with_priority
+Extract the arguments:
+priority with value ""p0"" (directly from the query)
+All required arguments for get_tasks_with_priority are filled, and the API is ready to be executed.
+Addition to Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument sprint_id from the output of the get_sprint_id API.
+Extract the argument work_items from the output of the get_tasks_with_priority API.
+All required arguments for add_work_items_to_sprint are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to get the current sprint ID and add all tasks with priority ""p0"" to that sprint.
+The get_sprint_id API is used to obtain the current sprint ID.
+This ID is then used as an argument for the get_tasks_with_priority API, which retrieves tasks with the specified priority (""p0"").
+The obtained sprint ID and task IDs are then used as arguments for the add_work_items_to_sprint API to add the identified tasks to the current sprint. The process is now ready to be executed."
+Create actionable tasks from a given text containing user feedback and prioritize them based on severity.,"API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of creating actionable tasks from user feedback and prioritizing them based on severity.
+
+Argument Completion:
+
+Actionable Tasks from Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the query.
+All required arguments for create_actionable_tasks_from_text are filled, and the API is ready to be executed.
+Prioritized Actionable Tasks:
+
+API: prioritize_objects
+Extract the argument actionable_tasks from the output of the create_actionable_tasks_from_text API.
+Extract the argument priority_criteria based on severity (directly from the query)
+All required arguments for prioritize_objects are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to create actionable tasks from a given text containing user feedback and prioritize them based on severity.
+The create_actionable_tasks_from_text API is used to generate actionable tasks from the provided text.
+The obtained actionable tasks are then used as arguments for the prioritize_objects API, along with the specified severity criteria.
+The prioritize_objects API is ready to be executed, providing a prioritized list of actionable tasks based on severity"
+"List all tasks in the ""To Do"" stage that are associated with Rev organizations ""ORG-1"" and ""ORG-2"".","
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing tasks in the ""To Do"" stage associated with specific Rev organizations.
+
+Argument Completion:
+
+Tasks to List:
+API: works_list
+Extract the arguments:
+stage_name with value ""To Do"" (directly from the query)
+rev_orgs with values ""ORG-1"" and ""ORG-2"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to list all tasks in the ""To Do"" stage that are associated with Rev organizations ""ORG-1"" and ""ORG-2.""
+The works_list API is used to retrieve tasks based on the specified criteria.
+The extracted values from the query (""To Do,"" ""ORG-1,"" and ""ORG-2"") are directly used as arguments for the works_list API, making it ready to be executed to provide the list of tasks that meet the specified conditions."
+"Find the current user's ID, then list all tasks and issues owned by that user in the ""In Progress"" stage.","API Selection:
+The ultimate API identified for the task is works_list, based on the context of finding the current user's ID and listing tasks and issues owned by that user in the ""In Progress"" stage.
+
+Argument Completion:
+
+Current User ID:
+
+API: who_am_i
+Extract the current user's ID.
+This ID is then used as an argument for the works_list API.
+Tasks and Issues to List:
+
+API: works_list
+Extract the arguments:
+owned_by with the value obtained from the who_am_i API.
+stage_name with value ""In Progress"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to find the current user's ID and list all tasks and issues owned by that user in the ""In Progress"" stage.
+The who_am_i API is used to obtain the current user's ID.
+This ID is then used as an argument for the works_list API, along with the specified stage (""In Progress"").
+The works_list API is ready to be executed, providing a list of tasks and issues owned by the current user in the ""In Progress"" stage"
+"List all issues and tasks with severity ""high"" that are assigned to the current user and in the ""In Progress"" stage.","
+
+User
+Given a developer query you need to follow reverse chain thought process to explain the answer.Specifically, Reverse Chain performs a multi-API planning task in a reverse manner:
+Starting from selecting the final API of a given task, each preceding step is inferred backward. first API selection, then argument completion from query and context, and finally backward inference to figure out which API’s output can properly complete the missing arguments before asking user that information. This
+process continues until a given task is completed
+Given the query and its output. Determine  the ultimate api to be used. Now look at its arguments step by step. Are the argument values available from query directly or generated from by calling another api.if directly, mention there itself. If from another api, in the argument completion part of output, mention this api and any arguments that can be directly inferred from query only.if even this secondary api requires another api. That will go in the internal selected api part of output with all the argument values required for this api as well.
+Output has to be generated in the following format:
+Examples follow:
+
+Query:Summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1
+
+1. API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing issues.
+
+2. Argument Completion:
+Objects to Summarize:
+API: get_similar_work_items
+Extract the argument work_id from the context: Value - ""don:core:dvrv-us-1:devo/0:issue/1""
+Now, the required argument for summarize_objects is partially filled, with the objects array containing the reference to the issue to be summarized.
+
+3. Argument Completion for Internal Selected APIs:
+Work ID:
+API: get_similar_work_items
+Extract the argument work_id from the context: Value - ""don:core:dvrv-us-1:devo/0:issue/1""
+All required arguments for get_similar_work_items are filled, and the API is ready to be executed.
+As a result, the argument for objects in the summarize_objects API is now filled successfully.
+
+Final Explanation:
+The query is to summarize issues similar to a specific issue (don:core:dvrv-us-1:devo/0:issue/1).
+The get_similar_work_items API is used to find issues similar to the specified issue.
+The obtained work_id is then used as an argument for the summarize_objects API to generate a summary of the similar issues.
+
+
+Query: Prioritize my P0 issues and add them to the current sprint
+
+1. API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint.
+2. Argument Completion:
+Sprint ID:
+API: get_sprint_id
+Extract the sprint ID.
+Work IDs for Prioritization:
+API: prioritize_objects
+Extract the argument work_ids from the output of the prioritize_objects API.
+3. Argument Completion for Internal Selected APIs:
+Objects for Prioritize Objects:
+API: works_list
+Extract the arguments:
+issue.priority with value ""P0"" (directly from the query)
+owned_by to identify issues owned by the current user (using who_am_i API)
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+Query:	What are my all issues in the triage stage under part FEAT-123? Summarize them. 
+
+
+
+1. API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing issues.
+2. Argument Completion:
+Objects to Summarize:
+API: works_list
+Work IDs for Summarization:
+API: summarize_objects
+Extract the argument objects from the output of the works_list API.
+Now, the required arguments for summarize_objects are filled, with the list of issues in the triage stage under part ""FEAT-123"" owned by the user.
+3. Argument Completion for Internal Selected APIs:
+Objects to Summarize:
+API: works_list
+Extract the arguments:
+stage.name with value ""triage""
+applies_to_part with value ""FEAT-123""
+owned_by to identify issues owned by the current user (using who_am_i API)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+
+
+
+
+
+Query: Summarize high severity tickets from the customer UltimateCustomer
+
+1. API Selection:
+The ultimate API identified for the task is summarize_objects.
+
+2. Argument Completion:
+Objects to Summarize:
+API: search_object_by_name
+Extract the argument query from the context: Value - ""UltimateCustomer""
+Now, the required argument for search_object_by_name is filled, with the search query for the customer ""UltimateCustomer.""
+
+3. Argument Completion for Internal Selected APIs:
+High Severity Tickets:
+API: works_list
+Extract the arguments:
+ticket.severity with value ""high""
+ticket.rev-org with value ""UltimateCustomer"" from the output of the search_object_by_name API.
+
+
+
+
+Query: Given a customer meeting transcript T, create action items and add them to my current sprint 
+1. API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of creating action items and adding them to the current sprint.
+2. Argument Completion:
+Work IDs from Transcript:
+API:create_actionable_tasks_from_text.
+Argument value: T (directly from query)
+Sprint ID:
+API: get_sprint_id
+
+
+
+Now given a query , output the thought process similar to the format above 
+		 	 	 		
+‘’’QUERY:Prioritize all the similar issues coming in from discord under part CAPL-123. ‘’’
+ChatGPT
+API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of prioritizing similar issues.
+
+Argument Completion:
+Work IDs for Prioritization:
+API: get_similar_issues_from_discord
+Extract the argument work_ids from the output of the get_similar_issues_from_discord API.
+Objects for Prioritize Objects:
+API: works_list
+Extract the arguments:
+applies_to_part with value ""CAPL-123"" (directly from the query)
+source with value ""discord"" (directly from the query)
+All required arguments for prioritize_objects are filled, with the list of similar issues from Discord under part ""CAPL-123.""
+
+Argument Completion for Internal Selected APIs:
+Work IDs for Prioritization:
+API: get_similar_issues_from_discord
+All required arguments for get_similar_issues_from_discord are filled, and the API is ready to be executed.
+Objects for Prioritize Objects:
+API: works_list
+Extract the arguments:
+applies_to_part with value ""CAPL-123"" (directly from the query)
+source with value ""discord"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+
+Final Explanation:
+The query is to prioritize similar issues coming in from Discord under part ""CAPL-123.""
+The get_similar_issues_from_discord API is used to find similar issues from Discord.
+The obtained work_ids are then used as arguments for the prioritize_objects API to prioritize the identified similar issues under part ""CAPL-123.""
+
+User
+Given a developer query you need to follow reverse chain thought process to explain the answer.Specifically, Reverse Chain performs a multi-API planning task in a reverse manner:
+Starting from selecting the final API of a given task, each preceding step is inferred backward. first API selection, then argument completion from query and context, and finally backward inference to figure out which API’s output can properly complete the missing arguments before asking user that information. This
+process continues until a given task is completed
+Given the query and its output. Determine  the ultimate api to be used. Now look at its arguments step by step. Are the argument values available from query directly or generated from by calling another api.if directly, mention there itself. If from another api, in the argument completion part of output, mention this api and any arguments that can be directly inferred from query only.if even this secondary api requires another api. That will go in the internal selected api part of output with all the argument values required for this api as well.
+Output has to be generated in the following format:
+Examples follow:
+
+Query:Summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1
+
+1. API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing issues.
+
+2. Argument Completion:
+Objects to Summarize:
+API: get_similar_work_items
+Extract the argument work_id from the context: Value - ""don:core:dvrv-us-1:devo/0:issue/1""
+Now, the required argument for summarize_objects is partially filled, with the objects array containing the reference to the issue to be summarized.
+
+3. Argument Completion for Internal Selected APIs:
+Work ID:
+API: get_similar_work_items
+Extract the argument work_id from the context: Value - ""don:core:dvrv-us-1:devo/0:issue/1""
+All required arguments for get_similar_work_items are filled, and the API is ready to be executed.
+As a result, the argument for objects in the summarize_objects API is now filled successfully.
+
+Final Explanation:
+The query is to summarize issues similar to a specific issue (don:core:dvrv-us-1:devo/0:issue/1).
+The get_similar_work_items API is used to find issues similar to the specified issue.
+The obtained work_id is then used as an argument for the summarize_objects API to generate a summary of the similar issues.
+
+
+Query: Prioritize my P0 issues and add them to the current sprint
+
+1. API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint.
+2. Argument Completion:
+Sprint ID:
+API: get_sprint_id
+Extract the sprint ID.
+Work IDs for Prioritization:
+API: prioritize_objects
+Extract the argument work_ids from the output of the prioritize_objects API.
+3. Argument Completion for Internal Selected APIs:
+Objects for Prioritize Objects:
+API: works_list
+Extract the arguments:
+issue.priority with value ""P0"" (directly from the query)
+owned_by to identify issues owned by the current user (using who_am_i API)
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+Query:	What are my all issues in the triage stage under part FEAT-123? Summarize them. 
+
+
+
+1. API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing issues.
+2. Argument Completion:
+Objects to Summarize:
+API: works_list
+Work IDs for Summarization:
+API: summarize_objects
+Extract the argument objects from the output of the works_list API.
+Now, the required arguments for summarize_objects are filled, with the list of issues in the triage stage under part ""FEAT-123"" owned by the user.
+3. Argument Completion for Internal Selected APIs:
+Objects to Summarize:
+API: works_list
+Extract the arguments:
+stage.name with value ""triage""
+applies_to_part with value ""FEAT-123""
+owned_by to identify issues owned by the current user (using who_am_i API)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+
+
+
+
+
+Query: Summarize high severity tickets from the customer UltimateCustomer
+
+1. API Selection:
+The ultimate API identified for the task is summarize_objects.
+
+2. Argument Completion:
+Objects to Summarize:
+API: search_object_by_name
+Extract the argument query from the context: Value - ""UltimateCustomer""
+Now, the required argument for search_object_by_name is filled, with the search query for the customer ""UltimateCustomer.""
+
+3. Argument Completion for Internal Selected APIs:
+High Severity Tickets:
+API: works_list
+Extract the arguments:
+ticket.severity with value ""high""
+ticket.rev-org with value ""UltimateCustomer"" from the output of the search_object_by_name API.
+
+
+
+
+Query: Given a customer meeting transcript T, create action items and add them to my current sprint 
+1. API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of creating action items and adding them to the current sprint.
+2. Argument Completion:
+Work IDs from Transcript:
+API:create_actionable_tasks_from_text.
+Argument value: T (directly from query)
+Sprint ID:
+API: get_sprint_id
+
+
+
+Now given a query , output the thought process similar to the format above 
+		 	 	 		
+‘’’QUERY:Summarize tasks in the current sprint with the highest priority. ‘’’
+ChatGPT
+API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing tasks in the current sprint with the highest priority.
+
+Argument Completion:
+
+Objects to Summarize:
+API: get_tasks_in_current_sprint
+Extract the argument sprint_id from the context: Value - ""current_sprint_id"" (directly from the query)
+Extract the argument priority from the context: Value - ""highest_priority"" (directly from the query)
+Now, the required arguments for summarize_objects are partially filled, with the list of tasks in the current sprint with the highest priority.
+Argument Completion for Internal Selected APIs:
+
+Task IDs in Current Sprint:
+
+API: get_tasks_in_current_sprint
+Extract the argument sprint_id from the context: Value - ""current_sprint_id"" (directly from the query)
+Extract the argument priority from the context: Value - ""highest_priority"" (directly from the query)
+All required arguments for get_tasks_in_current_sprint are filled, and the API is ready to be executed.
+Objects to Summarize:
+
+API: get_tasks_in_current_sprint
+Extract the argument sprint_id from the context: Value - ""current_sprint_id"" (directly from the query)
+Extract the argument priority from the context: Value - ""highest_priority"" (directly from the query)
+All required arguments for get_tasks_in_current_sprint are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to summarize tasks in the current sprint with the highest priority.
+The get_tasks_in_current_sprint API is used to retrieve tasks in the current sprint with the highest priority.
+The obtained task IDs are then used as arguments for the summarize_objects API to generate a summary of tasks in the current sprint with the highest priority.
+
+User
+‘’’QUERY:List all issues under part ""PART-789"" that are assigned to the current user. ‘’’
+
+ChatGPT
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing issues under a specific part assigned to the current user.
+
+Argument Completion:
+
+Issues to List:
+API: works_list
+Extract the arguments:
+applies_to_part with value ""PART-789"" (directly from the query)
+owned_by to identify issues assigned to the current user (using who_am_i API)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Argument Completion for Internal Selected APIs:
+
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API.
+Final Explanation:
+The query is to list all issues under part ""PART-789"" that are assigned to the current user.
+The who_am_i API is used to obtain the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API, along with the specified part (""PART-789"").
+The works_list API is ready to be executed, providing a list of issues under ""PART-789"" assigned to the current user.
+
+User
+QUERY:Get the ID of the current sprint and find work items with severity ""medium"" and ""high"" in that sprint. Summarize the results
+ChatGPT
+API Selection:
+The ultimate API identified for the task is summarize_objects, based on the context of summarizing work items with specific severities in the current sprint.
+
+Argument Completion:
+
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+This ID is then used as an argument for subsequent APIs.
+Work Items to Summarize:
+
+API: get_work_items_in_sprint
+Extract the arguments:
+sprint_id with the value obtained from get_sprint_id
+severity with values ""medium"" and ""high"" (directly from the query)
+All required arguments for get_work_items_in_sprint are filled, and the API is ready to be executed.
+Argument Completion for Internal Selected APIs:
+
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+All required arguments for get_sprint_id are filled, and the API is ready to be executed.
+Work Items to Summarize:
+
+API: get_work_items_in_sprint
+Extract the arguments:
+sprint_id with the value obtained from get_sprint_id
+severity with values ""medium"" and ""high"" (directly from the query)
+All required arguments for get_work_items_in_sprint are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to get the ID of the current sprint, find work items with severity ""medium"" and ""high"" in that sprint, and summarize the results.
+The get_sprint_id API is used to obtain the current sprint ID.
+This ID is then used as an argument for the get_work_items_in_sprint API along with the specified severities (""medium"" and ""high"").
+The get_work_items_in_sprint API is ready to be executed, providing a list of work items with the specified severities in the current sprint.
+The results can then be summarized using the summarize_objects API.
+
+User
+QUERY:Create actionable tasks from a given text containing user suggestions and add them to the current sprint
+ChatGPT
+API Selection:
+The ultimate API identified for the task is add_actionable_tasks_to_sprint, based on the context of creating actionable tasks from given text and adding them to the current sprint.
+
+Argument Completion:
+
+Actionable Tasks from Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the query.
+All required arguments for create_actionable_tasks_from_text are filled, and the API is ready to be executed.
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+This ID is then used as an argument for the add_actionable_tasks_to_sprint API.
+Argument Completion for Internal Selected APIs:
+
+Actionable Tasks from Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the query.
+All required arguments for create_actionable_tasks_from_text are filled, and the API is ready to be executed.
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+All required arguments for get_sprint_id are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to create actionable tasks from a given text containing user suggestions and add them to the current sprint.
+The create_actionable_tasks_from_text API is used to generate actionable tasks from the provided text.
+The get_sprint_id API is used to obtain the current sprint ID.
+The obtained actionable tasks and the current sprint ID are then used as arguments for the add_actionable_tasks_to_sprint API to add the generated tasks to the current sprint.
+
+User
+QUERY:List all tickets created by user DEVU-111 that are associated with Rev organizations ""ORG-X"" and ""ORG-Y""
+ChatGPT
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing tickets created by a specific user associated with specific Rev organizations.
+
+Argument Completion:
+
+Tickets to List:
+API: works_list
+Extract the arguments:
+created_by_user with value ""DEVU-111"" (directly from the query)
+rev_orgs with values ""ORG-X"" and ""ORG-Y"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to list all tickets created by user DEVU-111 that are associated with Rev organizations ""ORG-X"" and ""ORG-Y.""
+The works_list API is used to retrieve tickets based on the specified criteria.
+The extracted values from the query (""DEVU-111,"" ""ORG-X,"" and ""ORG-Y"") are directly used as arguments for the works_list API, making it ready to be executed to provide the list of tickets that meet the specified conditions.
+
+User
+QUERY:Find similar work items for a specific task ID (TASK-456) and prioritize them based on severity
+ChatGPT
+API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of finding similar work items for a specific task ID and prioritizing them based on severity.
+
+Argument Completion:
+
+Similar Work Items:
+
+API: get_similar_work_items
+Extract the argument task_id from the query: Value - ""TASK-456"" (directly from the query)
+All required arguments for get_similar_work_items are filled, and the API is ready to be executed.
+Work Items to Prioritize:
+
+API: prioritize_objects
+Extract the argument work_ids from the output of the get_similar_work_items API.
+Extract the argument priority_criteria based on severity (directly from the query)
+All required arguments for prioritize_objects are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to find similar work items for a specific task ID (TASK-456) and prioritize them based on severity.
+The get_similar_work_items API is used to find work items similar to the specified task ID.
+The obtained work IDs are then used as arguments for the prioritize_objects API, along with the specified severity criteria.
+The prioritize_objects API is ready to be executed, providing a prioritized list of similar work items based on severity.
+
+User
+QUERY;Search for objects related to ""urgent tasks"" and summarize them, then prioritize the summarized tasks.
+ChatGPT
+API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of searching for objects related to ""urgent tasks,"" summarizing them, and then prioritizing the summarized tasks.
+
+Argument Completion:
+
+Objects to Summarize:
+
+API: search_objects
+Extract the argument query from the context: Value - ""urgent tasks"" (directly from the query)
+All required arguments for search_objects are filled, and the API is ready to be executed.
+Summarized Objects:
+
+API: summarize_objects
+Extract the argument objects from the output of the search_objects API.
+All required arguments for summarize_objects are filled, and the API is ready to be executed.
+Prioritized Objects:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API.
+Extract the argument priority_criteria based on urgency (directly from the query)
+All required arguments for prioritize_objects are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to search for objects related to ""urgent tasks,"" summarize them, and then prioritize the summarized tasks.
+The search_objects API is used to find objects related to the specified query (""urgent tasks"").
+The obtained objects are then used as arguments for the summarize_objects API to generate a summary.
+The summarized objects are then used as arguments for the prioritize_objects API, along with the specified urgency criteria.
+The prioritize_objects API is ready to be executed, providing a prioritized list of summarized tasks related to ""urgent tasks.""
+
+User
+QUERY:List all tasks under part ""PART-XYZ"" that are owned by the current user and need a response
+ChatGPT
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing tasks under a specific part owned by the current user and requiring a response.
+
+Argument Completion:
+
+Tasks to List:
+API: works_list
+Extract the arguments:
+applies_to_part with value ""PART-XYZ"" (directly from the query)
+owned_by to identify tasks owned by the current user (using who_am_i API)
+needs_response with value true (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Argument Completion for Internal Selected APIs:
+
+Current User ID:
+API: who_am_i
+Extract the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API.
+Final Explanation:
+The query is to list all tasks under part ""PART-XYZ"" that are owned by the current user and need a response.
+The who_am_i API is used to obtain the current user's ID.
+This ID is then used as an argument for the owned_by parameter in the works_list API, along with the specified part (""PART-XYZ"") and the need for a response.
+The works_list API is ready to be executed, providing a list of tasks meeting the specified conditions.
+
+User
+QUERY:Get the current sprint ID and add all tasks with priority ""p0"" to that sprint.
+ChatGPT
+API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of getting the current sprint ID and adding tasks with priority ""p0"" to that sprint.
+
+Argument Completion:
+
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+This ID is then used as an argument for the add_work_items_to_sprint API.
+Tasks to Add to Sprint:
+
+API: get_tasks_with_priority
+Extract the arguments:
+priority with value ""p0"" (directly from the query)
+All required arguments for get_tasks_with_priority are filled, and the API is ready to be executed.
+Addition to Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument sprint_id from the output of the get_sprint_id API.
+Extract the argument work_items from the output of the get_tasks_with_priority API.
+All required arguments for add_work_items_to_sprint are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to get the current sprint ID and add all tasks with priority ""p0"" to that sprint.
+The get_sprint_id API is used to obtain the current sprint ID.
+This ID is then used as an argument for the get_tasks_with_priority API, which retrieves tasks with the specified priority (""p0"").
+The obtained sprint ID and task IDs are then used as arguments for the add_work_items_to_sprint API to add the identified tasks to the current sprint. The process is now ready to be executed.
+
+User
+QUERY:Create actionable tasks from a given text containing user feedback and prioritize them based on severity
+ChatGPT
+API Selection:
+The ultimate API identified for the task is prioritize_objects, based on the context of creating actionable tasks from user feedback and prioritizing them based on severity.
+
+Argument Completion:
+
+Actionable Tasks from Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the query.
+All required arguments for create_actionable_tasks_from_text are filled, and the API is ready to be executed.
+Prioritized Actionable Tasks:
+
+API: prioritize_objects
+Extract the argument actionable_tasks from the output of the create_actionable_tasks_from_text API.
+Extract the argument priority_criteria based on severity (directly from the query)
+All required arguments for prioritize_objects are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to create actionable tasks from a given text containing user feedback and prioritize them based on severity.
+The create_actionable_tasks_from_text API is used to generate actionable tasks from the provided text.
+The obtained actionable tasks are then used as arguments for the prioritize_objects API, along with the specified severity criteria.
+The prioritize_objects API is ready to be executed, providing a prioritized list of actionable tasks based on severity.
+
+User
+QUERY:List all tasks in the ""To Do"" stage that are associated with Rev organizations ""ORG-1"" and ""ORG-2""
+ChatGPT
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing tasks in the ""To Do"" stage associated with specific Rev organizations.
+
+Argument Completion:
+
+Tasks to List:
+API: works_list
+Extract the arguments:
+stage_name with value ""To Do"" (directly from the query)
+rev_orgs with values ""ORG-1"" and ""ORG-2"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to list all tasks in the ""To Do"" stage that are associated with Rev organizations ""ORG-1"" and ""ORG-2.""
+The works_list API is used to retrieve tasks based on the specified criteria.
+The extracted values from the query (""To Do,"" ""ORG-1,"" and ""ORG-2"") are directly used as arguments for the works_list API, making it ready to be executed to provide the list of tasks that meet the specified conditions.
+
+User
+QUERY:Find the current user's ID, then list all tasks and issues owned by that user in the ""In Progress"" stage
+ChatGPT
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of finding the current user's ID and listing tasks and issues owned by that user in the ""In Progress"" stage.
+
+Argument Completion:
+
+Current User ID:
+
+API: who_am_i
+Extract the current user's ID.
+This ID is then used as an argument for the works_list API.
+Tasks and Issues to List:
+
+API: works_list
+Extract the arguments:
+owned_by with the value obtained from the who_am_i API.
+stage_name with value ""In Progress"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to find the current user's ID and list all tasks and issues owned by that user in the ""In Progress"" stage.
+The who_am_i API is used to obtain the current user's ID.
+This ID is then used as an argument for the works_list API, along with the specified stage (""In Progress"").
+The works_list API is ready to be executed, providing a list of tasks and issues owned by the current user in the ""In Progress"" stage.
+
+User
+QUERY:List all issues and tasks with severity ""high"" that are assigned to the current user and in the ""In Progress"" stage
+ChatGPT
+API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing issues and tasks with severity ""high"" assigned to the current user in the ""In Progress"" stage.
+
+Argument Completion:
+
+Issues and Tasks to List:
+API: works_list
+Extract the arguments:
+severity with value ""high"" (directly from the query)
+owned_by to identify issues and tasks assigned to the current user (using who_am_i API)
+stage_name with value ""In Progress"" (directly from the query)
+All required arguments for works_list are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to list all issues and tasks with severity ""high"" that are assigned to the current user and in the ""In Progress"" stage.
+The who_am_i API is used to obtain the current user's ID.
+This ID is then used as an argument for the works_list API, along with the specified severity (""high"") and stage (""In Progress"").
+The works_list API is ready to be executed, providing a list of issues and tasks meeting the specified conditions"
+"Get the current sprint ID and add tasks with priority ""p2"" to that sprint.","API Selection:
+The ultimate API identified for the task is add_work_items_to_sprint, based on the context of getting the current sprint ID and adding tasks with priority ""p2"" to that sprint.
+
+Argument Completion:
+
+Current Sprint ID:
+
+API: get_sprint_id
+Extract the sprint ID.
+This ID is then used as an argument for the add_work_items_to_sprint API.
+Tasks to Add to Sprint:
+
+API: get_tasks_with_priority
+Extract the arguments:
+priority with value ""p2"" (directly from the query)
+All required arguments for get_tasks_with_priority are filled, and the API is ready to be executed.
+Addition to Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument sprint_id from the output of the get_sprint_id API.
+Extract the argument work_items from the output of the get_tasks_with_priority API.
+All required arguments for add_work_items_to_sprint are filled, and the API is ready to be executed.
+Final Explanation:
+The query is to get the current sprint ID and add tasks with priority ""p2"" to that sprint.
+The get_sprint_id API is used to obtain the current sprint ID.
+This ID is then used as an argument for the get_tasks_with_priority API, which retrieves tasks with the specified priority (""p2"").
+The obtained sprint ID and task IDs are then used as arguments for the add_work_items_to_sprint API to add the identified tasks to the current sprint. The process is now ready to be executed."
+"Search for objects related to ""feature requests"" and prioritize them based on severity.","API Selection:
+The ultimate APIs identified for the task are search_objects to search for objects related to ""feature requests"" and prioritize_objects to prioritize the search results based on severity.
+
+Argument Completion:
+
+Search for Objects Related to ""Feature Requests"":
+
+API: search_objects
+Extract the argument query with information related to ""feature requests.""
+Prioritize Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the search_objects API, containing the search results.
+Extract the argument priority_field with the value ""severity"" to prioritize the objects based on severity.
+Final Explanation:
+The query is to search for objects related to ""feature requests"" and prioritize them based on severity. The search_objects API is used to find relevant objects, and prioritize_objects prioritizes the search results based on severity."
+"List all issues in the ""Backlog"" stage under part ""PART-XYZ"" created by DEVU-567.","API Selection:
+The ultimate API identified for the task is works_list to list issues in the ""Backlog"" stage under part ""PART-XYZ"" created by DEVU-567.
+
+Argument Completion:
+
+List Issues in ""Backlog"" Stage Under Part ""PART-XYZ"" Created by DEVU-567:
+API: works_list
+Extract the arguments:
+stage.name with the value ""Backlog"" to filter for issues in this stage.
+part with the value ""PART-XYZ"" to filter for issues under this part.
+created_by with the value ""DEVU-567"" to filter for issues created by this user.
+type with the value ""issue"" to specifically filter for issues.
+Final Explanation:
+The query is to list issues in the ""Backlog"" stage under part ""PART-XYZ"" created by DEVU-567. The works_list API is used to filter issues based on specified criteria, providing the desired list of issues.
+
+
+
+
+
+"
+Get the current user's ID and find similar work items for a specific task ID (TASK-345).,"API Selection:
+The ultimate APIs identified for the task are who_am_i to get the current user's ID and find_similar_work_items to find similar work items for a specific task ID (TASK-345).
+
+Argument Completion:
+
+Get the Current User's ID:
+
+API: who_am_i
+Find Similar Work Items for Specific Task ID:
+
+API: find_similar_work_items
+Extract the argument task_id with the value ""TASK-345.""
+Extract the argument user_id with the ID obtained from the who_am_i API.
+Final Explanation:
+The query is to get the current user's ID and find similar work items for a specific task ID (TASK-345). The who_am_i API is used to obtain the current user's ID, and find_similar_work_items finds work items similar to the specified task for the identified user."
+Create actionable tasks from a given text containing user feedback and add them to the current sprint.,"API Selection:
+The ultimate APIs identified for the task are create_actionable_tasks_from_text to create actionable tasks from the given text containing user feedback and add_work_items_to_sprint to add the created tasks to the current sprint.
+
+Argument Completion:
+
+Create Actionable Tasks from Given Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text with the provided user feedback.
+Add Created Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the argument objects with the list of tasks created from the create_actionable_tasks_from_text API.
+Extract the argument sprint_id with the ID of the current sprint.
+Final Explanation:
+The query is to create actionable tasks from a given text containing user feedback and add them to the current sprint. The create_actionable_tasks_from_text API is used to generate tasks, and add_work_items_to_sprint adds these tasks to the current sprint."
+"List all tasks in the ""To Do"" stage that need a response and are associated with Rev organizations ""ORG-1"" and ""ORG-2"".","API Selection:
+The ultimate API identified for the task is works_list to list tasks in the ""To Do"" stage that need a response and are associated with Rev organizations ""ORG-1"" and ""ORG-2.""
+
+Argument Completion:
+
+List Tasks in ""To Do"" Stage Needing a Response and Associated with Rev Organizations ""ORG-1"" and ""ORG-2"":
+API: works_list
+Extract the arguments:
+stage.name with the value ""To Do"" to filter for tasks in this stage.
+needs_response with the value ""true"" to filter for tasks that need a response.
+organizations with the values ""ORG-1"" and ""ORG-2"" to filter for tasks associated with these Rev organizations.
+type with the value ""task"" to specifically filter for tasks.
+Final Explanation:
+The query is to list tasks in the ""To Do"" stage that need a response and are associated with Rev organizations ""ORG-1"" and ""ORG-2."" The works_list API is used to filter tasks based on specified criteria, providing the desired list of tasks."
+"Search for objects related to ""urgent tasks"" and summarize them, then prioritize based on severity.","API Selection:
+The ultimate APIs identified for the task are search_objects to search for objects related to ""urgent tasks,"" summarize_objects to provide a summary of the search results, and prioritize_objects to prioritize the summarized tasks based on severity.
+
+Argument Completion:
+
+Search for Objects Related to ""Urgent Tasks"":
+
+API: search_objects
+Extract the argument query with information related to ""urgent tasks.""
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the search_objects API, containing the search results.
+Prioritize Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks.
+Final Explanation:
+The query is to search for objects related to ""urgent tasks,"" summarize them, and prioritize based on severity. The search_objects API is used to find relevant objects, summarize_objects provides a summary of the search results, and prioritize_objects prioritizes tasks based on severity."
+Get the ID of the current sprint and summarize all tasks and issues in that sprint.,"API Selection:
+The ultimate APIs identified for the task are get_sprint_id to get the ID of the current sprint and summarize_objects to provide a summary of all tasks and issues in that sprint.
+
+Argument Completion:
+
+Get the Current Sprint ID:
+
+API: get_sprint_id
+Summarize All Tasks and Issues in the Current Sprint:
+
+API: summarize_objects
+Extract the argument sprint_id with the ID obtained from the get_sprint_id API.
+Extract the argument type with the values ""task"" and ""issue"" to filter for both tasks and issues in the sprint.
+Final Explanation:
+The query is to get the ID of the current sprint and summarize all tasks and issues in that sprint. The get_sprint_id API is used to obtain the current sprint ID, and summarize_objects provides a summary of tasks and issues in the specified sprint.
+
+
+
+
+"
+"Sort the priority of issues under part ""PART-789"" that are created by DEVU-001.","API Selection:
+The ultimate API identified for the task is works_list to list issues under part ""PART-789"" that are created by DEVU-001, and sorting the results based on priority.
+
+Argument Completion:
+
+List Issues Under Part ""PART-789"" Created by DEVU-001:
+
+API: works_list
+Extract the arguments:
+part with the value ""PART-789"" to filter for issues under this part.
+created_by with the value ""DEVU-001"" to filter for issues created by this user.
+type with the value ""issue"" to specifically filter for issues.
+Sorting by Priority:
+
+Sort the results based on the priority field.
+Final Explanation:
+The query is to list issues under part ""PART-789"" that are created by DEVU-001 and sort them based on priority. The works_list API is used to filter issues based on specified criteria, and the results are sorted by priority.
+
+
+
+
+"
+"List all tasks in the ""Testing"" stage with severity ""low"" under part ""PART-ABC"" created by DEVU-789. Summarize the results.","API Selection:
+The ultimate API identified for the task is works_list to list tasks in the ""Testing"" stage with severity ""low"" under part ""PART-ABC"" created by DEVU-789, and summarize_objects to provide a summary of the results.
+
+Argument Completion:
+
+List Tasks in ""Testing"" Stage with Severity ""Low"" Under Part ""PART-ABC"" Created by DEVU-789:
+
+API: works_list
+Extract the arguments:
+stage.name with the value ""Testing"" to filter for tasks in this stage.
+severity with the value ""low"" to filter for tasks with this severity.
+part with the value ""PART-ABC"" to filter for tasks under this part.
+created_by with the value ""DEVU-789"" to filter for tasks created by this user.
+type with the value ""task"" to specifically filter for tasks.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tasks.
+Final Explanation:
+The query is to list tasks in the ""Testing"" stage with severity ""low"" under part ""PART-ABC"" created by DEVU-789 and summarize the results. The works_list API is used to filter tasks based on specified criteria, and summarize_objects provides a summary of the listed tasks."
+"Get the current sprint ID and add issues with priority ""p0"" and ""p1"" to that sprint.","API Selection:
+The ultimate APIs identified for the task are get_sprint_id to get the current sprint ID, add_work_items_to_sprint to add issues with priority ""p0"" and ""p1"" to that sprint.
+
+Argument Completion:
+
+Get the Current Sprint ID:
+
+API: get_sprint_id
+Add Issues with Priority ""p0"" and ""p1"" to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID obtained from the get_sprint_id API.
+objects with the list of issues with priority ""p0"" and ""p1"" to be added to the current sprint.
+Final Explanation:
+The query is to get the current sprint ID and add issues with priority ""p0"" and ""p1"" to that sprint. The get_sprint_id API is used to obtain the current sprint ID, and add_work_items_to_sprint adds the specified issues to the current sprint."
+"Search for objects related to ""customer requests"" and create actionable tasks from the extracted insights. Prioritize them based on severity.","API Selection:
+The ultimate APIs identified for the task are search_objects to search for objects related to ""customer requests,"" create_actionable_tasks_from_text to create actionable tasks from the extracted insights, and prioritize_objects to prioritize the created tasks based on severity.
+
+Argument Completion:
+
+Search for Objects Related to ""Customer Requests"":
+
+API: search_objects
+Extract the argument query with information related to ""customer requests.""
+Create Actionable Tasks from Extracted Insights:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the search_objects API, containing insights related to customer requests.
+Prioritize Created Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the create_actionable_tasks_from_text API, containing the created tasks.
+Final Explanation:
+The query is to search for objects related to ""customer requests,"" create actionable tasks from the extracted insights, and prioritize them based on severity. The search_objects API is used to find relevant objects, create_actionable_tasks_from_text generates tasks from insights, and prioritize_objects prioritizes tasks based on severity."
+"List all tasks in the ""In Progress"" stage under part ""PART-XYZ"" that are assigned to the current user and need a response.","API Selection:
+The ultimate API identified for the task is works_list to list tasks in the ""In Progress"" stage under part ""PART-XYZ"" that are assigned to the current user and need a response.
+
+Argument Completion:
+
+List Tasks in ""In Progress"" Stage Under Part ""PART-XYZ"" Assigned to Current User and Need a Response:
+API: works_list
+Extract the arguments:
+stage.name with the value ""In Progress"" to filter for tasks in this stage.
+part with the value ""PART-XYZ"" to filter for tasks under this part.
+assigned_to with the ID of the current user to filter for tasks assigned to the current user.
+needs_response with the value ""true"" to filter for tasks that need a response.
+type with the value ""task"" to specifically filter for tasks.
+Final Explanation:
+The query is to list tasks in the ""In Progress"" stage under part ""PART-XYZ"" that are assigned to the current user and need a response. The works_list API is used to filter tasks based on specified criteria, providing the desired list of tasks.
+
+
+
+
+"
+Get the current user's ID and find similar work items for a specific task ID (TASK-890). Summarize the results.,"API Selection:
+The ultimate APIs identified for the task are who_am_i to get the current user's ID, find_similar_work_items to find similar work items for a specific task ID (TASK-890), and summarize_objects to provide a summary of the results.
+
+Argument Completion:
+
+Get the Current User's ID:
+
+API: who_am_i
+Find Similar Work Items for Specific Task ID (TASK-890):
+
+API: find_similar_work_items
+Extract the argument task_id with the value ""TASK-890.""
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the find_similar_work_items API, containing the similar work items.
+Final Explanation:
+The query is to get the current user's ID, find similar work items for a specific task ID (TASK-890), and summarize the results. The who_am_i API is used to obtain the current user's ID, find_similar_work_items finds similar work items based on the specified task ID, and summarize_objects provides a summary of the similar work items."
+Create actionable tasks from a given text containing user feedback. Add them to the current sprint and prioritize them based on severity.,"API Selection:
+The ultimate APIs identified for the task are create_actionable_tasks_from_text to create actionable tasks from a given text containing user feedback, add_work_items_to_sprint to add the created tasks to the current sprint, and prioritize_objects to prioritize the added tasks based on severity.
+
+Argument Completion:
+
+Create Actionable Tasks from Given Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text containing user feedback.
+Add Actionable Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects from the output of the create_actionable_tasks_from_text API, containing the created tasks.
+Prioritize Added Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the add_work_items_to_sprint API, containing the added tasks.
+Final Explanation:
+The query is to create actionable tasks from a given text containing user feedback, add them to the current sprint, and prioritize them based on severity. The create_actionable_tasks_from_text API is used to generate tasks, add_work_items_to_sprint adds these tasks to the current sprint, and prioritize_objects prioritizes the added tasks based on severity."
+"List all tasks in the ""To Do"" stage that are associated with Rev organizations ""ORG-5"" and ""ORG-6"" and have priority ""p2"".","API Selection:
+The ultimate API identified for the task is works_list to list tasks in the ""To Do"" stage associated with Rev organizations ""ORG-5"" and ""ORG-6"" and have priority ""p2.""
+
+Argument Completion:
+
+List Tasks in ""To Do"" Stage Associated with Rev Organizations ""ORG-5"" and ""ORG-6"" with Priority ""p2"":
+API: works_list
+Extract the arguments:
+stage.name with the value ""To Do"" to filter for tasks in this stage.
+organizations with the values ""ORG-5"" and ""ORG-6"" to filter for tasks associated with these organizations.
+priority with the value ""p2"" to filter for tasks with this priority.
+type with the value ""task"" to specifically filter for tasks.
+Final Explanation:
+The query is to list tasks in the ""To Do"" stage associated with Rev organizations ""ORG-5"" and ""ORG-6"" and have priority ""p2."" The works_list API is used to filter tasks based on specified criteria, providing the desired list of tasks."
+"Search for objects related to ""urgent tasks"" and prioritize them based on severity. Summarize the results.","API Selection:
+The ultimate APIs identified for the task are search_objects to search for objects related to ""urgent tasks,"" prioritize_objects to prioritize the search results based on severity, and summarize_objects to provide a summary of the prioritized tasks.
+
+Argument Completion:
+
+Search for Objects Related to ""Urgent Tasks"":
+
+API: search_objects
+Extract the argument query with information related to ""urgent tasks.""
+Prioritize the Search Results Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the search_objects API, containing the search results.
+Summarize the Prioritized Tasks:
+
+API: summarize_objects
+Extract the argument objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Final Explanation:
+The query is to search for objects related to ""urgent tasks,"" prioritize them based on severity, and summarize the results. The search_objects API is used to find relevant objects, prioritize_objects prioritizes tasks based on severity, and summarize_objects provides a summary of the prioritized tasks."
+"Sort the priority of issues under part ""PART-XYZ"" that are created by DEVU-001. Summarize the results.","API Selection:
+The ultimate API identified for the task is works_list to list issues under part ""PART-XYZ"" that are created by DEVU-001, and summarize_objects to provide a summary of the results.
+
+Argument Completion:
+
+List Issues Under Part ""PART-XYZ"" Created by DEVU-001:
+
+API: works_list
+Extract the arguments:
+part with the value ""PART-XYZ"" to filter for issues under this part.
+created_by with the value ""DEVU-001"" to filter for issues created by this user.
+type with the value ""issue"" to specifically filter for issues.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of issues.
+Final Explanation:
+The query is to sort the priority of issues under part ""PART-XYZ"" that are created by DEVU-001 and summarize the results. The works_list API is used to filter issues based on specified criteria, and summarize_objects provides a summary of the listed issues.
+
+
+
+
+"
+"List all tasks in the ""In Progress"" stage with severity ""high"" and ""medium"" under part ""PART-XYZ"" created by DEVU-123. Summarize the results and prioritize the summarized tasks based on severity.","API Selection:
+The ultimate APIs identified for the task are works_list to list tasks in the ""In Progress"" stage with severity ""high"" and ""medium"" under part ""PART-XYZ"" created by DEVU-123, summarize_objects to provide a summary of the results, and prioritize_objects to prioritize the summarized tasks based on severity.
+
+Argument Completion:
+
+List Tasks in ""In Progress"" Stage with Severity ""High"" and ""Medium"" Under Part ""PART-XYZ"" Created by DEVU-123:
+
+API: works_list
+Extract the arguments:
+stage.name with the value ""In Progress"" to filter for tasks in this stage.
+severity with the values ""high"" and ""medium"" to filter for tasks with these severities.
+part with the value ""PART-XYZ"" to filter for tasks under this part.
+created_by with the value ""DEVU-123"" to filter for tasks created by this user.
+type with the value ""task"" to specifically filter for tasks.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tasks.
+Prioritize Summarized Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks.
+Final Explanation:
+The query is to list tasks in the ""In Progress"" stage with severity ""high"" and ""medium"" under part ""PART-XYZ"" created by DEVU-123, summarize the results, and prioritize the summarized tasks based on severity. The works_list API is used to filter tasks based on specified criteria, summarize_objects provides a summary, and prioritize_objects prioritizes tasks based on severity."
+"Get the current sprint ID and add tasks with priority ""p1"" and ""p2"" to that sprint. Retrieve the details of the added tasks and create actionable tasks from the extracted insights.","API Selection:
+The ultimate APIs identified for the task are get_sprint_id to get the ID of the current sprint, add_work_items_to_sprint to add tasks with priority ""p1"" and ""p2"" to that sprint, works_list to retrieve details of the added tasks, create_actionable_tasks_from_text to create actionable tasks from the extracted insights.
+
+Argument Completion:
+
+Get the Current Sprint ID:
+
+API: get_sprint_id
+Add Tasks with Priority ""p1"" and ""p2"" to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID obtained from the get_sprint_id API.
+priority with the values ""p1"" and ""p2"" to specify the priorities of tasks to be added.
+Retrieve Details of the Added Tasks:
+
+API: works_list
+Extract the argument objects from the output of the add_work_items_to_sprint API, containing the list of added tasks.
+Create Actionable Tasks from Extracted Insights:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the works_list API, containing insights related to the added tasks.
+Final Explanation:
+The query is to get the current sprint ID, add tasks with priority ""p1"" and ""p2"" to that sprint, retrieve details of the added tasks, and create actionable tasks from the extracted insights. The get_sprint_id API is used to obtain the current sprint ID, add_work_items_to_sprint adds tasks to the current sprint, works_list retrieves details of the added tasks, and create_actionable_tasks_from_text generates actionable tasks from the insights."
+"Search for objects related to ""customer feedback"" and create actionable tasks from the extracted insights. Summarize the results and prioritize the summarized tasks based on severity.","API Selection:
+The ultimate APIs identified for the task are search_objects to search for objects related to ""customer feedback,"" create_actionable_tasks_from_text to create actionable tasks from the extracted insights, summarize_objects to provide a summary of the results, and prioritize_objects to prioritize the summarized tasks based on severity.
+
+Argument Completion:
+
+Search for Objects Related to ""Customer Feedback"":
+
+API: search_objects
+Extract the argument query with information related to ""customer feedback.""
+Create Actionable Tasks from Extracted Insights:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the search_objects API, containing the insights related to ""customer feedback.""
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the create_actionable_tasks_from_text API, containing the created tasks.
+Prioritize Summarized Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks.
+Final Explanation:
+The query is to search for objects related to ""customer feedback,"" create actionable tasks from the extracted insights, summarize the results, and prioritize the summarized tasks based on severity. The search_objects API is used to find relevant objects, create_actionable_tasks_from_text generates tasks, summarize_objects provides a summary, and prioritize_objects prioritizes tasks based on severity."
+"List all tasks in the ""Testing"" stage under part ""PART-ABC"" created by DEVU-789. Summarize the results, prioritize the summarized tasks based on severity, and add them to the current sprint.","API Selection:
+The ultimate APIs identified for the task are works_list to list all tasks in the ""Testing"" stage under part ""PART-ABC"" created by DEVU-789, summarize_objects to provide a summary of the results, prioritize_objects to prioritize the summarized tasks based on severity, add_work_items_to_sprint to add the prioritized tasks to the current sprint, and summarize_objects again to summarize the final results.
+
+Argument Completion:
+
+List All Tasks in ""Testing"" Stage Under Part ""PART-ABC"" Created by DEVU-789:
+
+API: works_list
+Extract the arguments:
+stage.name with the value ""Testing"" to filter for tasks in this stage.
+part with the value ""PART-ABC"" to filter for tasks under this part.
+created_by with the value ""DEVU-789"" to filter for tasks created by this user.
+type with the value ""task"" to specifically filter for tasks.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tasks.
+Prioritize Summarized Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks.
+Add Prioritized Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Summarize the Final Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Final Explanation:
+The query is to list all tasks in the ""Testing"" stage under part ""PART-ABC"" created by DEVU-789, summarize the results, prioritize the summarized tasks based on severity, add them to the current sprint, and summarize the final results. Multiple APIs, including works_list, summarize_objects, prioritize_objects, and add_work_items_to_sprint, are used in a sequence to achieve the desired outcome."
+"Get the current user's ID and find similar work items for a specific task ID (TASK-345). Summarize the results, prioritize the summarized tasks based on severity, and add them to the current sprint.","API Selection:
+The ultimate APIs identified for the task are who_am_i to get the current user's ID, get_similar_work_items to find similar work items for a specific task ID (TASK-345), summarize_objects to provide a summary of the results, prioritize_objects to prioritize the summarized tasks based on severity, add_work_items_to_sprint to add the prioritized tasks to the current sprint, and summarize_objects again to summarize the final results.
+
+Argument Completion:
+
+Get the Current User's ID:
+
+API: who_am_i
+Find Similar Work Items for a Specific Task ID:
+
+API: get_similar_work_items
+Extract the argument task_id with the value ""TASK-345.""
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the get_similar_work_items API, containing the list of similar work items.
+Prioritize Summarized Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks.
+Add Prioritized Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Summarize the Final Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Final Explanation:
+The query is to get the current user's ID, find similar work items for a specific task ID (TASK-345), summarize the results, prioritize the summarized tasks based on severity, add them to the current sprint, and summarize the final results. Multiple APIs, including who_am_i, get_similar_work_items, summarize_objects, prioritize_objects, and add_work_items_to_sprint, are used in a sequence to achieve the desired outcome."
+"Create actionable tasks from a given text containing user suggestions. Prioritize the created tasks based on severity, and add them to the current sprint. Summarize the results.","API Selection:
+The ultimate APIs identified for the task are create_actionable_tasks_from_text to create actionable tasks from the given text containing user suggestions, prioritize_objects to prioritize the created tasks based on severity, add_work_items_to_sprint to add the prioritized tasks to the current sprint, and summarize_objects to provide a summary of the results.
+
+Argument Completion:
+
+Create Actionable Tasks from Given Text:
+
+API: create_actionable_tasks_from_text
+Extract the argument text with the provided user suggestions.
+Prioritize Created Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the create_actionable_tasks_from_text API, containing the created tasks.
+Add Prioritized Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Final Explanation:
+The query is to create actionable tasks from a given text containing user suggestions, prioritize the created tasks based on severity, add them to the current sprint, and summarize the results. The create_actionable_tasks_from_text API generates tasks, prioritize_objects prioritizes tasks, add_work_items_to_sprint adds tasks to the current sprint, and summarize_objects provides a summary of the prioritized tasks."
+"Search for objects related to ""user stories"" and create actionable tasks from the extracted insights. Add them to the current sprint, prioritize the added tasks based on severity, and summarize the results.","API Selection:
+The ultimate APIs identified for the task are search_objects to search for objects related to ""user stories,"" create_actionable_tasks_from_text to create actionable tasks from the extracted insights, add_work_items_to_sprint to add the created tasks to the current sprint, prioritize_objects to prioritize the added tasks based on severity, and summarize_objects to provide a summary of the results.
+
+Argument Completion:
+
+Search for Objects Related to ""User Stories"":
+
+API: search_objects
+Extract the argument query with information related to ""user stories.""
+Create Actionable Tasks from Extracted Insights:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the search_objects API, containing the insights related to ""user stories.""
+Add Actionable Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects from the output of the create_actionable_tasks_from_text API, containing the created tasks.
+Prioritize Added Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the create_actionable_tasks_from_text API, containing the added tasks.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the prioritize_objects API, containing the prioritized tasks.
+Final Explanation:
+The query is to search for objects related to ""user stories,"" create actionable tasks from the extracted insights, add them to the current sprint, prioritize the added tasks based on severity, and summarize the results. The search_objects API is used to find relevant objects, create_actionable_tasks_from_text generates tasks, add_work_items_to_sprint adds tasks to the current sprint, prioritize_objects prioritizes tasks, and summarize_objects provides a summary of the prioritized tasks."
+"List all tasks in the ""To Do"" stage under part ""PART-XYZ"" that are associated with Rev organizations ""ORG-A"" and ""ORG-B"". Summarize the results and prioritize the summarized tasks based on severity.","API Selection:
+The ultimate APIs identified for the task are works_list to list all tasks in the ""To Do"" stage under part ""PART-XYZ"" associated with Rev organizations ""ORG-A"" and ""ORG-B,"" summarize_objects to provide a summary of the results, and prioritize_objects to prioritize the summarized tasks based on severity.
+
+Argument Completion:
+
+List All Tasks in ""To Do"" Stage under Part ""PART-XYZ"" Associated with ""ORG-A"" and ""ORG-B"":
+
+API: works_list
+Extract the arguments:
+stage.name with the value ""To Do"" to filter for tasks in this stage.
+part with the value ""PART-XYZ"" to filter for tasks under this part.
+organizations with the values ""ORG-A"" and ""ORG-B"" to filter for tasks associated with these organizations.
+type with the value ""task"" to specifically filter for tasks.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tasks.
+Prioritize Summarized Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks.
+Final Explanation:
+The query is to list all tasks in the ""To Do"" stage under part ""PART-XYZ"" that are associated with Rev organizations ""ORG-A"" and ""ORG-B,"" summarize the results, and prioritize the summarized tasks based on severity. The works_list API is used to filter and list tasks, summarize_objects creates a summary, and prioritize_objects prioritizes tasks based on severity."
+Get the ID of the current sprint and summarize all tasks and issues in that sprint. Prioritize the summarized results based on severity and add them to the current sprint.,"API Selection:
+The ultimate APIs identified for the task are get_sprint_id to get the ID of the current sprint, summarize_objects to provide a summary of all tasks and issues in that sprint, prioritize_objects to prioritize the summarized results based on severity, and add_work_items_to_sprint to add the prioritized tasks and issues to the current sprint.
+
+Argument Completion:
+
+Get the ID of the Current Sprint:
+
+API: get_sprint_id
+Summarize All Tasks and Issues in the Current Sprint:
+
+API: summarize_objects
+Extract the argument objects from the output of the get_sprint_id API, containing the list of tasks and issues in the current sprint.
+Prioritize Summarized Results Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks and issues.
+Add Prioritized Tasks and Issues to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID obtained from the get_sprint_id API.
+objects from the output of the prioritize_objects API, containing the list of prioritized tasks and issues.
+Final Explanation:
+The query is to get the ID of the current sprint, summarize all tasks and issues in that sprint, prioritize the summarized results based on severity, and add them to the current sprint. The get_sprint_id API is used to obtain the current sprint ID, summarize_objects creates a summary, prioritize_objects prioritizes tasks and issues, and add_work_items_to_sprint adds the prioritized tasks and issues to the current sprint."
+"Sort the priority of issues under part ""PART-XYZ"" that are created by DEVU-001. Summarize the results, prioritize the summarized tasks based on severity, and add them to the current sprint.","API Selection:
+The ultimate APIs identified for the task are works_list to sort the priority of issues under part ""PART-XYZ"" created by DEVU-001, summarize_objects to provide a summary of the results, prioritize_objects to prioritize the summarized tasks based on severity, and add_work_items_to_sprint to add the prioritized tasks to the current sprint.
+
+Argument Completion:
+
+Sort the Priority of Issues Under Part ""PART-XYZ"" Created by DEVU-001:
+
+API: works_list
+Extract the arguments:
+part with the value ""PART-XYZ"" to filter for issues under this part.
+created_by with the value ""DEVU-001"" to filter for issues created by this user.
+Summarize the Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of issues.
+Prioritize Summarized Tasks Based on Severity:
+
+API: prioritize_objects
+Extract the argument objects from the output of the summarize_objects API, containing the summarized tasks.
+Add Prioritized Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects from the output of the prioritize_objects API, containing the list of prioritized tasks.
+Final Explanation:
+The query is to sort the priority of issues under part ""PART-XYZ"" that are created by DEVU-001, summarize the results, prioritize the summarized tasks based on severity, and add them to the current sprint. The works_list API is used to filter and sort issues, summarize_objects creates a summary, prioritize_objects prioritizes tasks, and add_work_items_to_sprint adds the prioritized tasks to the current sprint."
+Prioritize all the similar issues coming in from discord under part CAPL-123.,"API Selection:
+The ultimate API identified for the task is search_objects to search for similar issues coming from Discord under part ""CAPL-123,"" and prioritize_objects to prioritize these similar issues.
+
+Argument Completion:
+
+Search for Similar Issues from Discord under Part ""CAPL-123"":
+
+API: search_objects
+Extract the argument query with information related to similar issues from Discord under part ""CAPL-123.""
+Prioritize Similar Issues:
+
+API: prioritize_objects
+Extract the argument objects from the output of the search_objects API, containing the list of similar issues.
+Final Explanation:
+The query is to prioritize all the similar issues coming in from Discord under part ""CAPL-123."" The search_objects API is used to find similar issues, and the prioritize_objects API is employed to prioritize these issues based on the provided information."
+Retrieve all high severity tickets associated with the Rev organizations REV-123 and BigRev that do not need a response.,"API Selection:
+The ultimate API identified for the task is works_list to retrieve all high severity tickets associated with the Rev organizations ""REV-123"" and ""BigRev"" that do not need a response.
+
+Argument Completion:
+
+Retrieve High Severity Tickets Associated with ""REV-123"" and ""BigRev"" Not Needing a Response:
+API: works_list
+Extract the arguments:
+severity with the value indicating high severity.
+organizations with the values ""REV-123"" and ""BigRev"" to filter for work items associated with these organizations.
+response_needed with a value indicating that a response is not needed.
+Final Explanation:
+The query is to retrieve all high severity tickets associated with the Rev organizations ""REV-123"" and ""BigRev"" that do not need a response. The works_list API is used with specific filters for severity, organization association, and response not needed."
+Find work items that need a response and are associated with Rev organizations Walter LTD and Hank Products. List them and summarize their details.,"API Selection:
+The ultimate APIs identified for the task are works_list to find work items that need a response and are associated with Rev organizations ""Walter LTD"" and ""Hank Products,"" and summarize_objects to list and summarize the details of these work items.
+
+Argument Completion:
+
+Find Work Items Needing a Response and Associated with ""Walter LTD"" and ""Hank Products"":
+
+API: works_list
+Extract the arguments:
+response_needed with a value indicating that a response is needed.
+organizations with the values ""Walter LTD"" and ""Hank Products"" to filter for work items associated with these organizations.
+Summarize Details of Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of work items.
+Final Explanation:
+The query is to find work items that need a response and are associated with Rev organizations ""Walter LTD"" and ""Hank Products,"" list them, and summarize their details. The works_list API is used with specific filters for response needed and organization association, and the summarize_objects API is employed to create a summary for the identified work items."
+I want to search for work items similar to issues created by me. Summarize them for me and create tasks for them.,"API Selection:
+The ultimate APIs identified for the task are search_objects to search for work items similar to issues created by you, summarize_objects to provide a summary of the identified work items, and create_tasks_from_text to create tasks from the summarized information.
+
+Argument Completion:
+
+Search for Work Items Similar to Issues Created by You:
+
+API: search_objects
+Extract the argument query with information related to issues created by you.
+Summarize Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the search_objects API, containing the list of similar work items.
+Create Tasks from Summarized Information:
+
+API: create_tasks_from_text
+Extract the argument text from the output of the summarize_objects API, containing the summary information.
+Final Explanation:
+The query is to search for work items similar to issues created by you, summarize them, and create tasks for them. The search_objects API is used to find similar work items, summarize_objects creates a summary of the identified work items, and create_tasks_from_text generates tasks from the summarized information."
+Get the ID of the current sprint and add the work items with IDs WK-123 and WK-456 to it.,"API Selection:
+The ultimate APIs identified for the task are get_sprint_id to get the ID of the current sprint and add_work_items_to_sprint to add the work items with IDs ""WK-123"" and ""WK-456"" to it.
+
+Argument Completion:
+
+Get the ID of the Current Sprint:
+
+API: get_sprint_id
+Add Work Items to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID obtained from the get_sprint_id API.
+objects with the values ""WK-123"" and ""WK-456"" to specify the work items to be added to the sprint.
+Final Explanation:
+The query is to get the ID of the current sprint and add the work items with IDs ""WK-123"" and ""WK-456"" to it. The get_sprint_id API is used to obtain the current sprint ID, and the add_work_items_to_sprint API is employed to add the specified work items to the identified sprint.
+
+
+
+
+"
+List the first 10 work items owned by user Jonathan in the Development stage and summarize them.,"API Selection:
+The ultimate APIs identified for the task are works_list to list the first 10 work items owned by user ""Jonathan"" in the Development stage and summarize_objects to provide a summary of these work items.
+
+Argument Completion:
+
+List First 10 Work Items Owned by User ""Jonathan"" in the Development Stage:
+API: works_list
+Extract the arguments:
+owned_by with the value ""Jonathan"" to filter for work items owned by this user.
+stage.name with the value ""Development"" to filter for work items in this stage.
+Additional filters if needed, such as limiting the number of results to 10.
+**Summarize Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of work items.
+Final Explanation:
+The query is to list the first 10 work items owned by user ""Jonathan"" in the Development stage and summarize them. The works_list API is used with specific filters for ownership, stage, and a limit on the number of results, and the summarize_objects API is employed to create a summary for the identified work items."
+"Get the first 5 work items of type task in the Planning stage,  and create tasks from their descriptions.","API Selection:
+The ultimate API identified for the task is works_list to get the first 5 work items of type ""task"" in the Planning stage, and create_tasks_from_text to create tasks from their descriptions.
+
+Argument Completion:
+
+Get First 5 Work Items of Type ""Task"" in the Planning Stage:
+API: works_list
+Extract the arguments:
+type with the value ""task"" to specifically filter for tasks.
+stage.name with the value ""Planning"" to filter for tasks in this stage.
+Additional filters if needed, such as limiting the number of results to 5.
+**Create Tasks from Descriptions:
+
+API: create_tasks_from_text
+Extract the argument text from the output of the works_list API, containing the descriptions of the tasks.
+Final Explanation:
+The query is to get the first 5 work items of type ""task"" in the Planning stage, and create tasks from their descriptions. The works_list API is used with specific filters for type, stage, and a limit on the number of results, and the create_tasks_from_text API is employed to create tasks from the descriptions of the identified tasks."
+Retrieve the top 10 work items owned by user Dustin and created by user Charles.,"API Selection:
+The ultimate API identified for the task is works_list to retrieve the top 10 work items owned by user ""Dustin"" and created by user ""Charles.""
+
+Argument Completion:
+
+Retrieve Top 10 Work Items Owned by User ""Dustin"" and Created by User ""Charles"":
+API: works_list
+Extract the arguments:
+owned_by with the value ""Dustin"" to filter for work items owned by this user.
+created_by with the value ""Charles"" to filter for work items created by this user.
+Additional filters if needed, such as limiting the number of results to 10.
+Final Explanation:
+The query is to retrieve the top 10 work items owned by user ""Dustin"" and created by user ""Charles."" The works_list API is used with specific filters for ownership, creatorship, and a limit on the number of results.
+
+
+
+
+"
+List all tickets owned by user Bob Smith in the Customer Support stage where the work item needs a response and provide a summary of these tickets.,"API Selection:
+The ultimate APIs identified for the task are works_list to list tickets owned by user ""Bob Smith"" in the Customer Support stage where the work item needs a response, and summarize_objects to provide a summary of these tickets.
+
+Argument Completion:
+
+List Tickets Owned by User ""Bob Smith"" in Customer Support Stage Needing a Response:
+API: works_list
+Extract the arguments:
+owned_by with the value ""Bob Smith"" to filter for tickets owned by this user.
+stage.name with the value ""Customer Support"" to filter for tickets in this stage.
+Additional filters if needed, such as filtering for work items that need a response.
+**Summarize Tickets:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tickets.
+Final Explanation:
+The query is to list all tickets owned by user ""Bob Smith"" in the Customer Support stage where the work item needs a response and provide a summary of these tickets. The works_list API is used with specific filters for ownership, stage, and work items needing a response, and the summarize_objects API is employed to create a summary for the identified tickets."
+"Filter out work items associated with Rev organizations Apache and Nvidia, which do not need a response and generate a summary for them. Using this summary, create actions from them and add them to my current sprint.","API Selection:
+The ultimate APIs identified for the task are works_list to filter out work items associated with Rev organizations ""Apache"" and ""Nvidia"" that do not need a response, summarize_objects to generate a summary for these filtered work items, and create_actions_from_summary to create actions from the summary and add_work_items_to_sprint to add the actions to the current sprint.
+
+Argument Completion:
+
+Filter Out Work Items Not Needing a Response:
+API: works_list
+Extract the arguments:
+organizations with the values ""Apache"" and ""Nvidia"" to filter for work items associated with these organizations.
+Additional filters if needed, such as filtering for work items that do not need a response.
+**Generate a Summary for Filtered Work Items:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of filtered work items.
+**Create Actions from Summary:
+
+API: create_actions_from_summary
+Extract the argument summary from the output of the summarize_objects API.
+**Add Actions to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+actions from the output of the create_actions_from_summary API, containing the list of actions.
+Final Explanation:
+The query is to filter out work items associated with Rev organizations ""Apache"" and ""Nvidia"" that do not need a response, generate a summary for them, create actions from the summary, and add these actions to the current sprint. The works_list API is used to filter work items, summarize_objects creates a summary, create_actions_from_summary generates actions, and add_work_items_to_sprint adds the actions to the current sprint.
+
+"
+"Begin by listing the first 15 work items owned by Eve in the Testing stage. Then, iteratively filter the list to include only those of type issue and task separately, and summarize each subset.","API Selection:
+The ultimate API identified for the task is works_list to list the first 15 work items owned by Eve in the Testing stage.
+
+Argument Completion:
+
+List First 15 Work Items Owned by Eve in the Testing Stage:
+API: works_list
+Extract the arguments:
+owned_by with the value ""Eve"" to filter for work items owned by Eve.
+stage.name with the value ""Testing"" to filter for work items in this stage.
+Additional parameters for limiting the number of results to 15.
+Iteratively Filter the List for Issues:
+
+API: works_list
+Extract the arguments:
+type with the value ""issue"" to specifically filter for issues.
+**Summarize Issues Subset:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of issues.
+Iteratively Filter the List for Tasks:
+
+API: works_list
+Extract the arguments:
+type with the value ""task"" to specifically filter for tasks.
+**Summarize Tasks Subset:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tasks.
+Final Explanation:
+The query is to list the first 15 work items owned by Eve in the Testing stage, iteratively filter the list for issues and tasks separately, and summarize each subset. The works_list API is used iteratively with filters for ownership, stage, and type, and the summarize_objects API is employed to create summaries for the identified subsets of issues and tasks."
+Find and summarize any urgent issues related to my project Gladeus?,"API Selection:
+The ultimate API identified for the task is works_list to find urgent issues related to the project ""Gladeus,"" and summarize_objects to summarize these urgent issues.
+
+Argument Completion:
+
+Find Urgent Issues Related to Project ""Gladeus"":
+API: works_list
+Extract the arguments:
+project with the value ""Gladeus"" to filter for issues related to this project.
+severity with the value for urgent issues.
+type with the value ""issue"" to specifically filter for issues.
+**Summarize Urgent Issues:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of urgent issues.
+Final Explanation:
+The query is to find and summarize any urgent issues related to the project ""Gladeus."" The works_list API is used with specific filters for project, severity, and issue type, and the summarize_objects API is employed to create a summary for the identified urgent issues."
+"Retrieve all tickets coming in from slack that do not have low severity, associated with the organization bulletCorp.","API Selection:
+The ultimate API identified for the task is works_list to retrieve tickets coming in from Slack that do not have low severity and are associated with the organization ""bulletCorp.""
+
+Argument Completion:
+
+Retrieve Tickets from Slack Not Having Low Severity and Associated with ""bulletCorp"":
+API: works_list
+Extract the arguments:
+source_channel with the value ""Slack"" to filter for tickets coming in from Slack.
+severity with values other than ""low"" to exclude tickets with low severity.
+organizations with the value ""bulletCorp"" to filter for tickets associated with this organization.
+type with the value ""ticket"" to specifically filter for tickets.
+Final Explanation:
+The query is to retrieve all tickets coming in from Slack that do not have low severity and are associated with the organization ""bulletCorp."" The works_list API is used with specific filters for source channel, severity, organization, and ticket type."
+Identify the Rev organizations associated with high priority issues in the Development stage. Summarize these issues.,"API Selection:
+The ultimate APIs identified for the task are works_list to retrieve high priority issues in the Development stage and summarize_objects to summarize these issues. Additionally, get_issue_details or a similar API can be used to identify the associated Rev organizations for each issue.
+
+Argument Completion:
+
+Retrieve High Priority Issues in the Development Stage:
+API: works_list
+Extract the arguments:
+stage.name with the value ""Development"" to filter for issues in this stage.
+priority with the value for high priority issues.
+**Identify Associated Rev Organizations:
+
+For each high priority issue, use an appropriate API (e.g., get_issue_details) to extract information about the associated Rev organizations.
+**Summarize High Priority Issues:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of high priority issues.
+Final Explanation:
+The query is to identify the Rev organizations associated with high priority issues in the Development stage and summarize these issues. The works_list API is used to retrieve high priority issues, and additional APIs like get_issue_details and summarize_objects are employed to extract organization information and create summaries for the identified issues."
+Identify the most common severity level for tickets associated with the parts HW-001 and HW-002. Summarize the tickets for each severity.,"API Selection:
+The ultimate API identified for the task is works_list to retrieve tickets associated with the parts HW-001 and HW-002 and identify the most common severity levels. Additionally, the summarize_objects API can be used to summarize the tickets for each severity.
+
+Argument Completion:
+
+Retrieve Tickets Associated with Parts HW-001 and HW-002:
+API: works_list
+Extract the arguments:
+applies_to_part with the values ""HW-001"" and ""HW-002"" to filter for tickets associated with these parts.
+type with the value ""ticket"" to specifically filter for tickets.
+**Identify the Most Common Severity Levels:
+
+Extract the severity levels from the output of the works_list API and determine the most common severity levels.
+**Summarize Tickets for Each Severity:
+
+For each identified severity level, use the summarize_objects API to obtain a summary of the associated tickets.
+Final Explanation:
+The query is to identify the most common severity levels for tickets associated with the parts HW-001 and HW-002 and summarize the tickets for each severity. The works_list API is used to retrieve tickets, and the summarize_objects API can be employed to summarize tickets for each identified severity level.
+
+
+
+
+
+"
+Find all tasks created by me and generate a summary. Add the summarized tasks to the current sprint.,"API Selection:
+The ultimate APIs identified for the task are who_am_i to get the ID of the current user, works_list to find all tasks created by the current user, summarize_objects to generate a summary of these tasks, and add_work_items_to_sprint to add the summarized tasks to the current sprint.
+
+Argument Completion:
+
+Get ID of the Current User:
+API: who_am_i
+Extract the argument user_id from the output.
+**Find Tasks Created by the Current User:
+
+API: works_list
+Extract the arguments:
+created_by with the value obtained from the who_am_i API.
+type with the value ""task"" to specifically filter for tasks.
+**Generate a Summary of the Tasks:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tasks.
+**Add Summarized Tasks to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the ID of the current sprint.
+objects from the output of the works_list API or the summarize_objects API, containing the list of tasks.
+Final Explanation:
+The query is to find all tasks created by the current user, generate a summary of these tasks, and add the summarized tasks to the current sprint. The who_am_i API is used to obtain the ID of the current user, works_list is employed to find tasks created by the user, summarize_objects generates a summary, and add_work_items_to_sprint adds the summarized tasks to the current sprint."
+" Search for objects related to the keyword security and return their IDs. If multiple matches are found, prioritize them based on relevance.","API Selection:
+The ultimate APIs identified for the task are search_objects to retrieve objects related to the keyword ""security"" and prioritize_objects to prioritize them based on relevance.
+
+Argument Completion:
+
+Search for Objects Related to the Keyword ""Security"":
+API: search_objects
+Extract the argument query with the value ""security"" to search for objects related to this keyword.
+**Prioritize Objects Based on Relevance:
+
+API: prioritize_objects
+Extract the arguments:
+objects from the output of the search_objects API, containing the found objects related to ""security.""
+Final Explanation:
+The query is to search for objects related to the keyword ""security"" and return their IDs. The search_objects API is used to retrieve objects, and the prioritize_objects API is employed to prioritize them based on relevance. The final output includes the IDs of the relevant objects."
+"Get the current sprint ID and add all tasks with priority ""p0"" to that sprint.","API Selection:
+The ultimate API identified for the task is get_current_sprint_id to retrieve the ID of the current sprint and add_work_items_to_sprint to add all tasks with priority ""p0"" to that sprint.
+
+Argument Completion:
+
+Get ID of the Current Sprint:
+API: get_current_sprint_id
+Extract the argument sprint_id from the output.
+**Add Tasks with Priority ""p0"" to the Current Sprint:
+
+API: add_work_items_to_sprint
+Extract the arguments:
+sprint_id with the value obtained from the get_current_sprint_id API.
+Additional filters if needed, such as filtering tasks based on priority ""p0.""
+Final Explanation:
+The query is to get the current sprint ID and add all tasks with priority ""p0"" to that sprint. The get_current_sprint_id API is used to obtain the ID of the current sprint, and then the add_work_items_to_sprint API is utilized to add tasks with priority ""p0"" to the identified sprint. Additional filters can be applied as needed to specify the conditions for including tasks in the sprint.
+
+
+
+
+
+"
+"Search for objects related to ""customer inquiry"" and create actionable tasks from the extracted insights.","API Selection:
+The ultimate APIs identified for the task are search_objects to retrieve objects related to ""customer inquiry"" and create_actionable_tasks_from_text to create actionable tasks from the extracted insights.
+
+Argument Completion:
+
+Search for Objects Related to ""Customer Inquiry"":
+API: search_objects
+Extract the argument query with the value ""customer inquiry"" to search for objects related to customer inquiries.
+**Create Actionable Tasks from Extracted Insights:
+
+API: create_actionable_tasks_from_text
+Extract the argument text from the output of the search_objects API, containing insights related to customer inquiries.
+Final Explanation:
+The query is to search for objects related to ""customer inquiry"" and create actionable tasks from the extracted insights. The search_objects API is used to retrieve objects, and the create_actionable_tasks_from_text API is employed to generate actionable tasks based on the insights obtained from the search results."
+"List all tasks in the ""In Progress"" stage under part ""PART-XYZ"" that are assigned to the current user and need a response.","API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing all tasks in the ""In Progress"" stage under part ""PART-XYZ"" that are assigned to the current user and need a response.
+
+Argument Completion:
+
+List Tasks in ""In Progress"" Stage Under Part ""PART-XYZ"" Assigned to Current User Needing Response:
+API: works_list
+Extract the arguments:
+stage.name with the value ""In Progress"" to filter for tasks in this stage.
+applies_to_part with the value ""PART-XYZ"" to filter for tasks under the specified part.
+assigned_to with the value obtained from the appropriate API to get the current user.
+Additional filters if needed, such as identifying tasks that need a response.
+Final Explanation:
+The query is to list all tasks in the ""In Progress"" stage under part ""PART-XYZ"" that are assigned to the current user and need a response. The works_list API is used with specific filters for stage, part, assignment, and response status. Additional filters can be applied based on specific criteria for tasks that need a response.
+
+
+
+
+
+"
+"Summarize work items in stage review across all projects, identify the unique users who have created them, and prioritize their other open work items.","API Selection:
+The ultimate APIs identified for the task are works_list to retrieve work items in the ""Review"" stage across all projects, get_unique_users to identify the unique users who have created these work items, and get_user_open_work_items to prioritize their other open work items.
+
+Argument Completion:
+
+Summarize Work Items in ""Review"" Stage Across All Projects:
+API: works_list
+Extract the arguments:
+stage.name with the value ""Review"" to filter for work items in this stage.
+type with the value ""issue"" or ""task"" depending on the nature of work items.
+**Identify Unique Users Who Have Created the Work Items:
+
+API: get_unique_users
+Extract the users who have created the work items obtained from the works_list API.
+**Prioritize Other Open Work Items for Each Unique User:
+
+API: get_user_open_work_items
+Extract the arguments:
+user_id for each unique user obtained from the get_unique_users API.
+Final Explanation:
+The query is to summarize work items in the ""Review"" stage across all projects, identify the unique users who have created them, and prioritize their other open work items. The works_list API is used to filter work items, get_unique_users to identify creators, and get_user_open_work_items to prioritize their other open work items."
+"List all tasks in the ""To Do"" stage under part ""PART-XYZ"" that are associated with Rev organizations ""ORG-A"" and ""ORG-B"". Summarize the results and prioritize the summarized tasks based on severity.","API Selection:
+The ultimate API identified for the task is works_list, based on the context of listing all tasks in the ""To Do"" stage under part ""PART-XYZ"" associated with Rev organizations ""ORG-A"" and ""ORG-B."" Additionally, the summarize_objects API will be used for summarizing, and works_list again for prioritizing based on severity.
+
+Argument Completion:
+
+List Tasks in ""To Do"" Stage Under Part ""PART-XYZ"" Associated with Organizations ""ORG-A"" and ""ORG-B"":
+API: works_list
+Extract the arguments:
+stage.name with the value ""To Do"" to filter for tasks in this stage.
+applies_to_part with the value ""PART-XYZ"" to filter for tasks under the specified part.
+organizations with the values ""ORG-A"" and ""ORG-B"" to filter for tasks associated with these organizations.
+type with the value ""task"" to specifically filter for tasks.
+**Summarize Results:
+
+API: summarize_objects
+Extract the argument objects from the output of the works_list API, containing the list of tasks.
+**Prioritize Summarized Tasks Based on Severity:
+
+API: works_list
+Extract the arguments:
+severity to prioritize the summarized tasks based on severity.
+Additional filters if needed.
+Final Explanation:
+The query is to list all tasks in the ""To Do"" stage under part ""PART-XYZ"" associated with Rev organizations ""ORG-A"" and ""ORG-B,"" summarize the results, and prioritize the summarized tasks based on severity. The works_list API is used iteratively for filtering tasks and prioritizing based on severity, and summarize_objects is used for summarizing the list of tasks.
+
+
+
+
+
+"
+"Get the IDs of work items created by Bruce. For each work item, find similar items and create a summary. ","API Selection:
+The ultimate API identified for the task is works_list to get the IDs of work items created by user 'Bruce,' and get_similar_work_items to find similar items for each work item and create a summary.
+
+Argument Completion:
+
+Get IDs of Work Items Created by 'Bruce':
+API: works_list
+Extract the arguments:
+created_by with the value ""Bruce"" to filter for work items created by this user.
+Additional filters if needed.
+**Find Similar Items and Create a Summary:
+
+API: get_similar_work_items
+Extract the arguments:
+work_id with the ID of each work item obtained from the works_list API.
+Additional filters if needed.
+Final Explanation:
+The query is to get the IDs of work items created by 'Bruce,' and for each work item, find similar items and create a summary.
+The works_list API is used to filter work items created by 'Bruce,' and for each work item, the get_similar_work_items API is used to find similar items. The summary can be created based on the obtained information."
+Provide me all the issues with the priority levels p0 and p1.,"API Selection:
+The ultimate API identified for the task is works_list, based on the context of providing all issues with priority levels 'p0' and 'p1.'
+
+Argument Completion:
+
+Provide All Issues with Priority Levels 'p0' and 'p1':
+API: works_list
+Extract the arguments:
+type with the value ""issue"" to specifically filter for issues.
+priority with the values ""p0"" and ""p1"" to filter for issues with these priority levels.
+Final Explanation:
+The query is to provide all issues with priority levels 'p0' and 'p1.'
+The works_list API is used to filter items based on the criteria of being issues and having priority levels 'p0' and 'p1.' Additional filters can be applied if there are specific conditions for the issues to be retrieved."
+Retrieve all the records in the In Progress stage.,"API Selection:
+The ultimate API identified for the task is works_list, based on the context of retrieving all records in the ""In Progress"" stage.
+
+Argument Completion:
+
+Retrieve All Records in ""In Progress"" Stage:
+API: works_list
+Extract the arguments:
+stage.name with the value ""In Progress"" to specifically filter for items in this stage.
+Additional filters if needed.
+Final Explanation:
+The query is to retrieve all records in the ""In Progress"" stage.
+The works_list API is used to filter items based on the criteria of being in the specified stage (""In Progress""). Additional filters can be applied if there are specific conditions for the records to be retrieved.
+
+"
+Prioritize all the similar issues coming in from discord under part CAPL-123.,"
+API Selection:
+The ultimate API identified for the task is get_similar_work_items, based on the context of prioritizing all similar issues coming in from Discord under part 'CAPL-123.'
+
+Argument Completion:
+
+Prioritize Similar Issues from Discord Under Part 'CAPL-123':
+API: get_similar_work_items
+Extract the arguments:
+source_channel with the value ""Discord"" to filter for issues originating from Discord.
+applies_to_part with the value ""CAPL-123"" to filter for issues under the specified part.
+Additional filters if needed, such as prioritizing based on certain criteria.
+Final Explanation:
+The query is to prioritize all similar issues coming in from Discord under part 'CAPL-123.'
+The get_similar_work_items API is used to filter and prioritize similar issues based on the specified source channel (Discord) and part ('CAPL-123'). Additional filters can be applied if needed to further refine the prioritization."

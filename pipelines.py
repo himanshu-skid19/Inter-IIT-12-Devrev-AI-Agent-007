@@ -27,7 +27,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
   print(f"##################")
   print(f"Reprompt Number: {cntr} #################")
 
-  json_response = json.loads(resp_formatted)
+  json_response = ast.literal_eval(resp_formatted)
   print(f"3. JSON decoded output- {cntr} ##################")
   print(json_response)
   print(type(json_response))
@@ -36,7 +36,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
 
   while not done:
     # hall = True
-    hallucinated_args, hallucinated_tools, hallucinated_args_values = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
+    hallucinated_args, hallucinated_tools, hallucinated_args_values = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments)
 
     print('##############')
     print(f'wrong stuff : {hallucinated_args}, {hallucinated_tools}, {hallucinated_args_values}')
@@ -53,7 +53,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
     print(f"##################")
 
     json_response = reprompt_chain.run(QUERY = query, API_LIST = API_LIST, CORRECTION_PROMPT = Correction_prompt)
-    json_response = json.loads(json_response)
+    json_response = ast.literal_eval(json_response)
     cntr+=1
     print(f"4. JSON decoded output- {cntr} ##################")
     print(json_response)
