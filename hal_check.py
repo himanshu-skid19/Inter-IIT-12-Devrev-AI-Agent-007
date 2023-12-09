@@ -202,3 +202,23 @@ def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, 
     Correction_prompt += f"Argument_value '{i}' is not valid according to the specified API list. \n"
   Correction_prompt += "You have to give the corrected solution to the product manager's query by modifying the provided JSON. You have to remove hallucinations and only output the corrected JSON. \n"
   return Correction_prompt
+
+
+def placeholder_check(json_response):
+    argument_names = []
+    for item in json_response:
+        arguments = item.get("arguments", [])
+        print(arguments)
+        for argument in arguments:
+            argument_name = argument.get("argument_name")
+            argument_value = argument["argument_value"]
+    #         x = re.search("<.*>", str(argument_value))
+    #         if x:
+    #             return 1
+    # return 0
+
+json_response = [{'name': 'prioritize_objects', 'description': 'Returns a list of objects sorted by priority. The logic of what constitutes priority for a given object is an internal implementation detail.', 'arguments': [{'argument_name': 'objects', 'argument_description': 'A list of objects to be prioritized', 'argument_type': 'array of objects'}]},
+                 {'name': 'add_work_ite ms_to_sprint', 'description': 'Adds the given work items to the sprint', 'arguments': [{'argument_name': 'work_ids', 'argument_description': 'A list of work item IDs to be added to the sprint.', 'argument_type': 'array of strings'}, {'argument_name': 'sprint_id', 'argument_description': 'The ID of the sprint to which the work items should be added', 'argument_type': 'string'}]}]
+
+
+placeholder_check(json_response)

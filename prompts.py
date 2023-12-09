@@ -61,10 +61,6 @@ LIST OF API BEGINS
 
 LIST OF API ENDS
 
-Here are some examples of prodcut manager queries and their appropriate solutions.
-
-{RAG}
-
 {QUERY}
 
 {CORRECTION_PROMPT}

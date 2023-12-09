@@ -36,7 +36,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
 
   while not done:
     # hall = True
-    hallucinated_args, hallucinated_tools, hallucinated_args_values = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments)
+    hallucinated_args, hallucinated_tools, hallucinated_args_values = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
 
     print('##############')
     print(f'wrong stuff : {hallucinated_args}, {hallucinated_tools}, {hallucinated_args_values}')
@@ -60,4 +60,6 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
     print(type(json_response))
     print(len(json_response))
     print(f"##################")
+    if placeholder_check(json_response):
+      return []
   return json_response
