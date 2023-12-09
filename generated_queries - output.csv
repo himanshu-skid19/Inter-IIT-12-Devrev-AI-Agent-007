@@ -1,0 +1,1668 @@
+Queries,Outputs
+List issues for part 'CAPL-234' created after '2023-06-01' and summarize their stages.,"[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""applies_to_part"": ""CAPL-234"",
+      ""type"": ""issue"",
+      ""date_of_creation"": ""2023-06-01 00:00:00""
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[0]""
+    }
+  }
+]
+"
+Add work items created by 'John' for part 'FEAT-123' to the current sprint and update their stage to 'In Progress'.,"[
+  {
+    ""tool_name"": ""who_am_i"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""created_by"": [""John""],
+      ""applies_to_part"": [""FEAT-123""]
+    }
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[1]"",
+      ""sprint_id"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""works_update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[1]"",
+      ""stage.name"": ""In Progress""
+    }
+  }
+]
+"
+Find work items similar to 'TKT-456' created on '2023-07-10' and add them to the current sprint.,"[
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {""argument_name"": ""work_id"", ""argument_value"": ""TKT-456""}
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""date_of_creation"", ""argument_value"": ""2023-07-10 00:00:00""},
+      {""argument_name"": ""type"", ""argument_value"": ""ticket""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      {""argument_name"": ""work_ids"", ""argument_value"": ""$$PREV[1]""},
+      {""argument_name"": ""sprint_id"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  }
+]
+"
+"Create new issues for part 'ENH-123' reported by 'CUST-123', and delete those not updated since '2023-05-01'","[
+  {
+    ""tool_name"": ""works-create"",
+    ""arguments"": [
+      { ""argument_name"": ""applies_to_part"", ""argument_value"": [""ENH-123""] },
+      { ""argument_name"": ""created_by"", ""argument_value"": [""CUST-123""] },
+      { ""argument_name"": ""type"", ""argument_value"": ""issue"" },
+      { ""argument_name"": ""owned_by"", ""argument_value"": ""$$PREV[0]"" }
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      { ""argument_name"": ""stage.name"", ""argument_value"": ""issue"" },
+      { ""argument_name"": ""last_modified"", ""argument_value"": ""2023-05-01 00:00:00"" }
+    ]
+  },
+  {
+    ""tool_name"": ""works-delete"",
+    ""arguments"": [
+      { ""argument_name"": ""id"", ""argument_value"": ""$$PREV[1]"" }
+    ]
+  }
+]
+"
+Summarize tickets in stage 'Testing' updated before '2023-08-15' and update their stage to 'Completed',"[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""stage.name"", ""argument_value"": ""Testing""},
+      {""argument_name"": ""last_modified"", ""argument_value"": ""2023-08-15""},
+      {""argument_name"": ""type"", ""argument_value"": ""ticket""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""stage.name"", ""argument_value"": ""Completed""}
+    ]
+  }
+]
+"
+Create actionable tasks from text by 'DEVU-123' and retrieve the ID of the sprint they are assigned to.,"[
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": [
+      {""argument_name"": ""query"", ""argument_value"": ""DEVU-123""}
+    ]
+  },
+  {
+    ""tool_name"": ""create_actionable_tasks_from_text"",
+    ""arguments"": [
+      {""argument_name"": ""text"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""type"", ""argument_value"": [""task""]},
+      {""argument_name"": ""stage.name"", ""argument_value"": ""backlog""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  }
+]
+"
+"List all tasks for part 'PROD-123' in stage 'Design', update their priority to p1, and delete those without a target close date.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""applies_to_part"": ""PROD-123"",
+      ""stage.name"": ""Design"",
+      ""type"": ""task""
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[0][i]"",
+      ""priority"": ""p1""
+    }
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""applies_to_part"": ""PROD-123"",
+      ""stage.name"": ""Design"",
+      ""type"": ""task"",
+      ""target_close_date"": ""$$PREV[1]""
+    }
+  },
+  {
+    ""tool_name"": ""works-delete"",
+    ""arguments"": {
+      ""id"": ""$$PREV[2][i]""
+    }
+  }
+]
+"
+Check how many tasks are created by 'John' for part 'CAPL-234'. Add them to my current sprint.,"[
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""created_by"": [""John""],
+      ""applies_to_part"": [""CAPL-234""],
+      ""type"": [""task""]
+    }
+  },
+  {
+    ""tool_name"": ""count"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[1]""
+    }
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[1]"",
+      ""sprint_id"": ""$$PREV[0]""
+    }
+  }
+]
+"
+"Get work IDs for items created by 'CUST-123' on '2023-09-01' and summarize these objects which are in the ""Planning"" Stage.","[
+  {
+    ""tool_name"": ""who_am_i"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""created_by"",
+        ""argument_value"": [""CUST-123""]
+      },
+      {
+        ""argument_name"": ""date_of_creation"",
+        ""argument_value"": ""2023-09-01""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""objects"",
+        ""argument_value"": ""$$PREV[1]""
+      },
+      {
+        ""additional_filter"": ""Planning stage""
+      }
+    ]
+  }
+]
+"
+"List all work items with priority 'p1', modified after '2023-06-01', in sprint 'S12345'. Then, update their stage to 'Development'.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""issue.priority"": [""p1""],
+      ""last_modified"": ""2023-06-01 00:00:00"",
+      ""sprint.name"": [""S12345""]
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[0].objects"",
+      ""stage.name"": ""Development""
+    }
+  }
+]
+"
+Create a new work item for user 'UID123' with priority 'p2' and expected completion date '2023-08-15'. Summarize similar items and list items in the same sprint.,"[
+  {
+    ""tool_name"": ""works-create"",
+    ""arguments"": {
+      ""created_by"": [""UID123""],
+      ""issue.priority"": ""p2"",
+      ""target_close_date"": ""2023-08-15""
+    }
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": {}
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": [""$$PREV[1]""],
+      ""sprint_id"": ""$$PREV[2]""
+    }
+  }
+]
+"
+Delete work items not updated since '2023-05-01'. Add remaining items to the current sprint and list items in the 'Testing' stage.,"[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""last_modified"": ""2023-05-01""
+    }
+  },
+  {
+    ""tool_name"": ""works-delete"",
+    ""arguments"": {
+      ""id"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[0]"",
+      ""sprint_id"": ""$$PREV[3]""
+    }
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""stage.name"": ""Testing""
+    }
+  }
+]
+"
+"List all issues with priority 'p0' created after '2023-01-01', and summarize similar issues. Then create actionable tasks from the summary","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""type"": [""issue""],
+      ""issue.priority"": [""p0""],
+      ""date_of_creation"": "">= '2023-01-01'""
+    }
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[1]""
+    }
+  },
+  {
+    ""tool_name"": ""create_actionable_tasks_from_text"",
+    ""arguments"": {
+      ""text"": ""$$PREV[2]""
+    }
+  }
+]
+[
+  {
+    ""tool_name"": ""who_am_i"",
+    ""arguments"": {}
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""type"": [""issue""],
+      ""stage.name"": [""triage""],
+      ""applies_to_part"": [""FEAT-123""],
+      ""owned_by"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[1]""
+    }
+  }
+]
+"
+"Summarize tickets from the 'slack' source channel that need a response, created in the last week, and create actionable tasks from them.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""ticket.source_channel"",
+        ""argument_value"": ""slack""
+      },
+      {
+        ""argument_name"": ""ticket.needs_response"",
+        ""argument_value"": true
+      },
+      {
+        ""argument_name"": ""date_of_creation"",
+        ""argument_value"": ""LAST_WEEK_START_DATE_TO_CURRENT_DATE""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""create_actionable_tasks_from_text"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""text"",
+        ""argument_value"": ""$$PREV[0]""  // Referring to the output of the previous API call
+      }
+    ]
+  }
+]
+"
+"Retrieve work items owned by user ID 'USER123', with stage 'development', and summarize objects created on '2023-02-01'.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""owned_by"", ""argument_value"": [""USER123""]},
+      {""argument_name"": ""stage.name"", ""argument_value"": [""development""]},
+      {""argument_name"": ""date_of_creation"", ""argument_value"": ""2023-02-01 00:00:00""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  }
+]
+"
+"Find issues with 'high' priority updated since '2023-03-01', and include detais of the associated Rev organization.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""issue.priority"": [""high""],
+      ""last_modified"": ""2023-03-01 00:00:00""
+    }
+  },
+  {
+    ""tool_name"": ""get_works_id"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""type"": [""issue""],
+      ""ticket.rev_org"": ""$$PREV[1]""
+    }
+  },
+  {
+    ""tool_name"": ""rev-orgs-create"",
+    ""arguments"": {
+      ""id"": ""$$PREV[1]""
+    }
+  }
+]
+"
+"List tickets created by 'USER456' with severity 'blocker', and get the current sprint ID and user information.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""created_by"", ""argument_value"": [""USER456""]},
+      {""argument_name"": ""type"", ""argument_value"": [""ticket""]},
+      {""argument_name"": ""ticket.severity"", ""argument_value"": [""blocker""]}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""who_am_i"",
+    ""arguments"": []
+  }
+]
+"
+"Generate a summary of work items in the 'testing' stage, created by 'DEVU-123' on '2023-04-01', and create tasks from them.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""stage.name"", ""argument_value"": ""testing""},
+      {""argument_name"": ""created_by"", ""argument_value"": ""DEVU-123""},
+      {""argument_name"": ""date_of_creation"", ""argument_value"": ""2023-04-01""}
+    ]
+  },
+  {
+    ""tool_name"": ""create_actionable_tasks_from_text"",
+    ""arguments"": [
+      {""argument_name"": ""text"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  }
+]
+"
+"Retrieve tasks owned by 'CUST-789' with priority 'p2', and list all work items in the current sprint.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""owned_by"", ""argument_value"": [""CUST-789""]},
+      {""argument_name"": ""type"", ""argument_value"": [""task""]},
+      {""argument_name"": ""issue.priority"", ""argument_value"": [""p2""]}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""sprint_id"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  }
+]
+"
+"Summarize issues with priority 'p3' created on '2023-05-01', and update their priority to p2.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""type"", ""argument_value"": ""issue""},
+      {""argument_name"": ""issue.priority"", ""argument_value"": ""p3""},
+      {""argument_name"": ""date_of_creation"", ""argument_value"": ""2023-05-01 00:00:00""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_works_id"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[1]""},
+      {""argument_name"": ""priority"", ""argument_value"": ""p2""}
+    ]
+  }
+]
+"
+"List tickets with 'medium' severity from 'whatsapp' source channel, updated since '2023-06-01', and add similar work items to current sprint","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""ticket.severity"": [""medium""],
+      ""ticket.source_channel"": [""whatsapp""],
+      ""last_modified"": ""2023-06-01""
+    }
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": {}
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": ""$$PREV[0].work_ids""
+    }
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[2]"",
+      ""sprint_id"": ""$$PREV[1].sprint_id""
+    }
+  }
+]
+"
+"Identify all work items related to part 'PartA', within the sprint 'Sprint123', and under Rev organization 'RevOrg1'. Summarize these items","[
+  {
+    ""tool_name"": ""who_am_i"",
+    ""arguments"": {}
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""stage.name"": ""triage"",
+      ""applies_to_part"": ""FEAT-123"",
+      ""owned_by"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[1]""
+    }
+  }
+]
+"
+"List work items from source channel 'ChannelX' in part 'PartB'. Find similar items to 'WorkItem456' in Rev organization 'RevOrg2', then add these similar items to sprint 'Sprint456'.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""type"": [""task""],
+      ""ticket.source_channel"": [""ChannelX""],
+      ""applies_to_part"": [""PartB""]
+    }
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": ""WorkItem456""
+    }
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[1]"",
+      ""sprint_id"": ""Sprint456""
+    }
+  }
+]
+"
+"Create work items for part 'PartC' with a target close date of next month, add them to sprint 'Sprint789'. Afterwards, get the sprint ID of the current sprint and list all work items in it","[
+  {
+    ""tool_name"": ""works-create"",
+    ""arguments"": [
+      {""applies_to_part"": [""PartC""]},
+      {""target_close_date"": ""$$PREV[0]""},
+      {""type"": ""task""},
+      {""title"": ""<Specify a title>""}
+    ]
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      {""work_ids"": ""$$PREV[0].ids""},
+      {""sprint_id"": ""Sprint789""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""sprint"": ""$$PREV[2]""}
+    ]
+  }
+]
+"
+"For part 'PartD', find work items in the current sprint. Summarize these items, and then find similar work items in Rev organization 'RevOrg4'","[
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""applies_to_part"",
+        ""argument_value"": [""PartD""]
+      },
+      {
+        ""argument_name"": ""stage.name"",
+        ""argument_value"": [""$$PREV[0]""]
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""objects"",
+        ""argument_value"": ""$$PREV[1]""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""ticket.rev_org"",
+        ""argument_value"": [""RevOrg4""]
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""work_id"",
+        ""argument_value"": ""$$PREV[3]""
+      }
+    ]
+  }
+]
+"
+"List work items created by 'User123' in part 'PartF', add these items to sprint 'Sprint303'. Then, summarize these items based on their source channel.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""created_by"", ""argument_value"": ""User123""},
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""PartF""}
+    ]
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      {""argument_name"": ""work_ids"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""sprint_id"", ""argument_value"": ""Sprint303""}
+    ]
+  }
+]
+"
+"In Rev organization 'RevOrg6', find work items similar to 'WorkItem789'. Create new items based on these in part 'PartG', and add them to the current sprint","[
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": [
+      { ""query"": ""WorkItem789"" }
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      { ""work_id"": ""$$PREV[0]"" }
+    ]
+  },
+  {
+    ""tool_name"": ""works-create"",
+    ""arguments"": [
+      { ""applies_to_part"": [""PartG""] },
+      { ""developed_with"": [""$$PREV[1]""] },
+      /* Other necessary arguments based on 'WorkItem789' */
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      { ""work_ids"": ""$$PREV[2]"" },
+      { ""sprint_id"": ""$$PREV[3]"" }
+    ]
+  }
+]
+"
+"Delete work items in sprint 'Sprint505' from source channel 'ChannelY'. Create new work items for part 'PartI' in Rev organization 'RevOrg8', then get the work IDs of these new items.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""stage.name"",
+        ""argument_value"": ""Sprint505""
+      },
+      {
+        ""argument_name"": ""ticket.source_channel"",
+        ""argument_value"": ""ChannelY""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""works-delete"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""id"",
+        ""argument_value"": ""$$PREV[0]""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""works-create"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""applies_to_part"",
+        ""argument_value"": ""PartI""
+      },
+      {
+        ""argument_name"": ""type"",
+        ""argument_value"": ""issue"" /* or ""ticket"" or ""task"" based on type */
+      },
+      {
+        ""argument_name"": ""owned_by"",
+        ""argument_value"": ""who_am_i"" /* Placeholder for the user ID */
+      },
+      {
+        ""argument_name"": ""stage.name"",
+        ""argument_value"": ""InitialStage""
+      },
+      {
+        ""argument_name"": ""sprint"",
+        ""argument_value"": ""OptionalSprintID""
+      },
+      {
+        ""argument_name"": ""target_close_date"",
+        ""argument_value"": ""ExpectedCompletionDate""
+      },
+      {
+        ""argument_name"": ""title"",
+        ""argument_value"": ""TitleOfTheWorkItem""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""get_works_id"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""objects"",
+        ""argument_value"": ""$$PREV[2]""
+      }
+    ]
+  }
+]
+"
+"List tickets for Rev organization 'REV-789', find similar tickets, and then get their work IDs","[
+  {
+    ""tool_name"": ""who_am_i"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""stage.name"", ""argument_value"": ""triage""},
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""FEAT-123""},
+      {""argument_name"": ""owned_by"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  }
+]
+[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""ticket.rev_org"", ""argument_value"": [""REV-789""]}
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {""argument_name"": ""work_id"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_works_id"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  }
+]
+"
+"List all work items associated with the part name 'EngineX' created by user 'JohnDoe', and then summarize these items. Also, return the ID of the current sprint these items are a part of.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""applies_to_part"", ""argument_value"": [""EngineX""]},
+      {""argument_name"": ""created_by"", ""argument_value"": [""JohnDoe""]}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  }
+]
+"
+"Find work items with ticket severity 'high' in Rev organization 'RevTech', add these items to the current sprint, and then return the sprint ID.","[
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": {
+      ""query"": ""RevTech""
+    }
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""ticket.severity"": [""high""],
+      ""ticket.rev_org"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": {}
+  }
+]
+"
+"Retrieve work items owned by user 'AliceSmith', check if any are similar to work item ID 'WK12345', and summarize the similar items found.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""owned_by"": [""AliceSmith""]}
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {""work_id"": ""WK12345""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""objects"": ""$$PREV[1]""}
+    ]
+  }
+]
+"
+"Search for work items related to part name 'GearBox5', filter by ticket severity 'medium', add these to the current sprint, and return the updated sprint details.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""GearBox5""},
+      {""argument_name"": ""ticket.severity"", ""argument_value"": [""medium""]}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      {""argument_name"": ""work_ids"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""sprint_id"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  }
+]
+"
+"Retrieve the work items created by user 'EmmaJones', check if they belong to the current sprint, and if so, update their priority to 'p1'","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""created_by"", ""argument_value"": [""EmmaJones""]}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""created_by"", ""argument_value"": [""EmmaJones""]},
+      {""argument_name"": ""stage.name"", ""argument_value"": [""$$PREV[1]""]}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[2]""},
+      {""argument_name"": ""issue.priority"", ""argument_value"": ""p1""}
+    ]
+  }
+]
+"
+"For part 'ControlUnit3', list all associated work items, create actionable tasks from their descriptions, and then summarize these tasks.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""ControlUnit3""},
+      {""argument_name"": ""type"", ""argument_value"": [""issue"", ""ticket"", ""task""]}
+    ]
+  },
+  {
+    ""tool_name"": ""create_actionable_tasks_from_text"",
+    ""arguments"": [
+      {""argument_name"": ""text"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  }
+]
+"
+"Identify all work items in Rev organization 'NetSolutions' with ticket severity 'low', update these items to be owned by user 'DavidLee', and count the total updated items.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""ticket.severity"": [""low""],
+      ""ticket.rev_org"": [""NetSolutions""]
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[0]"",
+      ""owned_by"": [""DavidLee""]
+    }
+  },
+  {
+    ""tool_name"": ""count"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[1]""
+    }
+  }
+]
+"
+"Search for and summarize work items related to part 'BatteryModule9', check their association with the current sprint, and then return the sprint's ID.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""applies_to_part"",
+        ""argument_value"": ""BatteryModule9""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""objects"",
+        ""argument_value"": ""$$PREV[0]""
+      }
+    ]
+  }
+]
+"
+"Find work items with the ID 'WK30210' in Rev organization 'EcoTech', determine if they are similar to any other work items, and then list the similar items found.","[
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": {
+      ""query"": ""EcoTech""
+    }
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""applies_to_part"": [""WK30210""],
+      ""ticket.rev_org"": [""$$PREV[0]""]
+    }
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": ""WK30210""
+    }
+  }
+]
+"
+"List tickets with 'blocker' severity created last week. Summarize these ticketsm find similar tickets, and add them to the current sprint.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""type"": [""ticket""],
+      ""ticket.severity"": [""blocker""],
+      ""date_of_creation"": [""Start date of last week"", ""End date of last week""]
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[2]"",
+      ""sprint_id"": ""ID of current sprint"" // This needs to be replaced with the actual sprint ID retrieved from the system
+    }
+  }
+]
+"
+"Retrieve work items due next week with high severity. Update their priority to 'p1', and summarize these items.","[
+    {
+        ""tool_name"": ""get_current_date"",
+        ""arguments"": []
+    },
+    {
+        ""tool_name"": ""works_list"",
+        ""arguments"": [
+            {""argument_name"": ""target_close_date"", ""argument_value"": ""current_date, next_week_date""},
+            {""argument_name"": ""ticket.severity"", ""argument_value"": [""high""]}
+        ]
+    },
+    {
+        ""tool_name"": ""works-update"",
+        ""arguments"": [
+            {""argument_name"": ""id"", ""argument_value"": ""$$PREV[1].ids""},
+            {""argument_name"": ""issue.priority"", ""argument_value"": ""p1""}
+        ]
+    },
+    {
+        ""tool_name"": ""summarize_objects"",
+        ""arguments"": [
+            {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[2].ids""}
+        ]
+    }
+]
+"
+"Get tickets created via 'slack' with 'high' severity. Update their stages in 'In Review', and then create tasks from their descriptions.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""type"": [""ticket""]},
+      {""ticket.source_channel"": [""slack""]},
+      {""ticket.severity"": [""high""]}
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""type"": [""ticket""]},
+      {""ticket.source_channel"": [""slack""]},
+      {""ticket.severity"": [""high""]},
+      {""stage.name"": [""In Review""]}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""id"": [""$$PREV[0].id""]},
+      {""stage.name"": [""In Review""]}
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""type"": [""ticket""]},
+      {""ticket.source_channel"": [""slack""]},
+      {""ticket.severity"": [""high""]},
+      {""stage.name"": [""In Review""]}
+    ]
+  },
+  {
+    ""tool_name"": ""create_actionable_tasks_from_text"",
+    ""arguments"": [
+      {""text"": [""Descriptions of tickets from $$PREV[2]""]}
+    ]
+  }
+]
+"
+"Identify tickets with 'medium' severity reported through 'discord' this month. Summarize these tickets, find similar items, and count them.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""ticket.severity"",
+        ""argument_value"": [""medium""]
+      },
+      {
+        ""argument_name"": ""ticket.source_channel"",
+        ""argument_value"": [""discord""]
+      },
+      {
+        ""argument_name"": ""date_of_creation"",
+        ""argument_value"": ""2023-12-01 00:00:00""
+      },
+      {
+        ""argument_name"": ""type"",
+        ""argument_value"": [""ticket""]
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""objects"",
+        ""argument_value"": ""$$PREV[0]""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""work_id"",
+        ""argument_value"": ""$$PREV[0]""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""count"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""objects"",
+        ""argument_value"": ""$$PREV[0]""
+      }
+    ]
+  }
+]
+"
+List issues created yesterday with 'blocker' severity. Add them to the current sprint and update their status to 'Urgent'.,"[
+  {
+    ""tool_name"": ""get_current_date"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""type"": ""issue"",
+      ""date_of_creation"": ""yesterday's date"",
+      ""ticket.severity"": [""blocker""]
+    }
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[1]"",
+      ""sprint_id"": ""$$PREV[2]""
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[1]"",
+      ""stage.name"": ""Urgent""
+    }
+  }
+]
+"
+"Retrieve tickets with 'low' severity reported via 'whatsapp' last week. Summarize these tickets, and update their target close date to next week.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""ticket.severity"": [""low""]},
+      {""ticket.source_channel"": [""whatsapp""]},
+      {""date_of_creation"": ""Specify last week's date range""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""objects"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""id"": ""ID_of_ticket_1"", ""target_close_date"": ""Specify next week's date""},
+      {""id"": ""ID_of_ticket_2"", ""target_close_date"": ""Specify next week's date""},
+      ...
+      {""id"": ""ID_of_last_ticket"", ""target_close_date"": ""Specify next week's date""}
+    ]
+  }
+]
+"
+"List tickets with 'high' severity from 'discord' created in the last month. Find similar tickets, add them to the current sprint, and summarize them.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""type"", ""argument_value"": [""ticket""]},
+      {""argument_name"": ""ticket.severity"", ""argument_value"": [""high""]},
+      {""argument_name"": ""ticket.source_channel"", ""argument_value"": [""discord""]},
+      {""argument_name"": ""date_of_creation"", ""argument_value"": [""start_date"", ""end_date""]}
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {""argument_name"": ""work_id"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      {""argument_name"": ""work_ids"", ""argument_value"": ""$$PREV[1]""},
+      {""argument_name"": ""sprint_id"", ""argument_value"": ""$$PREV[2]""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  }
+]
+"
+Identify work items reported through 'slack' with 'medium severity due next month. Update their priority to 'p2'.,"[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""ticket.source_channel"", ""argument_value"": ""slack""},
+      {""argument_name"": ""ticket.severity"", ""argument_value"": ""medium""},
+      {""argument_name"": ""target_close_date"", ""argument_value"": ""Next month's date range""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_works_id"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[1]""},
+      {""argument_name"": ""priority"", ""argument_value"": ""p2""}
+    ]
+  }
+]
+"
+"List all work items with Part Name 'PART-123', owned by User Id 'USER123', and in Stage Name 'Development'. Get similar work items based on these criteria. Then, update these work items to be associated with Rev Organization Name 'REV-XYZ' .","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""applies_to_part"": [""PART-123""],
+      ""owned_by"": [""USER123""],
+      ""stage.name"": [""Development""]
+    }
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": ""$$PREV[0]""
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[1]"",
+      ""issue.rev_orgs"": [""REV-XYZ""]
+    }
+  }
+]
+"
+"Retrieve current sprint ID. List work items with Part Name 'PART-456', Stage Name 'Testing', and owned by User Id 'USER456'. Add these work items to the current sprint. Then, summarize these work items","[
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""stage.name"", ""argument_value"": ""Testing""},
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""PART-456""},
+      {""argument_name"": ""owned_by"", ""argument_value"": ""USER456""}
+    ]
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      {""argument_name"": ""work_ids"", ""argument_value"": ""$$PREV[1]""},
+      {""argument_name"": ""sprint_id"", ""argument_value"": ""$$PREV[0]""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[2]""}
+    ]
+  }
+]
+
+"
+"List all work items under Rev Organization Name 'REV-ABC', with Part Name 'PART-789', and in Stage Name 'Review'. Update these work items to be owned by User Id 'ADMIN-123'. Summarize the updated work items","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""ticket.rev_org"": [""REV-ABC""],
+      ""applies_to_part"": [""PART-789""],
+      ""stage.name"": [""Review""]
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[0].ids"",
+      ""owned_by"": [""ADMIN-123""]
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[1].updated_work_items""
+    }
+  }
+]
+"
+"Retrieve work items with Work Item Id 'ITEM-123', in Stage Name 'Design', and under Rev Organization Name 'ORG-123'. Update their Stage Name to 'Implementation'.","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""stage.name"": ""Design""},
+      {""issue.rev_orgs"": ""ORG-123""},
+      {""type"": ""Issue""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""id"": ""$$PREV[0].results[0].id"", ""stage.name"": ""Implementation""}
+    ]
+  }
+]
+"
+"List work items with Part Name 'PART-234' and owned by User Id 'USER789'. Add these items to the current sprint. Then, update their Stage Name to 'Completed","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""PART-234""},
+      {""argument_name"": ""owned_by"", ""argument_value"": ""USER789""}
+    ]
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": [
+      {""argument_name"": ""work_ids"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""sprint_id"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""stage.name"", ""argument_value"": ""Completed""}
+    ]
+  }
+]
+"
+"Create a list of work items under Rev Organization Name 'REV-DEF', with Stage Name 'Planning', and owned by User Id 'USER321'. Summarize these work items and find similar work items","[
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": [
+      {
+        ""query"": ""REV-DEF""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""who_am_i"",
+    ""arguments"": []
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""stage.name"": ""Planning"",
+        ""owned_by"": ""$$PREV[1]"",
+        ""ticket.rev_org"": ""$$PREV[0]""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {
+        ""objects"": ""$$PREV[2]""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {
+        ""work_id"": ""$$PREV[2]""
+      }
+    ]
+  }
+]
+"
+"Retrieve work items for Part Name 'PART-567', in Stage Name 'Deployment', and under Rev Organization Name 'ORG-456'. Update these work items to be associated with User Id 'DEV-123'. Summarize the updated work items","[
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": [
+      {""argument_name"": ""query"", ""argument_value"": ""PART-567""}
+    ]
+  },
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": [
+      {""argument_name"": ""query"", ""argument_value"": ""ORG-456""}
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""stage.name"", ""argument_value"": ""Deployment""},
+      {""argument_name"": ""ticket.rev_org"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[2]""},
+      {""argument_name"": ""owned_by"", ""argument_value"": ""DEV-123""}
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {""argument_name"": ""objects"", ""argument_value"": ""$$PREV[3]""}
+    ]
+  }
+]
+"
+Generate a list of work items under Rev Organization Name 'REV-JKL' and with Part Name 'PART-890'. Update these work items to be in Stage Name 'Testing'. Create tasks from these items.,"[
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": [
+      {""argument_name"": ""query"", ""argument_value"": ""REV-JKL""}
+    ]
+  },
+  {
+    ""tool_name"": ""search_object_by_name"",
+    ""arguments"": [
+      {""argument_name"": ""query"", ""argument_value"": ""PART-890""}
+    ]
+  },
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""ticket.rev_org"", ""argument_value"": ""$$PREV[0]""},
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""$$PREV[1]""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[2]""},
+      {""argument_name"": ""stage.name"", ""argument_value"": ""Testing""}
+    ]
+  },
+  {
+    ""tool_name"": ""create_actionable_tasks_from_text"",
+    ""arguments"": [
+      {""argument_name"": ""text"", ""argument_value"": ""Tasks created from items in 'REV-JKL' and 'PART-890'""}
+    ]
+  }
+]
+"
+List all work items owned by User Id 'USER555' and in Stage Name 'Concept'. Update these work items to be associated with Part Name 'PART-321'.,"[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {""argument_name"": ""owned_by"", ""argument_value"": ""USER555""},
+      {""argument_name"": ""stage.name"", ""argument_value"": ""Concept""}
+    ]
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": [
+      {""argument_name"": ""id"", ""argument_value"": ""$$PREV[0].objects""},
+      {""argument_name"": ""applies_to_part"", ""argument_value"": ""PART-321""}
+    ]
+  }
+]
+"
+List tickets with severity 'blocker' created by 'UserX' on '2023-12-01'. Check if any are similar to ticket 'TICKET123' . Update their status to 'Resolved' and summarize the changes.,"[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""type"": [""ticket""],
+      ""ticket.severity"": [""blocker""],
+      ""created_by"": [""UserX""],
+      ""date_of_creation"": [""2023-12-01 00:00:00""]
+    }
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": {
+      ""work_id"": [""TICKET123""]
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""loop_through_result"": true,
+    ""arguments"": {
+      ""id"": ""$$PREV[0].result.tickets_ids"", 
+      ""stage.name"": [""Resolved""]
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[2].updated_tickets""
+    }
+  }
+]
+"
+"Retrieve tasks created by 'UserY' via source channel 'Email'. Get the current sprint ID and add these tasks to it . Then, update the tasks' due dates to '2023-12-10'  and generate a summary report","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": {
+      ""created_by"": [""UserY""],
+      ""ticket.source_channel"": [""Email""],
+      ""type"": [""task""]
+    }
+  },
+  {
+    ""tool_name"": ""get_sprint_id"",
+    ""arguments"": {}
+  },
+  {
+    ""tool_name"": ""add_work_items_to_sprint"",
+    ""arguments"": {
+      ""work_ids"": ""$$PREV[0]"",
+      ""sprint_id"": ""$$PREV[1]""
+    }
+  },
+  {
+    ""tool_name"": ""works-update"",
+    ""arguments"": {
+      ""id"": ""$$PREV[0]"",
+      ""target_close_date"": ""2023-12-10""
+    }
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": {
+      ""objects"": ""$$PREV[0]""
+    }
+  }
+]
+"
+"List all issues with priority 'p0' reported by 'UserZ' since '2023-11-01'. Summarize these issues, find similar ones, and update their priority to 'p1'","[
+  {
+    ""tool_name"": ""works_list"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""issue.priority"",
+        ""argument_value"": [""p0""]
+      },
+      {
+        ""argument_name"": ""created_by"",
+        ""argument_value"": [""UserZ""]
+      },
+      {
+        ""argument_name"": ""date_of_creation"",
+        ""argument_value"": ""2023-11-01""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""summarize_objects"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""objects"",
+        ""argument_value"": ""$$PREV[0]""
+      }
+    ]
+  },
+  {
+    ""tool_name"": ""get_similar_work_items"",
+    ""arguments"": [
+      {
+        ""argument_name"": ""work_id"",
+        ""argument_value"": ""<each_individual_issue_id_from_step_2>""
+      }
+      // Repeat this block for each similar issue ID obtained in step 2
+    ]
+  },
+  // This part can't be precisely defined due to the unknown number of similar issues until step 3.
+  // The update operation will depend on the specific issue IDs obtained from step 3.
+]
+"
