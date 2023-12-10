@@ -39,16 +39,6 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.schema.document import Document
 
-# these need to be input from user, but for now we are hardcoding them
-allowed_args_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
- 'works-update/type': ['issue', 'task', 'ticket'],
- 'works_list/issue.priority': ['p0', 'p1', 'p2', 'p3'],
- 'works_list/ticket.needs_response': ['true', 'false'],
- 'works_list/ticket.severity': ['blocker', 'low', 'medium', 'high'],
- 'works_list/type': ['issue', 'task', 'ticket'],
- 'works-create/issue.priority': ['p0', 'p1', 'p2', 'p3'],
- 'works-create/type': ['issue', 'task', 'ticket'],
- 'works-create/title': ['issue', 'ticket']}
 
 args_in_list_dict = {
  'works_list/applies_to_part': 1,

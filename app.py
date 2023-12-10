@@ -17,6 +17,16 @@ retrieval_vector_db = FAISS.from_documents(
     embedding=retrieval_embeddings,
 )
 
+arg_allowed_values_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
+ 'works-update/type': ['issue', 'task', 'ticket'],
+ 'works_list/issue.priority': ['p0', 'p1', 'p2', 'p3'],
+ 'works_list/ticket.needs_response': ['true', 'false'],
+ 'works_list/ticket.severity': ['blocker', 'low', 'medium', 'high'],
+ 'works_list/type': ['issue', 'task', 'ticket'],
+ 'works-create/issue.priority': ['p0', 'p1', 'p2', 'p3'],
+ 'works-create/type': ['issue', 'task', 'ticket'],
+ 'works-create/title': ['issue', 'ticket']}
+
 # Initialize session state for messages if not already present
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -124,10 +134,12 @@ elif page == "Tool Management":
         with st.form("new_argument_form"):
             new_arg_name = st.text_input("Argument Name")
             new_arg_desc = st.text_area("Argument Description")
+            new_arg_allowed_values = st.text_area("Argument Allowed Values")
             new_arg_type = st.text_input("Argument Type")
             submitted_arg = st.form_submit_button("Add Argument")
             if submitted_arg:
                 st.session_state.api_list_updated = add_argument(st.session_state.api_list_updated, selected_tool_name, new_arg_name, new_arg_desc, new_arg_type)
+                arg_allowed_values_dict[f"{selected_tool_name}/{new_arg_name}"] = new_arg_allowed_values
                 st.success("Argument Added Successfully!")
     else:
         st.write("No tools available. Add a tool first.")
@@ -144,12 +156,17 @@ elif page == "Tool Management":
             with st.form("update_delete_arg_form"):
                 new_arg_name = st.text_input("New Argument Name", value=selected_arg['argument_name'])
                 new_arg_desc = st.text_area("New Argument Description", value=selected_arg['argument_description'])
+                if f"{selected_tool_name}/{selected_arg_name}" in arg_allowed_values_dict:    
+                    new_arg_allowed_values = st.text_area("New Argument Allowed Values", value=arg_allowed_values_dict[f"{selected_tool_name}/{selected_arg_name}"])
+                else:
+                    new_arg_allowed_values = st.text_area("New Argument Allowed Values")
                 new_arg_type = st.text_input("New Argument Type", value=selected_arg['argument_type'])
                 update_arg_button = st.form_submit_button("Update Argument")
                 delete_arg_button = st.form_submit_button("Delete Argument")
 
                 if update_arg_button:
                     st.session_state.api_list_updated = update_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, new_arg_name, new_arg_desc, new_arg_type)
+                    arg_allowed_values_dict[f"{selected_tool_name}/{new_arg_name}"] = new_arg_allowed_values
                     st.success("Argument Updated Successfully!")
 
                 if delete_arg_button:
@@ -183,3 +200,4 @@ elif page == "Tool Management":
 #         }
 #     ]
 # }
+
