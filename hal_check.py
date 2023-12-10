@@ -252,6 +252,8 @@ def placeholder_check(json_response):
 def unsolvable_check(json_response):
     for item in json_response:
         for key in item:
+            if type(item[key]) is list:
+                return 0
             arg = item[key]
             x = re.search(".*cannot.*", arg)
             if x:
