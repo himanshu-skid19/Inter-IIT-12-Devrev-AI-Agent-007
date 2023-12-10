@@ -32,23 +32,7 @@ Query : {QUERY}
 '''
 follow_up_prompt_template = '''
 {chat_history}
-
-From your solution extract a list of JSONs where each json follows the following schema \
-that is given between triple backticks. Return only the list of JSONs. To reference the value of the ith API in the list, use $$PREV[i] as argument value. i = 0, 1,  ..  j-1;  j = current API’s index in the list.
-If according to your response, the task cannot be solved then return an empty list.
-
-' ' '
-{{
-"tool_name": {{ "type": "string" }},
-"arguments": [
-{{
-"argument_name": "{{ "type": "string" }},
-"argument_value": {{ "type": "string" }},
-}}
-]
-}}
-' ' '
-
+From your solution extract a list of JSONs. Return only the list of JSONs.
 '''
 
 reprompt_template= '''You are an AI Assistant that specializes in Agile Software Development and Product Management and your task is to assist product managers by providing a list of APIs that can solve the given task using only the APIs given below.
