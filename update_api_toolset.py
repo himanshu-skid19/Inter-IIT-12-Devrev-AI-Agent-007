@@ -1,8 +1,9 @@
 from imports import *
 from retrieval import *
 from prompt_templates import *
+from hal_check import *
 
-def API_CHOICE(n, tool_name):
+def API_CHOICE(n, tool_name, api_list):
   l = []
   apis = api_list.copy()
   if tool_name in apis:
@@ -13,88 +14,52 @@ def API_CHOICE(n, tool_name):
     l.append(choice)
   return l
 
-def generate_examples(tool_name, FEW_SHOT):
-  global API_LIST
-  APIs = API_CHOICE(2, tool_name)
-  example = generation_chain.run(API_LIST = API_LIST, FEW_SHOT = FEW_SHOT, APIS = APIs, TOOL_NAME = tool_name)
+def generate_examples(tool_name, api_list, store):
+  APIs = API_CHOICE(2, tool_name, api_list)
+  few_shot_examples = random.sample(list(store.docstore._dict), 2)
+  few_shot_examples = [few_shot_examples[0].page_content, few_shot_examples[1].page_content]
+  example = generation_chain.run(API_LIST = api_list, FEW_SHOT = few_shot_examples, APIS = APIs, TOOL_NAME = tool_name)
   return example
-
-
-def delete_tool_from_allowed_tools(tool_name):
-  global available_tools
-  global available_arguments
-  global allowed_args_dict
-  available_tools.remove(tool_name)
-  available_arguments = [s for s in available_arguments if not s.startswith(tool_name)]
-  allowed_args_dict = {key: value for key, value in allowed_args_dict.items() if not key.startswith(tool_name)}
-
-def add_tool_to_allowed_tools(tool):
-  global available_tools
-  global available_arguments
-  global allowed_args_dict
-  tool_name = tool['name']
-  available_tools.append(tool_name)
-  for i in tool["arguments"]:
-    available_arguments.append(f'{tool_name}/{i["argument_name"]}')
-
-
-def update_tool(tool, updated_tool, store):
-    global API_LIST
-    global FEW_SHOT
-    tool_name = tool['name']
-    delete_tool_from_allowed_tools(tool_name)
-    add_tool_to_allowed_tools(updated_tool)
-    delete_tool_examples(store, tool_name)
-    for i in range(len(API_LIST)):
-        if API_LIST[i]['name'] == tool_name:
-            API_LIST[i] = updated_tool
-    example = generate_examples(tool_name, FEW_SHOT)
-    add_to_vector_store(store, example)
-    FEW_SHOT.append(example)
-
-
-def delete_tool(tool_name, store):
-  global API_LIST
-  global FEW_SHOT
-  delete_tool_examples(store, tool_name)
-  delete_tool_from_allowed_tools(tool_name)
-  for i in range(len(API_LIST)):
-    if API_LIST[i]['name'] == tool_name:
-      API_LIST.remove(API_LIST[i])
-      break
-  to_remove = []
-  for i in range(len(FEW_SHOT)):
-    if tool_name in FEW_SHOT[i]['ANSWER']:
-      to_remove = FEW_SHOT[i]
-  FEW_SHOT = [item for item in to_remove if item not in FEW_SHOT]
-
-def add_tool(tool, store):
-  global FEW_SHOT
-  API_LIST.append(tool)
-  add_tool_to_allowed_tools(tool)
-  example = generate_examples(tool, FEW_SHOT)
-  add_to_vector_store(store, example)
-  FEW_SHOT.append(example)
-def manage_tools(operation, tool, store, updated_tool = None):
-    memory.clear()
-    if operation == 'add':
-        add_tool(tool, store)
-        print("add")
-    elif operation == 'delete':
-        tool_name = tool['name']
-        delete_tool(tool_name, store)
-        print("delete")
-    elif operation == 'update':
-        update_tool(tool, updated_tool, store)
-        print("update")
 
 api_weights = {'works_list': 0,  'prioritize_objects' : 0, 'add_work_items_to_sprint' : 0, 'get_sprint_id' : 0, 'get_similar_work_items' : 0, 'search_object_by_name' : 0,
                'create_actionable_tasks_from_text' : 0, 'who_am_i' : 0,  'get_works_id' : 0, }
 
 api_list = list(api_weights.keys())
 
+# Function to add a new tool
+def add_tool(api_list, name, description):
+    available_tools.append(name)
+    api_list.append({"name": name, "description": description, "arguments": []})
+    return api_list
 
-def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type):
+def delete_tool(api_list, tool_name, store):
+    delete_tool_examples(store, tool_name)
+    global available_tools
+    global available_arguments
+    global allowed_args_dict
+    global args_in_list_dict
+    available_tools.remove(tool_name)
+    available_arguments = [s for s in available_arguments if not s.startswith(tool_name)]
+    allowed_args_dict = {key: value for key, value in allowed_args_dict.items() if not key.startswith(tool_name)}
+    args_in_list_dict = {key: value for key, value in args_in_list_dict.items() if not key.startswith(tool_name)}
+    return [tool for tool in api_list if tool['name'] != tool_name]
+
+# Function to update a tool
+def update_tool(api_list, old_tool_name, new_tool_name, new_description, store):
+    delete_tool_examples(store, old_tool_name)
+    for tool in api_list:
+        if tool['name'] == old_tool_name:
+            tool['name'] = new_tool_name
+            tool['description'] = new_description
+            break
+    example = generate_examples(new_tool_name, api_list, store)
+    add_to_vector_store(store, example)
+    available_tools.remove(old_tool_name)
+    available_tools.append(new_tool_name)
+    return api_list
+
+# Function to add an argument to a tool
+def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, store):
     for tool in api_list:
         if tool['name'] == tool_name:
             tool['arguments'].append({
@@ -103,18 +68,26 @@ def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type):
                 "argument_type": arg_type
             })
             break
+    example = generate_examples(tool_name, api_list, store)
+    add_to_vector_store(store, example)
+    available_arguments.append(f"{tool_name}/{arg_name}")
     return api_list
 
 # Function to delete an argument from a tool
-def delete_argument(api_list, tool_name, arg_name):
+def delete_argument(api_list, tool_name, arg_name, store):
+    delete_tool_examples(store, arg_name)
     for tool in api_list:
         if tool['name'] == tool_name:
             tool['arguments'] = [arg for arg in tool['arguments'] if arg['argument_name'] != arg_name]
             break
+    example = generate_examples(tool_name, api_list, store)
+    add_to_vector_store(store, example)
+    available_arguments.remove(f"{tool_name}/{arg_name}")
     return api_list
 
 # Function to update an argument
-def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type):
+def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type, store):
+    delete_tool_examples(store, old_arg_name)
     for tool in api_list:
         if tool['name'] == tool_name:
             for arg in tool['arguments']:
@@ -124,17 +97,21 @@ def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_des
                     arg['argument_type'] = new_arg_type
                     break
             break
-    return api_list
-
-# Function to delete multiple tools
-def delete_multiple_tools(api_list, names):
-    api_list = [tool for tool in api_list if tool['name'] not in names]
+    example = generate_examples(tool_name, api_list, store)
+    add_to_vector_store(store, example)
+    available_arguments.remove(f"{tool_name}/{old_arg_name}")
+    available_arguments.append(f"{tool_name}/{new_arg_name}")
     return api_list
 
 # Function to delete multiple arguments from a tool
-def delete_multiple_arguments(api_list, tool_name, arg_names):
-    for tool in api_list:
-        if tool['name'] == tool_name:
-            tool['arguments'] = [arg for arg in tool['arguments'] if arg['argument_name'] not in arg_names]
-            break
-    return api_list
+def delete_multiple_arguments(api_list, tool_name, arg_names, store):
+  for arg_name in arg_names :
+    delete_tool_examples(store, arg_name)
+    available_arguments.remove(f"{tool_name}/{arg_name}")
+  for tool in api_list:
+      if tool['name'] == tool_name:
+          tool['arguments'] = [arg for arg in tool['arguments'] if arg['argument_name'] not in arg_names]
+          break
+  example = generate_examples(tool_name, api_list, store)
+  add_to_vector_store(store, example)
+  return api_list
