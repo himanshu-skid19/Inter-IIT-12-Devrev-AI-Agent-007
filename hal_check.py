@@ -197,13 +197,13 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
                 if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0]) >= idx):
                   hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
 
-    hallucinated_args_values = []
+    hallucinated_args_values = [] 
     for arg_name, arg_value in json_args_dict.items():
         if arg_name in allowed_args_dict:
             if arg_value not in allowed_args_dict[arg_name]:
-                hallucinated_args_values.append(arg_name)
+                hallucinated_args_values.append((arg_name, arg_value))
     return hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev
-    
+
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response):
   Correction_prompt = ''
   Correction_prompt += f'There are following errors in your previous json response \n {json_response} \n'
