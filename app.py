@@ -10,7 +10,7 @@ from update_api_toolset import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
-retrieval_loader = CSVLoader(file_path='/content/Seed_Dataset.csv', source_column = 'QUERY')
+retrieval_loader = CSVLoader(file_path=r'C:\Users\hp\OneDrive\Desktop\Devrev-AI-Agent-007\Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
 retrieval_vector_db = FAISS.from_documents(
