@@ -10,7 +10,8 @@ from transformers import StoppingCriteria, StoppingCriteriaList
 import warnings
 import simplejson as json
 import pandas as pd
-
+import re
+import ast
 from langchain.prompts import (
     PromptTemplate,
     ChatPromptTemplate,
@@ -38,7 +39,6 @@ from langchain.document_loaders.csv_loader import CSVLoader
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.schema.document import Document
-
 
 args_in_list_dict = {
  'works_list/applies_to_part': 1,

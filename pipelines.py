@@ -26,22 +26,13 @@ def pipeline(query, api_list, available_arguments, available_tools, allowed_args
   print(f"##################")
   print(f"Reprompt Number: {cntr} #################")
 
-  try:
-      json_response = json.loads(resp_formatted)
-      print(f"3. JSON decoded output- {cntr} ##################")
-      print(json_response)
-      print(type(json_response))
-      print(len(json_response))
-      print(f"##################")
 
-  except:
-      json_response = {}
-      json_response = json.dumps(json_response)
-      print(f"3. JSON decoded output- {cntr} ##################")
-      print(json_response)
-      print(type(json_response))
-      print(len(json_response))
-      print(f"##################")
+  json_response = ast.literal_eval(resp_formatted)
+  print(f"3. JSON decoded output- {cntr} ##################")
+  print(json_response)
+  print(type(json_response))
+  print(len(json_response))
+  print(f"##################")
 
   while not done:
       hallucinated_args, hallucinated_tools, hallucinated_args_values = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
@@ -69,6 +60,16 @@ def pipeline(query, api_list, available_arguments, available_tools, allowed_args
       print(len(json_response))
       print(f"##################")
 
-      if placeholder_check(json_response):
-          return []
+
+    json_response = reprompt_chain.run(QUERY = query, API_LIST = API_LIST, CORRECTION_PROMPT = Correction_prompt)
+    json_response = ast.literal_eval(json_response)
+    cntr+=1
+    print(f"4. JSON decoded output- {cntr} ##################")
+    print(json_response)
+    print(type(json_response))
+    print(len(json_response))
+    print(f"##################")
+    if placeholder_check(json_response):
+      return []
   return json_response
+

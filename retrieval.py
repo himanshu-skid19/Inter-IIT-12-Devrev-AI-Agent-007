@@ -1,5 +1,6 @@
 from imports import *
 
+
 def store_to_df(store):
     v_dict = store.docstore._dict
     data_rows = []

@@ -40,16 +40,18 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
     return hallucinated_args, hallucinated_tools, hallucinated_args_values
 
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, json_response):
-    Correction_prompt = ''
-    Correction_prompt += f'There are following errors in this \n {json_response} \n'
-    for i in hallucinated_args:
-        Correction_prompt += f"Argument '{i}' not found in available arguments. \n"
-    for i in hallucinated_tools:
-        Correction_prompt += f"Tool '{i}' not found in available tools. \n"
-    for i in hallucinated_args_values:
-        Correction_prompt += f"Argument_value '{i}' is not valid \n"
-    Correction_prompt += "You have to give the corrected solution to developer query by modifying the provided JSON. You have to remove hallucinations and only output the corrected JSON. \n"
-    return Correction_prompt
+
+  Correction_prompt = ''
+  Correction_prompt += f'There are following errors in your previous json response \n {json_response} \n'
+  for i in hallucinated_args:
+    Correction_prompt += f"The argument {i} is used but is not present in the provided API list. \n"
+  for i in hallucinated_tools:
+    Correction_prompt += f"The tool {i} is used but is not present in the provided API list. \n"
+  for i in hallucinated_args_values:
+    Correction_prompt += f"Argument_value '{i}' is not valid according to the specified API list. \n"
+  Correction_prompt += "You have to give the corrected solution to the product manager's query by modifying the provided JSON. You have to remove hallucinations and only output the corrected JSON. \n"
+  return Correction_prompt
+
 
 def placeholder_check(json_response):
     argument_names = []
@@ -59,7 +61,7 @@ def placeholder_check(json_response):
         for argument in arguments:
             argument_name = argument.get("argument_name")
             argument_value = argument["argument_value"]
-    #         x = re.search("<.*>", str(argument_value))
-    #         if x:
-    #             return 1
-    # return 0
+            x = re.search("<.*>", str(argument_value))
+            if x:
+                return 1
+    return 0
