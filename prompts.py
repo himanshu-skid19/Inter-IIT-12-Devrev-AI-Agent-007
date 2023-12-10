@@ -33,6 +33,7 @@ Query : {QUERY}
 follow_up_prompt_template = '''
 {chat_history}
 From your solution extract a list of JSONs. Return only the list of JSONs.
+If according to your response, the query cannot be solved using the given APIs then return an empty list
 '''
 
 reprompt_template= '''You are an AI Assistant that specializes in Agile Software Development and Product Management and your task is to assist product managers by providing a list of APIs that can solve the given task using only the APIs given below.
