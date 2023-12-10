@@ -1,7 +1,7 @@
 from imports import *
 from hal_check import find_hallucinations, correction, placeholder_check
 
-def pipeline(query, api_list, available_arguments, available_tools, allowed_args_dict, vector_db, query_chain, format_chain, reprompt_chain, args_in_list_dict):
+def pipeline(query, api_list, available_arguments, available_tools, allowed_args_dict, vector_db):
   done = False
   max_reprompts = 1
   cntr = 1
