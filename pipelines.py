@@ -2,13 +2,18 @@ from imports import *
 from hal_check import *
 from prompt_templates import *
 
+ENV_HOST = "https://cloud.langfuse.com"
+ENV_SECRET_KEY = "sk-lf-d86b4406-8aa2-49e0-829f-8367aa67c98e"
+ENV_PUBLIC_KEY = "pk-lf-0304359e-b115-403e-8eb4-45429fbe037f"
+
 def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args_dict, vector_db):
+  handler = CallbackHandler(ENV_PUBLIC_KEY, ENV_SECRET_KEY, ENV_HOST)
   done = False
   max_reprompts = 1
   cntr = 1
   docs = vector_db.max_marginal_relevance_search(query,k=3)
   RAG_examples = f'{docs[0].page_content}' + '\n' + f'{docs[1].page_content}' + '\n' + f'{docs[2].page_content}'
-  resp = query_chain.run(QUERY = query , API_LIST = API_LIST, RAG = RAG_examples)
+  resp = query_chain.run(QUERY = query , API_LIST = API_LIST, RAG = RAG_examples, callbacks=[handler])
   print(f"1. Pseudo code output- {cntr} ##################")
   print(resp)
   print(type(resp))
@@ -19,7 +24,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
   #   # Extract json via python code
   #   pass
   # except:
-  resp_formatted= format_chain.run(QUERY = "")
+  resp_formatted= format_chain.run(QUERY = "", callbacks=[handler])
   print(f"2. JSON string output- {cntr} ##################")
   print(resp_formatted)
   print(type(resp_formatted))
@@ -52,7 +57,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
     print(len(Correction_prompt))
     print(f"##################")
 
-    json_response = reprompt_chain.run(QUERY = query, API_LIST = API_LIST, CORRECTION_PROMPT = Correction_prompt)
+    json_response = reprompt_chain.run(QUERY = query, API_LIST = API_LIST, CORRECTION_PROMPT = Correction_prompt, callbacks=[handler])
     json_response = ast.literal_eval(json_response)
     cntr+=1
     print(f"4. JSON decoded output- {cntr} ##################")

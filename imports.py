@@ -41,3 +41,6 @@ from langchain.document_loaders.csv_loader import CSVLoader
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.schema.document import Document
+
+from langfuse.callback import CallbackHandler
+from langfuse.callback import CallbackHandler
