@@ -79,7 +79,7 @@ if page == "Chatbot":
             message_placeholder = st.empty()
             json_answer = pipeline(query, api_list, args_, tools_, allowed_args_dict, retrieval_vector_db) # allowed args dict ka placeholder modify karna bacha
             full_response = json_answer
-            message_placeholder.markdown(full_response)
+            message_placeholder.json(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 elif page == "Tool Management":
