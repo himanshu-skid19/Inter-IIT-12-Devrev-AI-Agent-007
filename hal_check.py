@@ -150,7 +150,6 @@ args_in_list_dict = {
 }
 
 
-
 def find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict):
     # check errors in names of tools and arguments
     tool_names = [tool["tool_name"] for tool in json_response]
@@ -192,7 +191,6 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
                 hallucinated_args_values.append(arg_name)
     return hallucinated_args, hallucinated_tools, hallucinated_args_values
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, json_response):
-
   Correction_prompt = ''
   Correction_prompt += f'There are following errors in your previous json response \n {json_response} \n'
   for i in hallucinated_args:
@@ -216,4 +214,3 @@ def placeholder_check(json_response):
             if x:
                 return 1
     return 0
-
