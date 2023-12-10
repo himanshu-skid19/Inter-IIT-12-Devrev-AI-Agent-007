@@ -36,7 +36,7 @@ format_chain = LLMChain(llm=llm,
                         memory = memory,
                         verbose=True)
 
-generation_chain = LLMChain(llm= ChatOpenAI(temperature = 0.7, model =  "gpt-3.5-turbo-1106"),
+generation_chain = LLMChain(llm= ChatOpenAI(temperature = 0.7, model =  "gpt-4"),
                         prompt=generation_prompt,
                         output_key = 'QUERY',
                         verbose=False)
