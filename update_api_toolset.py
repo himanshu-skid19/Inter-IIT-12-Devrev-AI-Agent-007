@@ -14,12 +14,14 @@ def API_CHOICE(n, tool_name, api_list):
     l.append(choice)
   return l
 
-def generate_examples(tool_name, api_list, store):
+def generate_examples(tool_name, api_list, store, num_example):
   APIs = API_CHOICE(2, tool_name, api_list)
-  few_shot_examples = random.sample(list(store.docstore._dict), 2)
+  few_shot_examples = random.sample(list(store.docstore._dict.values()), 2)
   few_shot_examples = [few_shot_examples[0].page_content, few_shot_examples[1].page_content]
-  example = generation_chain.run(API_LIST = api_list, FEW_SHOT = few_shot_examples, APIS = APIs, TOOL_NAME = tool_name)
-  return example
+  examples = []
+  for i in range(num_example):
+    examples.append(generation_chain.run(API_LIST = api_list, FEW_SHOT = few_shot_examples, APIS = APIs, TOOL_NAME = tool_name))
+  return examples
 
 api_weights = {'works_list': 0,  'prioritize_objects' : 0, 'add_work_items_to_sprint' : 0, 'get_sprint_id' : 0, 'get_similar_work_items' : 0, 'search_object_by_name' : 0,
                'create_actionable_tasks_from_text' : 0, 'who_am_i' : 0,  'get_works_id' : 0, }
