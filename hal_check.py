@@ -186,21 +186,35 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
                         l.append(arg_val)
                         argument["argument_value"] = l
 
+    hallucinated_args_values_prev = []
+    for idx, item in enumerate(json_response):
+        if item["tool_name"] in available_tools:
+            arguments = item.get("arguments", [])
+            for argument in arguments:
+                argument_name = argument.get("argument_name")
+                if argument_name:
+                    json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
+                if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0]) >= idx):
+                  hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
+
     hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
         if arg_name in allowed_args_dict:
             if arg_value not in allowed_args_dict[arg_name]:
                 hallucinated_args_values.append(arg_name)
-    return hallucinated_args, hallucinated_tools, hallucinated_args_values
-def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, json_response):
+    return hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev
+    
+def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response):
   Correction_prompt = ''
   Correction_prompt += f'There are following errors in your previous json response \n {json_response} \n'
   for i in hallucinated_args:
     Correction_prompt += f"The argument {i} is used but is not present in the provided API list. \n"
   for i in hallucinated_tools:
     Correction_prompt += f"The tool {i} is used but is not present in the provided API list. \n"
-  for i in hallucinated_args_values:
-    Correction_prompt += f"Argument_value '{i}' is not valid according to the specified API list. \n"
+  for i, j in hallucinated_args_values:
+    Correction_prompt += f"Argument_value '{j}' for argument '{i}' is not valid according to the specified API list. \n"
+  for i, j in hallucinated_args_values_prev:
+    Correction_prompt += f"Argument_value '{j}' for argument '{i}' is not valid since it refers to an item in the API list that does not come before it.\n"
   Correction_prompt += "You have to give the corrected solution to the product manager's query by modifying the provided JSON. You have to remove hallucinations and only output the corrected JSON. \n"
   return Correction_prompt
 
