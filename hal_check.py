@@ -175,6 +175,8 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
             arguments = item.get("arguments", [])
             for argument in arguments:
                 argument_name = argument.get("argument_name")
+                if argument_name:
+                    json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
                 concat_arg = item["tool_name"] + "/" + argument_name
                 argument_names.append(concat_arg)
                 if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
