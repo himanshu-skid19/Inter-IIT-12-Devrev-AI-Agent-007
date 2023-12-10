@@ -94,3 +94,47 @@ api_weights = {'works_list': 0,  'prioritize_objects' : 0, 'add_work_items_to_sp
 api_list = list(api_weights.keys())
 
 
+def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type):
+    for tool in api_list:
+        if tool['name'] == tool_name:
+            tool['arguments'].append({
+                "argument_name": arg_name,
+                "argument_description": arg_desc,
+                "argument_type": arg_type
+            })
+            break
+    return api_list
+
+# Function to delete an argument from a tool
+def delete_argument(api_list, tool_name, arg_name):
+    for tool in api_list:
+        if tool['name'] == tool_name:
+            tool['arguments'] = [arg for arg in tool['arguments'] if arg['argument_name'] != arg_name]
+            break
+    return api_list
+
+# Function to update an argument
+def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type):
+    for tool in api_list:
+        if tool['name'] == tool_name:
+            for arg in tool['arguments']:
+                if arg['argument_name'] == old_arg_name:
+                    arg['argument_name'] = new_arg_name
+                    arg['argument_description'] = new_arg_desc
+                    arg['argument_type'] = new_arg_type
+                    break
+            break
+    return api_list
+
+# Function to delete multiple tools
+def delete_multiple_tools(api_list, names):
+    api_list = [tool for tool in api_list if tool['name'] not in names]
+    return api_list
+
+# Function to delete multiple arguments from a tool
+def delete_multiple_arguments(api_list, tool_name, arg_names):
+    for tool in api_list:
+        if tool['name'] == tool_name:
+            tool['arguments'] = [arg for arg in tool['arguments'] if arg['argument_name'] not in arg_names]
+            break
+    return api_list
