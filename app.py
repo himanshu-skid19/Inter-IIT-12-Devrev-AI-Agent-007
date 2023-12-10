@@ -10,7 +10,7 @@ from update_api_toolset import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
-retrieval_loader = CSVLoader(file_path='/content/Seed_Dataset.csv', source_column = 'QUERY')
+retrieval_loader = CSVLoader(file_path='C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
 retrieval_vector_db = FAISS.from_documents(
@@ -79,7 +79,7 @@ if page == "Chatbot":
             message_placeholder = st.empty()
             json_answer = pipeline(query, api_list, args_, tools_, allowed_args_dict, retrieval_vector_db) # allowed args dict ka placeholder modify karna bacha
             full_response = json_answer
-            message_placeholder.markdown(full_response)
+            message_placeholder.json(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 elif page == "Tool Management":
@@ -189,4 +189,3 @@ elif page == "Tool Management":
 
     with open(file_path, 'w') as file:
         json.dump(st.session_state.api_list_updated, file)
-
