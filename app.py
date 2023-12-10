@@ -120,11 +120,11 @@ elif page == "Tool Management":
                 delete_button = st.form_submit_button("Delete Tool")
 
                 if update_button:
-                    st.session_state.api_list_updated = update_tool(st.session_state.api_list_updated, selected_tool_name, new_name, new_description)
+                    st.session_state.api_list_updated = update_tool(st.session_state.api_list_updated, selected_tool_name, new_name, new_description, vector_db)
                     st.success("Tool Updated Successfully!")
 
                 if delete_button:
-                    st.session_state.api_list_updated = delete_tool(st.session_state.api_list_updated, selected_tool_name)
+                    st.session_state.api_list_updated = delete_tool(st.session_state.api_list_updated, selected_tool_name, vector_db)
                     st.success("Tool Deleted Successfully!")
 
 
@@ -139,7 +139,7 @@ elif page == "Tool Management":
             new_arg_type = st.text_input("Argument Type")
             submitted_arg = st.form_submit_button("Add Argument")
             if submitted_arg:
-                st.session_state.api_list_updated = add_argument(st.session_state.api_list_updated, selected_tool_name, new_arg_name, new_arg_desc, new_arg_type)
+                st.session_state.api_list_updated = add_argument(st.session_state.api_list_updated, selected_tool_name, new_arg_name, new_arg_desc, new_arg_type, vector_db)
                 arg_allowed_values_dict[f"{selected_tool_name}/{new_arg_name}"] = new_arg_allowed_values
                 st.success("Argument Added Successfully!")
     else:
@@ -166,12 +166,12 @@ elif page == "Tool Management":
                 delete_arg_button = st.form_submit_button("Delete Argument")
 
                 if update_arg_button:
-                    st.session_state.api_list_updated = update_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, new_arg_name, new_arg_desc, new_arg_type)
+                    st.session_state.api_list_updated = update_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, new_arg_name, new_arg_desc, new_arg_type, vector_db)
                     arg_allowed_values_dict[f"{selected_tool_name}/{new_arg_name}"] = new_arg_allowed_values
                     st.success("Argument Updated Successfully!")
 
                 if delete_arg_button:
-                    st.session_state.api_list_updated = delete_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name)
+                    st.session_state.api_list_updated = delete_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, vector_db)
                     st.success("Argument Deleted Successfully!")
 
     # Delete Multiple Arguments
@@ -180,7 +180,7 @@ elif page == "Tool Management":
         all_arg_names = [arg["argument_name"] for arg in selected_tool["arguments"]]
         selected_args_to_delete = st.multiselect("Select arguments to delete from the tool", options=all_arg_names)
         if st.button("Delete Selected Arguments"):
-            st.session_state.api_list_updated = delete_multiple_arguments(st.session_state.api_list_updated, selected_tool_name, selected_args_to_delete)
+            st.session_state.api_list_updated = delete_multiple_arguments(st.session_state.api_list_updated, selected_tool_name, selected_args_to_delete, vector_db)
             st.success("Selected Arguments Deleted Successfully!")
     
     # Display the current API list
