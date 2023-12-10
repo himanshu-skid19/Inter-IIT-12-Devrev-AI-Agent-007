@@ -63,5 +63,6 @@ def placeholder_check(json_response):
             argument_value = argument["argument_value"]
             x = re.search("<.*>", str(argument_value))
             if x:
-                return 1
-    return 0
+
+                return 1
+    return 0

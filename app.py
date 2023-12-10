@@ -189,15 +189,4 @@ elif page == "Tool Management":
     with open(file_path, 'w') as file:
         json.dump(st.session_state.api_list_updated, file)
 
-# {
-#     "name": "desummarize_objects",
-#     "description": "Summarizes a list of objects. The logic of how to summarize a particular object type is an internal implementation detail.",
-#     "arguments": [
-#         {
-#             "argument_name": "objects",
-#             "argument_description": "List of objects to summarize",
-#             "argument_type": "array of objects"
-#         }
-#     ]
-# }
 
