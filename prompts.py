@@ -72,7 +72,7 @@ A few examples of a query are:
 
 {FEW_SHOT}
 
-Now you must only use {APIS} and {TOOL_NAME} and generate a query, its reasoning, and the final answer. Now generate a query and give your output in the form of only of a list of dictionaries.
+Now you must only use {APIS} and {TOOL_NAME} and generate a query, its reasoning, and the final answer. Now generate a query and give your output in the form of the following dictionary.
 
-{{QUERY: , REASONING: , ANSWER: }}
+{{QUERY: , REASONING: }}
   '''
