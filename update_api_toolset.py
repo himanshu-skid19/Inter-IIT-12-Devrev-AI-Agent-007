@@ -14,12 +14,12 @@ def API_CHOICE(n, tool_name, api_list):
     l.append(choice)
   return l
 
-def generate_examples(tool_name, api_list, store, num_example):
+def generate_examples(tool_name, api_list, store, num_examples = 2):
   APIs = API_CHOICE(2, tool_name, api_list)
   few_shot_examples = random.sample(list(store.docstore._dict.values()), 2)
   few_shot_examples = [few_shot_examples[0].page_content, few_shot_examples[1].page_content]
   examples = []
-  for i in range(num_example):
+  for i in range(num_examples):
     examples.append(generation_chain.run(API_LIST = api_list, FEW_SHOT = few_shot_examples, APIS = APIs, TOOL_NAME = tool_name))
   return examples
 
