@@ -1,5 +1,17 @@
 from imports import *
 
+loader = CSVLoader(file_path="/content/Seed_Dataset.csv")
+data = loader.load()
+
+embeddings = HuggingFaceEmbeddings()
+# persist_directory = 'docs/chroma_db/'
+# !rm -rf ./docs/chroma_db
+vector_db = FAISS.from_documents(
+    documents=data,
+    embedding=embeddings,
+    # persist_directory=persist_directory
+)
+# vector_db.persist()
 
 def store_to_df(store):
     v_dict = store.docstore._dict
