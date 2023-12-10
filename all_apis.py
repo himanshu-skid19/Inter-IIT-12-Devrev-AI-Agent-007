@@ -138,7 +138,7 @@ API_LIST = [
         "arguments": [
             {
                 "argument_name": "query",
-                "argument_description": "The search string, could be for example customer’s name, part name, username.",
+                "argument_description": "The search string, could be for example customer's name, part name, username.",
                 "argument_type": "string"
             }
         ]
@@ -248,14 +248,14 @@ API_LIST = [
         "arguments": [
             {
                 "argument_name": "id",
-                "argument_description": "The work’s ID",
+                "argument_description": "The work's ID",
                 "argument_type": "array of objects"
             }
         ]
     },
     {
         "name": "works-update",
-        "description": "Updates a work item’s information",
+        "description": "Updates a work item's information",
         "arguments": [
             {
                 "argument_name": "id",
@@ -365,7 +365,7 @@ API_LIST = [
     },
     {
         "name": "get_works_id",
-        "description": "Get’s the work id of the input objects",
+        "description": "Get's the work id of the input objects",
         "arguments": [
             {
                 "argument_name": "objects",
@@ -376,89 +376,8 @@ API_LIST = [
     },
     {
         "name": "get_current_date",
-        "description": "Get’s the current date",
+        "description": "Get's the current date",
         "arguments": []
     }
 
 ]
-
-FEW_SHOT = [{'QUERY' : 'Summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1',
-             'REASONING' : '''Let’s think step by step
-Since the Query has specified that we need to summarize the issues similar to don:core:dvrv-us-1:devo/0:issue/1, we need to first call the (get_similar_work_items) API with the following arguments:
-Since this is a work item we will use “work_id” as the argument name
-don:core:dvrv-us-1:devo/0:issue/1 is the work item for which we need to get similar issues.0
-
-Then we need to then summarize those issues hence we will call the (summarize_objects) API with the following arguments:
-Argument name is objects and Argument_value is “$$PREV[0]” which we can use to refer the value of the ith tool in the chain.
-
-Therefore, the answer is: [ (tool_name: (get_similar_work_items), arguments = ([argument_name: (work_id), argument_value: (don:core:dvrv-us-1:devo/0:issue/1)],)), (tool_name: (summarize_objects), arguments = ([argument_name: (objects), argument_value: $$PREV[0]]''',
-             'ANSWER': '''[
-    {
-        "tool_name": "get_similar_work_items",
-        "arguments": [
-            {
-                "argument_name": "work_id",
-                "argument_value": "don:core:dvrv-us-1:devo/0:issue/1"
-            }
-        ]
-    },
-    {
-        "tool_name": "summarize_objects",
-        "arguments": [
-            {
-                "argument_name": "objects",
-                "argument_value": "$$PREV[0]"
-            }
-        ]
-    }
-]
-'''  },
-            {'QUERY' : 'What are my all issues in the triage stage under part FEAT-123? Summarize them.',
-             'REASONING' : '''Let's think this step by step
-  Since the Query has specified that we have to find the issues of a particular person we have to identify the person by calling the (whoami) API with the following arguments:
-  There is no argument
-
-
-  Since we have to look for the issues,  we need to call the (work_list) with the following arguments:
-  Argument_name: stage and argument_value: triage, since we have bee asked to find the issues in the triage stage.
-  Argument_name: applies_to_part and argument_value: FEAT-123, since we are asked to find issues under part FEAT-123.
-  Argument_name: owned_by and argument_value: $$PREV[0] since we have to find the specific tool owned by that person
-
-  Finally we have been asked to summarize these tools, which is why we will call the (summarize_objects) API with the following arguments:
-  Argument_name: objects and argument_value: $$PREV[0] which we can use to refer the value of the ith tool in the chain.
-  Therefore, the answer is:
-
-  [(tool_name: whoami, arguments =[ ], (tool_name: works_list, arguments= ([argument_name: stage.name, argument_value: triage], [argument_name:applies_to_part, argument_value: FEAT-123], [argument_name: owned_by, argument_value: $$PREV[0]]),(tool_name: summarize_objects, (arguments = ([argument_name: objects, argument_value: $$PREV[0]),])]''',
-             'ANSWER' : '''[
-    {
-        "tool_name": "who_am_i",
-        "arguments": []
-    },
-    {
-        "tool_name": "works_list",
-        "arguments": [
-            {
-                "argument_name": "stage.name",
-                "argument_value": "triage"
-            },
-            {
-                "argument_name": "applies_to_part",
-                "argument_value": "FEAT-123"
-            },
-            {
-                "argument_name": "owned_by",
-                "argument_value": "$$PREV[0]"
-            }
-        ]
-    },
-    {
-        "tool_name": "summarize_objects",
-        "arguments": [
-            {
-                "argument_name": "objects",
-                "argument_value": "$$PREV[0]"
-            }
-        ]
-    }
-]
-'''}]
