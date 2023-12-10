@@ -36,16 +36,16 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
 
   while not done:
     # hall = True
-    hallucinated_args, hallucinated_tools, hallucinated_args_values = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
+    hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
 
     print('##############')
-    print(f'wrong stuff : {hallucinated_args}, {hallucinated_tools}, {hallucinated_args_values}')
+    print(f'wrong stuff : {hallucinated_args}, {hallucinated_tools}, {hallucinated_args_values}, {hallucinated_args_values_prev}')
     print('#############')
-    if ((len(hallucinated_args) + len(hallucinated_tools) + len(hallucinated_args_values))is 0 ):
+    if ((len(hallucinated_args) + len(hallucinated_tools) + len(hallucinated_args_values)) + len(hallucinated_args_values_prev) is 0 ):
       return json_response
     if cntr>max_reprompts:
         done=True
-    Correction_prompt = correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, json_response)
+    Correction_prompt = correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response)
     print(f"4. Correction prompt- {cntr} ##################")
     print(Correction_prompt)
     print(type(Correction_prompt))
