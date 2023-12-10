@@ -33,7 +33,8 @@ def delete_tool_examples(store, tool_name):
   print(chunk_ids_to_delete)
   store.delete(chunk_ids_to_delete)
 
-def add_to_vector_store(store, example):
-  doc = Document(page_content = example)
-  extension = FAISS.from_documents([doc], embeddings)
-  store.merge_from(extension)
+def add_to_vector_store(store, examples):
+  for example in examples:
+    doc = Document(page_content = example)
+    extension = FAISS.from_documents([doc], embeddings)
+    store.merge_from(extension)
