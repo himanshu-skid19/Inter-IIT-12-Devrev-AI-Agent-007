@@ -19,22 +19,22 @@ retrieval_vector_db = FAISS.from_documents(
 )
 
 if "available_tools" not in st.session_state:
-    st.session_state.available_tools = available_tools
+    st.session_state.available_tools = available_tools.copy()
     
 if "available_arguments" not in st.session_state:
-    st.session_state.available_arguments = available_arguments
+    st.session_state.available_arguments = available_arguments.copy()
     
 if "arg_allowed_values_dict" not in st.session_state:
-    st.session_state.arg_allowed_values_dict = arg_allowed_values_dict
+    st.session_state.arg_allowed_values_dict = arg_allowed_values_dict.copy()
     
 if "args_in_list_dict" not in st.session_state:
-    st.session_state.args_in_list_dict = args_in_list_dict
+    st.session_state.args_in_list_dict = args_in_list_dict.copy()
     
 if "api_list_updated" not in st.session_state:
     st.session_state.api_list_updated = API_LIST.copy()
 
 if "retrieval_vector_db" not in st.session_state:
-    st.session_state.retrieval_vector_db = retrieval_vector_db
+    st.session_state.retrieval_vector_db = retrieval_vector_db.copy()
 
 # Initialize session state for messages if not already present
 if "messages" not in st.session_state:
@@ -43,6 +43,11 @@ if "messages" not in st.session_state:
 # Function to clear the session state variable
 def clear_api_list_updated():
     st.session_state.api_list_updated = API_LIST.copy()
+    st.session_state.args_in_list_dict = args_in_list_dict.copy()
+    st.session_state.arg_allowed_values_dict = arg_allowed_values_dict.copy()
+    st.session_state.available_arguments = available_arguments.copy()
+    st.session_state.available_tools = available_tools.copy()
+    st.session_state.retrieval_vector_db = retrieval_vector_db.copy()
 
 file_path = 'Updated_API_list.json'
 
