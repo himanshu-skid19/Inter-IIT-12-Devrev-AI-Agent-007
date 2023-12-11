@@ -33,7 +33,7 @@ api_weights = {'works_list': 0,  'prioritize_objects' : 0, 'add_work_items_to_sp
 api_list = list(api_weights.keys())
 
 # Function to add a new tool
-def add_tool(api_list, name, available_tools, available_arguments, description):
+def add_tool(api_list, name, description, available_tools, available_arguments):
     available_tools.append(name)
     api_list.append({"name": name, "description": description, "arguments": []})
     available_arguments.append(f"{name}/")
