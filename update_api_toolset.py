@@ -35,7 +35,7 @@ def add_tool(api_list, name, description):
     return api_list
 
 def delete_tool(api_list, tool_name, available_tools, available_arguments, allowed_args_dict, args_in_list_dict, store):
-    delete_tool_examples(store, tool_name)
+    store = delete_tool_examples(store, tool_name)
     available_tools.remove(tool_name)
     available_arguments = [s for s in available_arguments if not s.startswith(tool_name)]
     allowed_args_dict = {key: value for key, value in allowed_args_dict.items() if not key.startswith(tool_name)}
