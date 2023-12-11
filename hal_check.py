@@ -173,12 +173,14 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
     for item in json_response:
         for key in item:
             if item[key] in valid_tools:
-                arguments = item.get("arguments", [])
-                for argument in arguments:
-                    argument_name = argument.get("argument_name")
-                    if argument_name:
-                        argument_names.append(item["tool_name"]+"/"+argument_name)
-
+                try:
+                    arguments = item.get("arguments", [])
+                    for argument in arguments:
+                        argument_name = argument.get("argument_name")
+                        if argument_name:
+                            argument_names.append(item["tool_name"]+"/"+argument_name)
+                except AttributeError:
+                    pass
     # valid_args = [arg_name for arg_name in argument_names if arg_name in merged_arguments]
     hallucinated_args = [arg_name for arg_name in argument_names if arg_name not in available_arguments]
     # check the validity of argument values using allowed_arg_values_dict
@@ -186,35 +188,41 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
     for item in json_response:
         for key in item:
             if item[key] in available_tools:
-                arguments = item.get("arguments", [])
-                for argument in arguments:
-                    argument_name = argument.get("argument_name")
-                    if argument_name:
-                        json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
-                    concat_arg = item["tool_name"] + "/" + argument_name
-                    argument_names.append(concat_arg)
-                    try:
-                        if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
-                            arg_val = argument.get("argument_value")
-                            if type(arg_val) is not list:
-                                l = []
-                                l.append(arg_val)
-                                argument["argument_value"] = l
-                    except KeyError:
-                        pass
+                try:
+                    arguments = item.get("arguments", [])
+                    for argument in arguments:
+                        argument_name = argument.get("argument_name")
+                        if argument_name:
+                            json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
+                        concat_arg = item["tool_name"] + "/" + argument_name
+                        argument_names.append(concat_arg)
+                        try:
+                            if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
+                                arg_val = argument.get("argument_value")
+                                if type(arg_val) is not list:
+                                    l = []
+                                    l.append(arg_val)
+                                    argument["argument_value"] = l
+                        except KeyError:
+                            pass
+                except AttributeError:
+                    pass
 
     hallucinated_args_values_prev = []
     for idx, item in enumerate(json_response):
         for key in item:
             if item[key] in available_tools:
-                arguments = item.get("arguments", [])
-                for argument in arguments:
-                    argument_name = argument.get("argument_name")
+                try:
+                    arguments = item.get("arguments", [])
+                    for argument in arguments:
+                        argument_name = argument.get("argument_name")
 
-                    if argument_name:
-                        json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
-                    if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0])):
-                      hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
+                        if argument_name:
+                            json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
+                        if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0])):
+                          hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
+                except AttributeError:
+                    pass
 
     hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
