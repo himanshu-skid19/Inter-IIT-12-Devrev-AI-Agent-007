@@ -14,13 +14,17 @@ def API_CHOICE(n, tool_name, api_list):
     l.append(choice)
   return l
 
-def generate_examples(tool_name, api_list, store, num_examples = 2):
+def generate_examples(tool_name, api_list, store, num_examples = 2, arg_name = None):
   APIs = API_CHOICE(2, tool_name, api_list)
   few_shot_examples = random.sample(list(store.docstore._dict.values()), 2)
   few_shot_examples = [few_shot_examples[0].page_content, few_shot_examples[1].page_content]
   examples = []
+  if arg_name is not None:
+    MODIFIED_ARG = f'Now you must only use {APIs} and {tool_name} to generate a query, its reasoning and the finar answer. You, also must use the argument {arg_name} for the tool {tool_name} to generate the query. Now generate a query and give your output in the form of the following dictionary.'
+  else:
+    MODIFIED_ARG = f'Now you must only use {APIs} and {tool_name} to generate a query, its reasoning and the finar answer. Now generate a query and give your output in the form of the following dictionary.'
   for i in range(num_examples):
-    examples.append(generation_chain.run(API_LIST = api_list, FEW_SHOT = few_shot_examples, APIS = APIs, TOOL_NAME = tool_name))
+    examples.append(generation_chain.run(API_LIST = api_list, FEW_SHOT = few_shot_examples, MODIFIED_ARG = MODIFIED_ARG))
   return examples
 
 api_weights = {'works_list': 0,  'prioritize_objects' : 0, 'add_work_items_to_sprint' : 0, 'get_sprint_id' : 0, 'get_similar_work_items' : 0, 'search_object_by_name' : 0,
@@ -90,7 +94,7 @@ def delete_argument(api_list, tool_name, arg_name, available_arguments, arg_allo
     return api_list, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to update an argument
-def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type, store):
+def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type, new_arg_allowed_values, available_arguments, allowed_args_dict, args_in_list_dict, store):
     delete_tool_examples(store, old_arg_name)
     for tool in api_list:
         if tool['name'] == tool_name:
@@ -101,11 +105,21 @@ def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_des
                     arg['argument_type'] = new_arg_type
                     break
             break
-    example = generate_examples(tool_name, api_list, store)
-    add_to_vector_store(store, example)
+    # examples = generate_examples(tool_name, api_list, store, arg_name = new_arg_name)
+    # add_to_vector_store(store, examples)
     available_arguments.remove(f"{tool_name}/{old_arg_name}")
     available_arguments.append(f"{tool_name}/{new_arg_name}")
-    return api_list
+    if old_arg_name in arg_allowed_values_dict:
+      del arg_allowed_values_dict[old_arg_name]
+    if old_arg_name in args_in_list_dict:
+      del args_in_list_dict[old_arg_name]
+    if new_arg_allowed_values is not '':
+      arg_allowed_values_dict[f'{tool_name}/{new_arg_name}'] = ast.literal_eval(new_arg_allowed_values)
+    if 'array' in new_arg_type.lower() :
+      args_in_list_dict[f'{tool_name}/{new_arg_name}'] = 1
+    else:
+      args_in_list_dict[f'{tool_name}/{new_arg_name}'] = 0
+    return api_list, available_arguments, allowed_args_dict, args_in_list_dict
 
 # Function to delete multiple arguments from a tool
 def delete_multiple_arguments(api_list, tool_name, arg_names, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
