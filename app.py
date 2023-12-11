@@ -34,7 +34,10 @@ if "api_list_updated" not in st.session_state:
     st.session_state.api_list_updated = API_LIST.copy()
 
 if "retrieval_vector_db" not in st.session_state:
-    st.session_state.retrieval_vector_db = retrieval_vector_db.copy()
+    st.session_state.retrieval_vector_db = FAISS.from_documents(
+        documents=retrieval_data,
+        embedding=retrieval_embeddings,
+        )
 
 # Initialize session state for messages if not already present
 if "messages" not in st.session_state:
