@@ -258,16 +258,16 @@ def unsolvable_check(json_response):
                 return 1
     return 0
 
-json_response = [
-  {
-    "API": "who_am_i",
-    "arguments": []
-  },
-  {
-    "API": "get_sprint_id",
-    "arguments":[]
-    }
-]
+def complexity(output):
+    num_tools = 0
+    num_args = 0
+    tool_wt = 2
+    args_wt = 0.5
+    for tool in output:
+        num_tools += 1
+        arguments = tool.get("arguments", [])
+        for argument in arguments:
+            num_args += 1
+    return num_args*args_wt + num_tools*tool_wt
 
-# placeholder_check(json_response)
-# unsolvable_check(json_response)
+
