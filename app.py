@@ -10,7 +10,7 @@ from update_api_toolset import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
-retrieval_loader = CSVLoader(file_path=r'C:\Users\hp\OneDrive\Desktop\Devrev-AI-Agent-007\Seed_Dataset.csv', source_column = 'QUERY')
+retrieval_loader = CSVLoader(file_path=r'C:\Users\hp\OneDrive\Desktop\dev-rev-testing\content\Devrev-AI-Agent-007\Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
 retrieval_vector_db = FAISS.from_documents(
@@ -31,13 +31,18 @@ arg_allowed_values_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
 # Initialize session state for messages if not already present
 if "messages" not in st.session_state:
     st.session_state.messages = []
+if "PAST_QUERY" not in st.session_state:
+    st.session_state.PAST_QUERY = "NO PAST QUERIES"
+    st.session_state.PAST_RESPONSE = "NO PAST RESPONSES"
+    st.session_state.PREV_QUERY = ""
+    st.session_state.PREV_RESPONSE = ""
 
 # Function to clear the session state variable
 def clear_api_list_updated():
     st.session_state.api_list_updated = API_LIST
 
 
-file_path = 'Updated_API_list.json'
+file_path = r'C:\Users\hp\OneDrive\Desktop\dev-rev-testing\content\Devrev-AI-Agent-007\Updated_API_list.json'
 
 # Page navigation
 st.sidebar.title("Navigation")
@@ -79,7 +84,7 @@ if page == "Chatbot":
             message_placeholder = st.empty()
             json_answer = pipeline(query, api_list, args_, tools_, allowed_args_dict, retrieval_vector_db) # allowed args dict ka placeholder modify karna bacha
             full_response = json_answer
-            message_placeholder.markdown(full_response)
+            message_placeholder.json(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 elif page == "Tool Management":
@@ -189,4 +194,3 @@ elif page == "Tool Management":
 
     with open(file_path, 'w') as file:
         json.dump(st.session_state.api_list_updated, file)
-
