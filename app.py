@@ -31,7 +31,7 @@ if "args_in_list_dict" not in st.session_state:
     st.session_state.args_in_list_dict = args_in_list_dict
     
 if "api_list_updated" not in st.session_state:
-    st.session_state.api_list_updated = API_LIST
+    st.session_state.api_list_updated = API_LIST.copy()
 
 if "retrieval_vector_db" not in st.session_state:
     st.session_state.retrieval_vector_db = retrieval_vector_db
@@ -42,7 +42,7 @@ if "messages" not in st.session_state:
 
 # Function to clear the session state variable
 def clear_api_list_updated():
-    st.session_state.api_list_updated = API_LIST
+    st.session_state.api_list_updated = API_LIST.copy()
 
 file_path = 'Updated_API_list.json'
 
