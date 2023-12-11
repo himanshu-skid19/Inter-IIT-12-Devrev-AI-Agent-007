@@ -188,13 +188,15 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
                         json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
                     concat_arg = item["tool_name"] + "/" + argument_name
                     argument_names.append(concat_arg)
-                    if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
-                        arg_val = argument.get("argument_value")
-                        if type(arg_val) is not list:
-                            l = []
-                            l.append(arg_val)
-                            argument["argument_value"] = l
-
+                    try:
+                        if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
+                            arg_val = argument.get("argument_value")
+                            if type(arg_val) is not list:
+                                l = []
+                                l.append(arg_val)
+                                argument["argument_value"] = l
+                    except KeyError:
+                        pass
     hallucinated_args_values_prev = []
     for idx, item in enumerate(json_response):
         for item[key] in item:
@@ -260,6 +262,7 @@ def unsolvable_check(json_response):
                 return 1
     return 0
 
-json_response = [{'content': 'This task cannot be solved using the given set of APIs.'}]
-# placeholder_check(json_response)
-unsolvable_check(json_response)
+# json_response = [{'organization_id': 'REV789', 'created_date': '2023-12-01', 'severity': 'high'}]
+#
+# # placeholder_check(json_response)
+# unsolvable_check(json_response)
