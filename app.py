@@ -13,10 +13,6 @@ warnings.filterwarnings('ignore')
 retrieval_loader = CSVLoader(file_path='C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
-retrieval_vector_db = FAISS.from_documents(
-    documents=retrieval_data,
-    embedding=retrieval_embeddings,
-)
 
 if "available_tools" not in st.session_state:
     st.session_state.available_tools = available_tools.copy()
@@ -50,7 +46,10 @@ def clear_api_list_updated():
     st.session_state.arg_allowed_values_dict = arg_allowed_values_dict.copy()
     st.session_state.available_arguments = available_arguments.copy()
     st.session_state.available_tools = available_tools.copy()
-    st.session_state.retrieval_vector_db = retrieval_vector_db.copy()
+    st.session_state.retrieval_vector_db = FAISS.from_documents(
+        documents=retrieval_data,
+        embedding=retrieval_embeddings,
+        )
 
 file_path = 'Updated_API_list.json'
 
