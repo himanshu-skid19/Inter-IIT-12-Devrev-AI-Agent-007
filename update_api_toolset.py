@@ -110,11 +110,11 @@ def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_des
     available_arguments.remove(f"{tool_name}/{old_arg_name}")
     available_arguments.append(f"{tool_name}/{new_arg_name}")
     if old_arg_name in arg_allowed_values_dict:
-      del arg_allowed_values_dict[old_arg_name]
+      del arg_allowed_values_dict[f"{tool_name}/{old_arg_name}"]
     if old_arg_name in args_in_list_dict:
-      del args_in_list_dict[old_arg_name]
-    if new_arg_allowed_values is not '':
-      arg_allowed_values_dict[f'{tool_name}/{new_arg_name}'] = ast.literal_eval(new_arg_allowed_values)
+      del args_in_list_dict[f"{tool_name}/{old_arg_name}"]
+    if len(new_arg_allowed_values) == 0:
+      arg_allowed_values_dict[f'{tool_name}/{new_arg_name}'] = eval(new_arg_allowed_values)
     if 'array' in new_arg_type.lower() :
       args_in_list_dict[f'{tool_name}/{new_arg_name}'] = 1
     else:
