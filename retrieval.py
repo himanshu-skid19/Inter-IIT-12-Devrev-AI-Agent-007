@@ -29,7 +29,7 @@ def show_vstore(store):
 def delete_tool_examples(store, tool_name, arg_name = None):
   vector_df = store_to_df(store)
   if (arg_name is not None):
-      mask = vector_df['content'].str.contains(tool_name) and vector_df['content'].str.contains(arg_name)
+      mask = (vector_df['content'].str.contains(tool_name) & vector_df['content'].str.contains(arg_name))
   else:
       mask = vector_df['content'].str.contains(tool_name)
   chunk_ids_to_delete = vector_df.loc[mask, 'chunk_id']
