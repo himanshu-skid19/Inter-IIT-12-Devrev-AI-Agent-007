@@ -43,4 +43,3 @@ from langchain.vectorstores import FAISS
 from langchain.schema.document import Document
 
 from langfuse.callback import CallbackHandler
-from langfuse.callback import CallbackHandler

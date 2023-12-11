@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 
 available_tools = [
     "works_list",
@@ -152,16 +153,19 @@ args_in_list_dict = {
 
 def find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict):
     # check errors in names of tools and arguments
-    for item in json_response:
+    for i, item in enumerate(json_response):
         if 'tool_name' not in item:
-            key_to_replace = next(iter(item))
-            item['tool_name'] = item.pop(key_to_replace)
+            first_key = list(item.keys())[0]
+            first_value = item.pop(first_key)
+            # Create a new dictionary with 'tool_name' and the rest of the key-value pairs
+            new_item = {'tool_name': first_value, **item}
+            json_response[i] = new_item
 
     tool_names = [item['tool_name'] for item in json_response]
     valid_tools = [tool_name for tool_name in tool_names if tool_name in available_tools]
     hallucinated_tools = [tool_name for tool_name in tool_names if tool_name not in available_tools]
-
     argument_names = []
+
     for item in json_response:
         for key in item:
             if item[key] in valid_tools:
@@ -194,23 +198,30 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
                                 argument["argument_value"] = l
                     except KeyError:
                         pass
+
     hallucinated_args_values_prev = []
     for idx, item in enumerate(json_response):
-        for item[key] in item:
-            if key in available_tools:
+        for key in item:
+            if item[key] in available_tools:
                 arguments = item.get("arguments", [])
                 for argument in arguments:
                     argument_name = argument.get("argument_name")
+
                     if argument_name:
                         json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
-                    if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0]) >= idx):
+                    if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0])):
                       hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
 
-    hallucinated_args_values = [] 
+    hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
         if arg_name in allowed_args_dict:
-            if arg_value not in allowed_args_dict[arg_name]:
-                hallucinated_args_values.append((arg_name, arg_value))
+            if type(arg_value) is not list:
+                if arg_value not in allowed_args_dict[arg_name]:
+                    hallucinated_args_values.append((arg_name, arg_value))
+            else:
+                for i in arg_value:
+                    if i not in allowed_args_dict[arg_name]:
+                        hallucinated_args_values.append((arg_name, i))
     return hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev
 
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response):
@@ -270,4 +281,6 @@ def complexity(output):
             num_args += 1
     return num_args*args_wt + num_tools*tool_wt
 
-
+json_response = [{'API': 'who_am_i', 'arguments': []}, {'API': 'get_sprint_id', 'arguments': []}]
+find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
+print(json_response)
