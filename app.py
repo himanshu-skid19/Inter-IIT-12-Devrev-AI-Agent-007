@@ -158,7 +158,7 @@ elif page == "Tool Management":
                 delete_arg_button = st.form_submit_button("Delete Argument")
 
                 if update_arg_button:
-                    st.session_state.api_list_updated, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict = update_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, new_arg_name, new_arg_desc, new_arg_type, new_arg_allowed_values, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, vector_db)
+                    st.session_state.api_list_updated, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict = update_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, new_arg_name, new_arg_desc, new_arg_type, new_arg_allowed_values, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
                     arg_allowed_values_dict[f"{selected_tool_name}/{new_arg_name}"] = new_arg_allowed_values
                     st.success("Argument Updated Successfully!")
 
