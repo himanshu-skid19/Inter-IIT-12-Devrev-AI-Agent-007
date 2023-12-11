@@ -172,7 +172,7 @@ elif page == "Tool Management":
         all_arg_names = [arg["argument_name"] for arg in selected_tool["arguments"]]
         selected_args_to_delete = st.multiselect("Select arguments to delete from the tool", options=all_arg_names)
         if st.button("Delete Selected Arguments"):
-            st.session_state.api_list_updated = delete_multiple_arguments(st.session_state.api_list_updated, selected_tool_name, selected_args_to_delete, st.session_state.retrieval_vector_db)
+            st.session_state.api_list_updated, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict = delete_multiple_arguments(st.session_state.api_list_updated, selected_tool_name, selected_args_to_delete, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
             st.success("Selected Arguments Deleted Successfully!")
     
     # Display the current API list
