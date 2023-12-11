@@ -7,10 +7,11 @@ from retrieval import *
 from all_apis import *
 from prompts import *
 from update_api_toolset import *
+from mem_check import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
-retrieval_loader = CSVLoader(file_path='C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Seed_Dataset.csv', source_column = 'QUERY')
+retrieval_loader = CSVLoader(file_path=r'C:\Users\hp\OneDrive\Desktop\dev-rev-testing\content\Devrev-AI-Agent-007\Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
 retrieval_vector_db = FAISS.from_documents(
@@ -32,12 +33,19 @@ arg_allowed_values_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Intialize memory tracking
+if "PAST_QUERY" not in st.session_state:
+    st.session_state.PAST_QUERY = "NO PAST QUERIES"
+    st.session_state.PAST_RESPONSE = "NO PAST RESPONSES"
+    st.session_state.PREV_QUERY = ""
+    st.session_state.PREV_RESPONSE = ""
+
 # Function to clear the session state variable
 def clear_api_list_updated():
     st.session_state.api_list_updated = API_LIST
 
 
-file_path = 'Updated_API_list.json'
+file_path = r'C:\Users\hp\OneDrive\Desktop\dev-rev-testing\content\Devrev-AI-Agent-007\Updated_API_list.json'
 
 # Page navigation
 st.sidebar.title("Navigation")
@@ -189,4 +197,3 @@ elif page == "Tool Management":
 
     with open(file_path, 'w') as file:
         json.dump(st.session_state.api_list_updated, file)
-
