@@ -48,18 +48,29 @@ def delete_tool(api_list, tool_name, available_tools, available_arguments, arg_a
     return api_list, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict, store
 
 # Function to update a tool
-def update_tool(api_list, old_tool_name, new_tool_name, new_description, store):
+def update_tool(api_list, old_tool_name, new_tool_name, new_description, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
     delete_tool_examples(store, old_tool_name)
     for tool in api_list:
         if tool['name'] == old_tool_name:
             tool['name'] = new_tool_name
             tool['description'] = new_description
             break
-    example = generate_examples(new_tool_name, api_list, store)
-    add_to_vector_store(store, example)
+    # example = generate_examples(new_tool_name, api_list, store)
+    # add_to_vector_store(store, example)
     available_tools.remove(old_tool_name)
     available_tools.append(new_tool_name)
-    return api_list
+    available_arguments = [s.replace(old_tool_name, new_tool_name, 1) if s.startswith(old_tool_name) else s for s in available_arguments]
+    keys_to_replace1 = [key for key in arg_allowed_values_dict if key.startswith(old_tool_name)]
+    for key in keys_to_replace1:
+      new_key = key.replace(old_tool_name, new_tool_name)
+      arg_allowed_values_dict[new_key] = arg_allowed_values_dict[key]
+      del arg_allowed_values_dict[key]
+    keys_to_replace2 = [key for key in args_in_list_dict if key.startswith(old_tool_name)]
+    for key in keys_to_replace2:
+      new_key = key.replace(old_tool_name, new_tool_name)
+      args_in_list_dict[new_key] = args_in_list_dict[key]
+      del args_in_list_dict[key]
+    return api_list, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to add an argument to a tool
 def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, store):
