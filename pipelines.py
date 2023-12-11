@@ -1,8 +1,10 @@
 from imports import *
 from hal_check import *
 from prompt_templates import *
+from api_json_to_doc import *
 
 def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args_dict, vector_db):
+  API_LIST = convert_json_to_doc(API_LIST)
   done = False
   max_reprompts = 1
   cntr = 1
