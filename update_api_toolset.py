@@ -38,14 +38,14 @@ def add_tool(api_list, name, description):
     api_list.append({"name": name, "description": description, "arguments": []})
     return api_list
 
-def delete_tool(api_list, tool_name, available_tools, available_arguments, allowed_args_dict, args_in_list_dict, store):
+def delete_tool(api_list, tool_name, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
     delete_tool_examples(store, tool_name)
     available_tools.remove(tool_name)
     available_arguments = [s for s in available_arguments if not s.startswith(tool_name)]
-    allowed_args_dict = {key: value for key, value in allowed_args_dict.items() if not key.startswith(tool_name)}
+    arg_allowed_values_dict = {key: value for key, value in arg_allowed_values_dict.items() if not key.startswith(tool_name)}
     args_in_list_dict = {key: value for key, value in args_in_list_dict.items() if not key.startswith(tool_name)}
     api_list = [tool for tool in api_list if tool['name'] != tool_name]
-    return api_list, available_tools, available_arguments, allowed_args_dict, args_in_list_dict, store
+    return api_list, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict, store
 
 # Function to update a tool
 def update_tool(api_list, old_tool_name, new_tool_name, new_description, store):
@@ -94,7 +94,7 @@ def delete_argument(api_list, tool_name, arg_name, available_arguments, arg_allo
     return api_list, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to update an argument
-def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type, new_arg_allowed_values, available_arguments, allowed_args_dict, args_in_list_dict, store):
+def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type, new_arg_allowed_values, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
     delete_tool_examples(store, tool_name, old_arg_name)
     for tool in api_list:
         if tool['name'] == tool_name:
@@ -119,7 +119,7 @@ def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_des
       args_in_list_dict[f'{tool_name}/{new_arg_name}'] = 1
     else:
       args_in_list_dict[f'{tool_name}/{new_arg_name}'] = 0
-    return api_list, available_arguments, allowed_args_dict, args_in_list_dict
+    return api_list, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to delete multiple arguments from a tool
 def delete_multiple_arguments(api_list, tool_name, arg_names, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
