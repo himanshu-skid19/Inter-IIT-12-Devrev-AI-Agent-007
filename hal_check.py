@@ -152,16 +152,14 @@ args_in_list_dict = {
 
 def find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict):
     # check errors in names of tools and arguments
-    try:
-        tool_names = [tool["tool_name"] for tool in json_response]
-    except:
-        tool_names = []
-        for i in json_response:
-            for j in i:
-                tool_names.append(j)
+    for item in json_response:
+        if 'tool_name' not in item:
+            key_to_replace = next(iter(item))
+            item['tool_name'] = item.pop(key_to_replace)
+
+    tool_names = [item['tool_name'] for item in json_response]
     valid_tools = [tool_name for tool_name in tool_names if tool_name in available_tools]
     hallucinated_tools = [tool_name for tool_name in tool_names if tool_name not in available_tools]
-    print(hallucinated_tools)
 
     argument_names = []
     for item in json_response:
@@ -175,7 +173,6 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
 
     # valid_args = [arg_name for arg_name in argument_names if arg_name in merged_arguments]
     hallucinated_args = [arg_name for arg_name in argument_names if arg_name not in available_arguments]
-    print(hallucinated_args)
     # check the validity of argument values using allowed_arg_values_dict
     json_args_dict = {}
     for item in json_response:
@@ -236,7 +233,6 @@ def placeholder_check(json_response):
         l = []
         l.append(json_response)
         json_response = l
-    print(json_response)
     for item in json_response:
         arguments = item.get("arguments", [])
         for argument in arguments:
@@ -262,7 +258,16 @@ def unsolvable_check(json_response):
                 return 1
     return 0
 
-# json_response = [{'organization_id': 'REV789', 'created_date': '2023-12-01', 'severity': 'high'}]
-#
-# # placeholder_check(json_response)
+json_response = [
+  {
+    "API": "who_am_i",
+    "arguments": []
+  },
+  {
+    "API": "get_sprint_id",
+    "arguments":[]
+    }
+]
+
+# placeholder_check(json_response)
 # unsolvable_check(json_response)
