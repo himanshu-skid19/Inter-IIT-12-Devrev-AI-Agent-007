@@ -81,9 +81,12 @@ def delete_argument(api_list, tool_name, arg_name, available_arguments, arg_allo
             break
     examples = generate_examples(tool_name, api_list, store)
     add_to_vector_store(store, examples)
-    available_arguments.remove(f"{tool_name}/{arg_name}")
-    arg_allowed_values_dict = {key: value for key, value in arg_allowed_values_dict.items() if arg_name not in key}
-    arg_in_list_dict = {key: value for key, value in args_in_list_dict.items() if arg_name not in key}
+    arg_to_delete = f"{tool_name}/{arg_name}"
+    available_arguments.remove(arg_to_delete)
+    if arg_to_delete in arg_allowed_values_dict:
+      del arg_allowed_values_dict[arg_to_delete]
+    if arg_to_delete in arg_in_list_dict:
+      del arg_in_list_dict[arg_to_delete]
     return api_list, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to update an argument
