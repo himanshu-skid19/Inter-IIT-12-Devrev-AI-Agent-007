@@ -3,7 +3,7 @@ from hal_check import *
 from prompt_templates import *
 from api_json_to_doc import *
 
-def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args_dict, vector_db):
+def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_values_dict, vector_db):
   API_LIST = convert_json_to_doc(API_LIST)
   done = False
   max_reprompts = 1
@@ -38,7 +38,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
 
   while not done:
     # hall = True
-    hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev = find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
+    hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev = find_hallucinations(json_response, arg_allowed_values_dict, available_tools, available_arguments, args_in_list_dict)
 
     print('##############')
     print(f'wrong stuff : {hallucinated_args}, {hallucinated_tools}, {hallucinated_args_values}, {hallucinated_args_values_prev}')
