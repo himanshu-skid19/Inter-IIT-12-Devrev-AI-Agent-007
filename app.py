@@ -163,7 +163,7 @@ elif page == "Tool Management":
                     st.success("Argument Updated Successfully!")
 
                 if delete_arg_button:
-                    st.session_state.api_list_updated = delete_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, st.session_state.retrieval_vector_db)
+                    st.session_state.api_list_updated, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict = delete_argument(st.session_state.api_list_updated, selected_tool_name, selected_arg_name, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
                     st.success("Argument Deleted Successfully!")
 
     # Delete Multiple Arguments
