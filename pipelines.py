@@ -59,13 +59,19 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
     print(f"##################")
 
     json_response = reprompt_chain.run(QUERY = query, API_LIST = API_LIST, CORRECTION_PROMPT = Correction_prompt, callbacks=[handler])
-    json_response = ast.literal_eval(json_response)
+    try:
+      json_response = ast.literal_eval(json_response)
+    except SyntaxError:
+      json_response = reprompt_chain.run(QUERY=query, API_LIST=API_LIST, CORRECTION_PROMPT=Correction_prompt,
+                                         callbacks=[handler])
+      json_response = ast.literal_eval(json_response)
     cntr+=1
     print(f"4. JSON decoded output- {cntr} ##################")
     print(json_response)
     print(type(json_response))
     print(len(json_response))
     print(f"##################")
+    json_response = structure_check(json_response)
     if placeholder_check(json_response):
       return []
     if unsolvable_check(json_response):

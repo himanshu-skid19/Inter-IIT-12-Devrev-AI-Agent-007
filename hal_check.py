@@ -154,12 +154,16 @@ args_in_list_dict = {
 def find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict):
     # check errors in names of tools and arguments
     for i, item in enumerate(json_response):
+        print(item)
         if 'tool_name' not in item:
-            first_key = list(item.keys())[0]
-            first_value = item.pop(first_key)
-            # Create a new dictionary with 'tool_name' and the rest of the key-value pairs
-            new_item = {'tool_name': first_value, **item}
-            json_response[i] = new_item
+            if type(item) is dict:
+                first_key = list(item.keys())[0]
+                first_value = item.pop(first_key)
+                # Create a new dictionary with 'tool_name' and the rest of the key-value pairs
+                new_item = {'tool_name': first_value, **item}
+                json_response[i] = new_item
+        else:
+            item = 'tool_name'
 
     tool_names = [item['tool_name'] for item in json_response]
     valid_tools = [tool_name for tool_name in tool_names if tool_name in available_tools]
@@ -245,16 +249,19 @@ def placeholder_check(json_response):
         l.append(json_response)
         json_response = l
     for item in json_response:
-        arguments = item.get("arguments", [])
-        for argument in arguments:
-            try:
-                argument_name = argument.get("argument_name")
-                argument_value = argument["argument_value"]
-                x = re.search("<.*>", str(argument_value))
-                if x:
+        try:
+            arguments = item.get("arguments", [])
+            for argument in arguments:
+                try:
+                    argument_name = argument.get("argument_name", [])
+                    argument_value = argument["argument_value"]
+                    x = re.search("<.*>", str(argument_value))
+                    if x:
+                        return 1
+                except KeyError:
                     return 1
-            except KeyError:
-                return 1
+        except AttributeError:
+            return 0
     return 0
 
 
@@ -281,6 +288,67 @@ def complexity(output):
             num_args += 1
     return num_args*args_wt + num_tools*tool_wt
 
-json_response = [{'API': 'who_am_i', 'arguments': []}, {'API': 'get_sprint_id', 'arguments': []}]
-find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
-print(json_response)
+
+def structure_check(json_response):
+    for i, item in enumerate(json_response):        #fixing tool_name issue
+        if 'tool_name' not in item:
+            if type(item) is dict:
+                first_key = list(item.keys())[0]
+                first_value = item.pop(first_key)
+                # Create a new dictionary with 'tool_name' and the rest of the key-value pairs
+                new_item = {'tool_name': first_value, **item}
+                json_response[i] = new_item
+        else:
+            item = 'tool_name'
+
+
+    restructured_json = []
+    for item in json_response:
+        d = {}
+        d['tool_name'] = item['tool_name']
+        x=[]
+        try:
+            for args in item['arguments']:
+                d_ = {}
+                d_['argument_name'] = args['argument_name']
+                d_['argument_value'] = args['argument_value']
+                x.append(d_)
+            d['arguments'] = x
+            restructured_json.append(d)
+        except (KeyError, TypeError) as e:
+            if 'arguments' in item:
+                if type(item['arguments']) is not list:
+                    x = []
+                    x.append(item['arguments'])
+                    item['arguments'] = x
+                # print(item['arguments'])]
+
+                for args in item['arguments']:
+                    # print(args)
+                    x_ = []
+                    n = {}
+                    keys = list(args.keys())
+                    # print(keys)
+                    for j in keys:
+                        d_ = {}
+                        d_['argument_name'] = j
+                        d_['argument_value'] = item['arguments'][0][j]
+                        # print(d_)
+                        x_.append(d_)
+                    n['tool_name'] = item['tool_name']
+                    n['arguments'] = x_
+                    restructured_json.append(n)
+                else:
+                    pass
+
+    print(restructured_json)
+    return restructured_json
+
+
+
+# json_response = [{'name': 'works_list', 'arguments': {'applies_to_part': ['PART-123'], 'owned_by': ['USER123'], 'stage.name': ['Development']}}, {'name': 'get_similar_work_items', 'arguments': {'work_id': 'work_id_from_previous_response'}}, {'name': 'works-update', 'arguments': {'id': 'work_id_from_previous_response', 'ticket.rev_org': ['REV-XYZ']}}]
+# json_response = [{'tool_name': 'works_list', 'arguments': [{'argument_name': 'applies_to_part', 'argument_value': ['PART-123']}, {'argument_name': 'owned_by', 'argument_value': ['USER123']}, {'argument_name': 'stage.name', 'argument_value': ['Development']}]}, {'tool_name': 'get_similar_work_items', 'arguments': [{'argument_name': 'work_id', 'argument_value': 'work_id_from_previous_response'}]}, {'tool_name': 'works-update', 'arguments': [{'argument_name': 'id', 'argument_value': 'work_id_from_previous_response'}, {'argument_name': 'ticket.rev_org', 'argument_value': ['REV-XYZ']}]}]
+#
+# # find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict)
+# # placeholder_check(json_response)
+# structure_check(json_response)
