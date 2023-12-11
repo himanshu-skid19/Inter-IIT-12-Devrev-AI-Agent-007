@@ -10,7 +10,7 @@ from update_api_toolset import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
-retrieval_loader = CSVLoader(file_path='C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Seed_Dataset.csv', source_column = 'QUERY')
+retrieval_loader = CSVLoader(file_path='/content/Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
 retrieval_vector_db = FAISS.from_documents(
@@ -18,15 +18,22 @@ retrieval_vector_db = FAISS.from_documents(
     embedding=retrieval_embeddings,
 )
 
-arg_allowed_values_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
- 'works-update/type': ['issue', 'task', 'ticket'],
- 'works_list/issue.priority': ['p0', 'p1', 'p2', 'p3'],
- 'works_list/ticket.needs_response': ['true', 'false'],
- 'works_list/ticket.severity': ['blocker', 'low', 'medium', 'high'],
- 'works_list/type': ['issue', 'task', 'ticket'],
- 'works-create/issue.priority': ['p0', 'p1', 'p2', 'p3'],
- 'works-create/type': ['issue', 'task', 'ticket'],
- 'works-create/title': ['issue', 'ticket']}
+if "available_tools" not in st.session_state:
+    st.session_state.available_tools = available_tools
+    
+if "available_arguments" not in st.session_state:
+    st.session_state.available_arguments = available_arguments
+    
+if "arg_allowed_values_dict" not in st.session_state:
+    st.session_state.arg_allowed_values_dict = arg_allowed_values_dict
+    
+if "args_in_list_dict" not in st.session_state:
+    st.session_state.args_in_list_dict = args_in_list_dict
+    
+if "api_list_updated" not in st.session_state:
+    st.session_state.api_list_updated = API_LIST
+    
+st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict
 
 # Initialize session state for messages if not already present
 if "messages" not in st.session_state:
@@ -35,7 +42,6 @@ if "messages" not in st.session_state:
 # Function to clear the session state variable
 def clear_api_list_updated():
     st.session_state.api_list_updated = API_LIST
-
 
 file_path = 'Updated_API_list.json'
 
@@ -54,22 +60,7 @@ if page == "Chatbot":
 
     # Accept user input
     if prompt := st.chat_input("What is up?"):
-        with open(file_path, 'r') as file:
-            api_list = json.load(file)
-
-
-        tools_ = [tool['name'] for tool in api_list]
-        args_ = []
-        for tool in api_list:
-            tool_name = tool['name']
-            arguments = tool['arguments']
-
-            for argument in arguments:
-                argument_name = argument['argument_name']
-                args_.append(f"{tool_name}/{argument_name}")
-
         print("okay")
-
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
@@ -77,9 +68,9 @@ if page == "Chatbot":
         query = prompt
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
-            json_answer = pipeline(query, api_list, args_, tools_, allowed_args_dict, retrieval_vector_db) # allowed args dict ka placeholder modify karna bacha
+            json_answer = pipeline(query, st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, retrieval_vector_db) # allowed args dict ka placeholder modify karna bacha
             full_response = json_answer
-            message_placeholder.json(full_response)
+            message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 elif page == "Tool Management":
@@ -102,7 +93,7 @@ elif page == "Tool Management":
         new_tool_desc = st.text_area("Tool Description")
         submitted = st.form_submit_button("Add Tool")
         if submitted:
-            st.session_state.api_list_updated = add_tool(st.session_state.api_list_updated, new_tool_name, new_tool_desc)
+            st.session_state.api_list_updated = add_tool(st.session_state.api_list_updated, new_tool_name, new_tool_desc, st.session_state.available_tools)
             st.success("Tool Added Successfully!")
 
     # Update or Delete Tools
