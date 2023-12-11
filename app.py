@@ -138,7 +138,7 @@ elif page == "Tool Management":
             new_arg_type = st.text_input("Argument Type")
             submitted_arg = st.form_submit_button("Add Argument")
             if submitted_arg:
-                st.session_state.api_list_updated = add_argument(st.session_state.api_list_updated, selected_tool_name, new_arg_name, new_arg_desc, new_arg_type, st.session_state.retrieval_vector_db)
+                st.session_state.api_list_updated, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict= add_argument(st.session_state.api_list_updated, selected_tool_name, new_arg_name, new_arg_desc, new_arg_type, new_arg_allowed_values, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
                 arg_allowed_values_dict[f"{selected_tool_name}/{new_arg_name}"] = new_arg_allowed_values
                 st.success("Argument Added Successfully!")
     else:
