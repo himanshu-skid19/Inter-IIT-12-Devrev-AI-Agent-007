@@ -32,6 +32,7 @@ def delete_tool_examples(store, tool_name):
   chunk_ids_to_delete = vector_df.loc[mask, 'chunk_id']
   print(chunk_ids_to_delete)
   store.delete(chunk_ids_to_delete)
+  return store
 
 def add_to_vector_store(store, examples):
   for example in examples:
