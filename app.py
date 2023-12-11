@@ -32,8 +32,6 @@ if "args_in_list_dict" not in st.session_state:
     
 if "api_list_updated" not in st.session_state:
     st.session_state.api_list_updated = API_LIST
-    
-st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict
 
 # Initialize session state for messages if not already present
 if "messages" not in st.session_state:
