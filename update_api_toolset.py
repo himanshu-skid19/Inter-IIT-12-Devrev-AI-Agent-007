@@ -108,14 +108,19 @@ def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_des
     return api_list
 
 # Function to delete multiple arguments from a tool
-def delete_multiple_arguments(api_list, tool_name, arg_names, store):
+def delete_multiple_arguments(api_list, tool_name, arg_names, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
   for arg_name in arg_names :
-    delete_tool_examples(store, arg_name)
-    available_arguments.remove(f"{tool_name}/{arg_name}")
+      delete_tool_examples(store, arg_name)
+      arg_to_delete = f"{tool_name}/{arg_name}"
+      available_arguments.remove(arg_to_delete)
+      if arg_to_delete in arg_allowed_values_dict:
+        del arg_allowed_values_dict[arg_to_delete]
+      if arg_to_delete in args_in_list_dict:
+        del args_in_list_dict[arg_to_delete]
   for tool in api_list:
       if tool['name'] == tool_name:
           tool['arguments'] = [arg for arg in tool['arguments'] if arg['argument_name'] not in arg_names]
           break
-  example = generate_examples(tool_name, api_list, store)
-  add_to_vector_store(store, example)
-  return api_list
+  examples = generate_examples(tool_name, api_list, store)
+  add_to_vector_store(store, examples)
+  return api_list, available_arguments, arg_allowed_values_dict, args_in_list_dict
