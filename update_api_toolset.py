@@ -73,19 +73,25 @@ def update_tool(api_list, old_tool_name, new_tool_name, new_description, availab
     return api_list, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to add an argument to a tool
-def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, store):
+def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, arg_allowed_values, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
     for tool in api_list:
-        if tool['name'] == tool_name:
-            tool['arguments'].append({
+      if tool['name'] == tool_name:
+        tool['arguments'].append({
                 "argument_name": arg_name,
                 "argument_description": arg_desc,
                 "argument_type": arg_type
             })
-            break
-    example = generate_examples(tool_name, api_list, store)
+        break
+    if 'array' in arg_type.lower() :
+      args_in_list_dict[f'{tool_name}/{arg_name}'] = 1
+    else:
+      args_in_list_dict[f'{tool_name}/{arg_name}'] = 0
+    example = generate_examples(tool_name, api_list, store, arg_name)
     add_to_vector_store(store, example)
     available_arguments.append(f"{tool_name}/{arg_name}")
-    return api_list
+    if len(arg_allowed_values) is not 0:
+      arg_allowed_values_dict[f'{tool_name}/{arg_name}'] = ast.literal_eval(arg_allowed_values)
+    return api_list, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to delete an argument from a tool
 def delete_argument(api_list, tool_name, arg_name, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
