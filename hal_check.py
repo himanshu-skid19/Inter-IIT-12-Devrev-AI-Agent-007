@@ -295,3 +295,59 @@ def complexity(output):
         for argument in arguments:
             num_args += 1
     return num_args*args_wt + num_tools*tool_wt
+
+def structure_check(json_response):
+    for i, item in enumerate(json_response):        #fixing tool_name issue
+        if 'tool_name' not in item:
+            if type(item) is dict:
+                first_key = list(item.keys())[0]
+                first_value = item.pop(first_key)
+                # Create a new dictionary with 'tool_name' and the rest of the key-value pairs
+                new_item = {'tool_name': first_value, **item}
+                json_response[i] = new_item
+        else:
+            item = 'tool_name'
+
+
+    restructured_json = []
+    for item in json_response:
+        d = {}
+        d['tool_name'] = item['tool_name']
+        x=[]
+        try:
+            for args in item['arguments']:
+                d_ = {}
+                d_['argument_name'] = args['argument_name']
+                d_['argument_value'] = args['argument_value']
+                x.append(d_)
+            d['arguments'] = x
+            restructured_json.append(d)
+        except (KeyError, TypeError) as e:
+            if 'arguments' in item:
+                if type(item['arguments']) is not list:
+                    x = []
+                    x.append(item['arguments'])
+                    item['arguments'] = x
+                # print(item['arguments'])]
+
+                for args in item['arguments']:
+                    # print(args)
+                    x_ = []
+                    n = {}
+                    keys = list(args.keys())
+                    # print(keys)
+                    for j in keys:
+                        d_ = {}
+                        d_['argument_name'] = j
+                        d_['argument_value'] = item['arguments'][0][j]
+                        # print(d_)
+                        x_.append(d_)
+                    n['tool_name'] = item['tool_name']
+                    n['arguments'] = x_
+                    restructured_json.append(n)
+                else:
+                    pass
+
+    print(restructured_json)
+    return restructured_json
+
