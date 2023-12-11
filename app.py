@@ -103,34 +103,34 @@ elif page == "Tool Management":
         if submitted:
             st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments = add_tool(st.session_state.api_list_updated, new_tool_name, new_tool_desc, st.session_state.available_tools, st.session_state.available_arguments)
             st.success("Tool Added Successfully!")
-
-    # Update or Delete Tools
-    st.header("Update or Delete Tools")
+            
     if st.session_state.api_list_updated:
         selected_tool_name = st.selectbox("Select a tool", options=[tool["name"] for tool in st.session_state.api_list_updated])
         selected_tool = next((tool for tool in st.session_state.api_list_updated if tool['name'] == selected_tool_name), None)
 
-        if selected_tool:
-            with st.form("update_delete_tool_form"):
-                st.write(f"Selected Tool: {selected_tool_name}")
-                new_name = st.text_input("New Name", value=selected_tool['name'])
-                new_description = st.text_area("New Description", value=selected_tool['description'])
-                update_button = st.form_submit_button("Update Tool")
-                delete_button = st.form_submit_button("Delete Tool")
+    # Update or Delete Tools
+    st.header("Update or Delete Tools")
+    if selected_tool:
+        with st.form("update_delete_tool_form"):
+            st.write(f"Selected Tool: {selected_tool_name}")
+            new_name = st.text_input("New Name", value=selected_tool['name'])
+            new_description = st.text_area("New Description", value=selected_tool['description'])
+            update_button = st.form_submit_button("Update Tool")
+            delete_button = st.form_submit_button("Delete Tool")
 
-                if update_button:
-                    st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict = update_tool(st.session_state.api_list_updated, selected_tool_name, new_name, new_description, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
-                    st.success("Tool Updated Successfully!")
+            if update_button:
+                st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict = update_tool(st.session_state.api_list_updated, selected_tool_name, new_name, new_description, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
+                st.success("Tool Updated Successfully!")
 
-                if delete_button:
-                    st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db = delete_tool(st.session_state.api_list_updated, selected_tool_name, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
-                    st.success("Tool Deleted Successfully!")
-
+            if delete_button:
+                st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db = delete_tool(st.session_state.api_list_updated, selected_tool_name, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
+                st.success("Tool Deleted Successfully!")
 
     # Add a New Argument to a Tool
     st.header("Add a New Argument to a Tool")
-    if st.session_state.api_list_updated:  # Check if there are tools available
-        selected_tool_name = st.selectbox("Select a tool to add an argument", options=[tool["name"] for tool in st.session_state.api_list_updated])
+    # if st.session_state.api_list_updated:  # Check if there are tools available
+    #     selected_tool_name = st.selectbox("Select a tool to add an argument", options=[tool["name"] for tool in st.session_state.api_list_updated])
+    if selected_tool:
         with st.form("new_argument_form"):
             new_arg_name = st.text_input("Argument Name")
             new_arg_desc = st.text_area("Argument Description")
