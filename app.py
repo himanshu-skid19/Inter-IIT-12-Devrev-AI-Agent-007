@@ -183,4 +183,4 @@ elif page == "Tool Management":
         json.dump(st.session_state.api_list_updated, file)
 elif page == "API_LIST":
     st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict
-    print(len(vector_db.docstore._dict))
+    st.write(len(vector_db.docstore._dict))
