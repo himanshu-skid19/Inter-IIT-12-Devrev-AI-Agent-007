@@ -119,6 +119,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, allowed_args
     print(type(json_response))
     print(len(json_response))
     print(f"##################")
+    json_response = structure_check(json_response)
     if placeholder_check(json_response):
       if(classification==True):
         st.session_state.PAST_QUERY = st.session_state.PAST_QUERY + '.\n' + query
