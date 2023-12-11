@@ -101,7 +101,7 @@ elif page == "Tool Management":
         new_tool_desc = st.text_area("Tool Description")
         submitted = st.form_submit_button("Add Tool")
         if submitted:
-            st.session_state.api_list_updated = add_tool(st.session_state.api_list_updated, new_tool_name, new_tool_desc, st.session_state.available_tools)
+            st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments = add_tool(st.session_state.api_list_updated, new_tool_name, new_tool_desc, st.session_state.available_tools, st.session_state.available_arguments)
             st.success("Tool Added Successfully!")
 
     # Update or Delete Tools
