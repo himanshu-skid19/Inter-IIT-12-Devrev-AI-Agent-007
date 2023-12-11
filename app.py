@@ -119,7 +119,7 @@ elif page == "Tool Management":
                 delete_button = st.form_submit_button("Delete Tool")
 
                 if update_button:
-                    st.session_state.api_list_updated = update_tool(st.session_state.api_list_updated, selected_tool_name, new_name, new_description, st.session_state.retrieval_vector_db)
+                    st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict = update_tool(st.session_state.api_list_updated, selected_tool_name, new_name, new_description, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db)
                     st.success("Tool Updated Successfully!")
 
                 if delete_button:
