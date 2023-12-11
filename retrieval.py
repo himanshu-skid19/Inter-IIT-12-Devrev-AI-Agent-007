@@ -26,12 +26,18 @@ def show_vstore(store):
   vector_df = store_to_df(store)
   # display(vector_df)
 
-def delete_tool_examples(store, tool_name):
+def delete_tool_examples(store, tool_name, arg_name = None):
   vector_df = store_to_df(store)
-  mask = vector_df['content'].str.contains(tool_name)
+  if (arg_name is not None):
+      mask = vector_df['content'].str.contains(tool_name) and vector_df['content'].str.contains(arg_name)
+  else:
+      mask = vector_df['content'].str.contains(tool_name)
   chunk_ids_to_delete = vector_df.loc[mask, 'chunk_id']
   print(chunk_ids_to_delete)
-  store.delete(chunk_ids_to_delete)
+  try:
+      store.delete(chunk_ids_to_delete)
+  except:
+      print("Unable to delete")
 
 def add_to_vector_store(store, examples):
   for example in examples:
