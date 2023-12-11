@@ -378,6 +378,26 @@ API_LIST = [
         "name": "get_current_date",
         "description": "Get's the current date",
         "arguments": []
+    },
+
+    {
+        "name": "iterate",
+        "description": "Iterates over a list of objects and applies the specified functions to each. The iterating variable 'i' starts from the number after 'j', where 'j' is the last tool in the chain, and continues as 'j+n', where 'n' is the number of elements in the list to iterate over.",
+        "arguments": [
+            {
+                "argument_name": "objects",
+                "argument_description": "List of objects to be iterated over.",
+                "argument_type": "array of objects"
+            },
+            {
+                "argument_name": "tool_name",
+                "argument_description": "List of dictionary functions with their arguments that are to be applied to each item in the list of objects, in the specified order.",
+                "argument_type": "array of strings"
+            }
+        ]
     }
+
+
+
 
 ]
