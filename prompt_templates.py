@@ -16,7 +16,7 @@ follow_up_prompt = PromptTemplate(
     input_variables=["QUERY", "chat_history"], template= follow_up_prompt_template
 )
 generation_prompt = PromptTemplate(
-    input_variables = ["API_LIST", "FEW_SHOT", "APIS", "TOOL_NAME"],template = generation_prompt_template
+    input_variables = ["API_LIST", "FEW_SHOT", "MODIFIED_ARG"],template = generation_prompt_template
   )
 
 memory = ConversationBufferWindowMemory(
