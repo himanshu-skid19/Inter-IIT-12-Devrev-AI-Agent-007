@@ -41,7 +41,7 @@ def delete_tool(api_list, tool_name, available_tools, available_arguments, allow
     allowed_args_dict = {key: value for key, value in allowed_args_dict.items() if not key.startswith(tool_name)}
     args_in_list_dict = {key: value for key, value in args_in_list_dict.items() if not key.startswith(tool_name)}
     api_list = [tool for tool in api_list if tool['name'] != tool_name]
-    return api_list, available_tools, available_arguments, allowed_args_dict, args_in_list_dict
+    return api_list, available_tools, available_arguments, allowed_args_dict, args_in_list_dict, store
 
 # Function to update a tool
 def update_tool(api_list, old_tool_name, new_tool_name, new_description, store):
