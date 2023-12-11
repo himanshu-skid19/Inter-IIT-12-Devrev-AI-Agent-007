@@ -73,16 +73,18 @@ def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, store):
     return api_list
 
 # Function to delete an argument from a tool
-def delete_argument(api_list, tool_name, arg_name, store):
+def delete_argument(api_list, tool_name, arg_name,  available_arguments, allowed_args_dict, args_in_list_dict, store):
     delete_tool_examples(store, arg_name)
     for tool in api_list:
         if tool['name'] == tool_name:
             tool['arguments'] = [arg for arg in tool['arguments'] if arg['argument_name'] != arg_name]
             break
-    example = generate_examples(tool_name, api_list, store)
-    add_to_vector_store(store, example)
+    examples = generate_examples(tool_name, api_list, store)
+    add_to_vector_store(store, examples)
     available_arguments.remove(f"{tool_name}/{arg_name}")
-    return api_list
+    allowed_args_dict = {key: value for key, value in allowed_args_dict.items() if arg_name not in key}
+    arg_in_list_dict = {key: value for key, value in args_in_list_dict.items() if arg_name not in key}
+    return api_list, available_arguments, allowed_args_dict, args_in_list_dict
 
 # Function to update an argument
 def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_desc, new_arg_type, store):
