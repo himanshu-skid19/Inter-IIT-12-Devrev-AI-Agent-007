@@ -85,8 +85,8 @@ def delete_argument(api_list, tool_name, arg_name, available_arguments, arg_allo
     available_arguments.remove(arg_to_delete)
     if arg_to_delete in arg_allowed_values_dict:
       del arg_allowed_values_dict[arg_to_delete]
-    if arg_to_delete in arg_in_list_dict:
-      del arg_in_list_dict[arg_to_delete]
+    if arg_to_delete in args_in_list_dict:
+      del args_in_list_dict[arg_to_delete]
     return api_list, available_arguments, arg_allowed_values_dict, args_in_list_dict
 
 # Function to update an argument
