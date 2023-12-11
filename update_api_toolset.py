@@ -86,7 +86,7 @@ def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, arg_allowed_
       args_in_list_dict[f'{tool_name}/{arg_name}'] = 1
     else:
       args_in_list_dict[f'{tool_name}/{arg_name}'] = 0
-    example = generate_examples(tool_name, api_list, store, arg_name)
+    example = generate_examples(tool_name, api_list, store, arg_name = arg_name)
     add_to_vector_store(store, example)
     available_arguments.append(f"{tool_name}/{arg_name}")
     if len(arg_allowed_values) is not 0:
