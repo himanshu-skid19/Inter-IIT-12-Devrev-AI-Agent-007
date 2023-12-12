@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 
 available_tools = [
     "works_list",
@@ -81,7 +82,7 @@ available_arguments = [
     "get_current_date/"
 ]
 
-arg_allowed_values_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
+allowed_args_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
  'works-update/type': ['issue', 'task', 'ticket'],
  'works_list/issue.priority': ['p0', 'p1', 'p2', 'p3'],
  'works_list/ticket.needs_response': ['true', 'false'],
@@ -150,9 +151,9 @@ args_in_list_dict = {
 }
 
 
-def find_hallucinations(json_response, arg_allowed_values_dict, available_tools, available_arguments, args_in_list_dict):
+def find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict):
     # check errors in names of tools and arguments
-        for i, item in enumerate(json_response):
+    for i, item in enumerate(json_response):
         print(item)
         if 'tool_name' not in item:
             if type(item) is dict:
@@ -163,11 +164,12 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
                 json_response[i] = new_item
         else:
             item = 'tool_name'
-    tool_names = [tool["tool_name"] for tool in json_response]
+
+    tool_names = [item['tool_name'] for item in json_response]
     valid_tools = [tool_name for tool_name in tool_names if tool_name in available_tools]
     hallucinated_tools = [tool_name for tool_name in tool_names if tool_name not in available_tools]
-
     argument_names = []
+
     for item in json_response:
         for key in item:
             if item[key] in valid_tools:
@@ -181,9 +183,8 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
                     pass
     # valid_args = [arg_name for arg_name in argument_names if arg_name in merged_arguments]
     hallucinated_args = [arg_name for arg_name in argument_names if arg_name not in available_arguments]
-
-    # check the validity of argument values using arg_allowed_values_dict
-     json_args_dict = {}
+    # check the validity of argument values using allowed_arg_values_dict
+    json_args_dict = {}
     for item in json_response:
         for key in item:
             if item[key] in available_tools:
@@ -225,15 +226,16 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
 
     hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
-        if arg_name in arg_allowed_values_dict:
+        if arg_name in allowed_args_dict:
             if type(arg_value) is not list:
-                if arg_value not in arg_allowed_values_dict[arg_name]:
+                if arg_value not in allowed_args_dict[arg_name]:
                     hallucinated_args_values.append((arg_name, arg_value))
             else:
                 for i in arg_value:
-                    if i not in arg_allowed_values_dict[arg_name]:
+                    if i not in allowed_args_dict[arg_name]:
                         hallucinated_args_values.append((arg_name, i))
     return hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev
+
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response):
   Correction_prompt = ''
   Correction_prompt += f'There are following errors in your previous json response \n {json_response} \n'
