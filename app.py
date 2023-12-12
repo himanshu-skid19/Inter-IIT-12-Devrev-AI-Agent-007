@@ -11,7 +11,7 @@ from mem_check import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
-retrieval_loader = CSVLoader(file_path='C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Seed_Dataset.csv', source_column = 'QUERY')
+retrieval_loader = CSVLoader(file_path=r'C:\Users\hp\OneDrive\Desktop\dev-rev-testing\content\Devrev-AI-Agent-007\Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
 
@@ -58,7 +58,7 @@ def clear_api_list_updated():
         embedding=retrieval_embeddings,
         )
 
-file_path = 'Updated_API_list.json'
+file_path = r'C:\Users\hp\OneDrive\Desktop\dev-rev-testing\content\Devrev-AI-Agent-007\Updated_API_list.json'
 
 # Page navigation
 st.sidebar.title("Navigation")
