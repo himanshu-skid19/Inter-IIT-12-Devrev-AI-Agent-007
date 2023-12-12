@@ -82,7 +82,7 @@ available_arguments = [
     "get_current_date/"
 ]
 
-allowed_args_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
+arg_allowed_values_dict = {'works-update/priority': ['p0', 'p1', 'p2', 'p3'],
  'works-update/type': ['issue', 'task', 'ticket'],
  'works_list/issue.priority': ['p0', 'p1', 'p2', 'p3'],
  'works_list/ticket.needs_response': ['true', 'false'],
@@ -151,7 +151,7 @@ args_in_list_dict = {
 }
 
 
-def find_hallucinations(json_response, allowed_args_dict, available_tools, available_arguments, args_in_list_dict):
+def find_hallucinations(json_response, arg_allowed_values_dict, available_tools, available_arguments, args_in_list_dict):
     # check errors in names of tools and arguments
     for i, item in enumerate(json_response):
         print(item)
@@ -226,13 +226,13 @@ def find_hallucinations(json_response, allowed_args_dict, available_tools, avail
 
     hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
-        if arg_name in allowed_args_dict:
+        if arg_name in arg_allowed_values_dict:
             if type(arg_value) is not list:
-                if arg_value not in allowed_args_dict[arg_name]:
+                if arg_value not in arg_allowed_values_dict[arg_name]:
                     hallucinated_args_values.append((arg_name, arg_value))
             else:
                 for i in arg_value:
-                    if i not in allowed_args_dict[arg_name]:
+                    if i not in arg_allowed_values_dict[arg_name]:
                         hallucinated_args_values.append((arg_name, i))
     return hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev
 
