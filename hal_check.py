@@ -225,13 +225,13 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
 
     hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
-        if arg_name in allowed_args_dict:
+        if arg_name in arg_allowed_values_dict:
             if type(arg_value) is not list:
-                if arg_value not in allowed_args_dict[arg_name]:
+                if arg_value not in arg_allowed_values_dict[arg_name]:
                     hallucinated_args_values.append((arg_name, arg_value))
             else:
                 for i in arg_value:
-                    if i not in allowed_args_dict[arg_name]:
+                    if i not in arg_allowed_values_dict[arg_name]:
                         hallucinated_args_values.append((arg_name, i))
     return hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response):
