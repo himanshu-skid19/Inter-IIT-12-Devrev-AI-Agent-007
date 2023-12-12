@@ -61,8 +61,12 @@ Click the radio button in the sidebar to access the Tools Management Page.
 3. **Tool Management:**
 - **Reset API Toolset:** Click on "Reset API toolset" on the Tools Management Page.
 - **Add New Tools:** Use the "Add New Tool" form to add tools to the API list. Multiple tools can be added.
+![image](https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/95518516/279be45c-d5a2-4a9e-912e-14aca18c3988)
+
 - **Update Tool Details:** To update a tool's name or description, select it and make changes as needed.
+<img width="890" alt="image" src="https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/95518516/65a59138-dc65-4456-9237-ca7e5187e88a">
 - **Delete Tool:** Select a tool and click "Delete tool" to remove it.
+<img width="906" alt="image" src="https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/95518516/8b842fe4-82af-4913-839d-54dfa6897726">
 
 4. **Argument Management:**
 - **Add New Arguments:** Fill in the details for new arguments in the provided form.
