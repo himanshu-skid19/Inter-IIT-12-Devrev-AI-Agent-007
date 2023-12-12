@@ -87,7 +87,16 @@ def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_
   print(f"Reprompt Number: {cntr} #################")
 
   print(f"Response formatted:{resp_formatted}")
-  json_response = ast.literal_eval(resp_formatted)
+  try:
+    json_response = ast.literal_eval(json_response)
+  except Exception as e:
+    Correction_prompt = correction_if_wrong_schema(e, json_response)
+    json_response = reprompt_chain.run(QUERY=query, API_LIST=API_LIST, CORRECTION_PROMPT=Correction_prompt,
+                                       callbacks=[handler])
+    try:
+      json_response = ast.literal_eval(json_response)
+    except:
+      return []
   print(f"3. JSON decoded output- {cntr} ##################")
   print(json_response)
   print(type(json_response))
@@ -124,10 +133,14 @@ def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_
     json_response = reprompt_chain.run(QUERY = query, API_LIST = API_LIST, CORRECTION_PROMPT = Correction_prompt, callbacks=[handler])
     try:
       json_response = ast.literal_eval(json_response)
-    except SyntaxError:
+    except Exception as e:
+      Correction_prompt = correction_if_wrong_schema(e, json_response)
       json_response = reprompt_chain.run(QUERY=query, API_LIST=API_LIST, CORRECTION_PROMPT=Correction_prompt,
                                          callbacks=[handler])
-      json_response = ast.literal_eval(json_response)
+      try:
+        json_response = ast.literal_eval(json_response)
+      except:
+        return []
     cntr+=1
     print(f"4. JSON decoded output- {cntr} ##################")
     print(json_response)
