@@ -152,58 +152,88 @@ args_in_list_dict = {
 
 def find_hallucinations(json_response, arg_allowed_values_dict, available_tools, available_arguments, args_in_list_dict):
     # check errors in names of tools and arguments
+        for i, item in enumerate(json_response):
+        print(item)
+        if 'tool_name' not in item:
+            if type(item) is dict:
+                first_key = list(item.keys())[0]
+                first_value = item.pop(first_key)
+                # Create a new dictionary with 'tool_name' and the rest of the key-value pairs
+                new_item = {'tool_name': first_value, **item}
+                json_response[i] = new_item
+        else:
+            item = 'tool_name'
     tool_names = [tool["tool_name"] for tool in json_response]
     valid_tools = [tool_name for tool_name in tool_names if tool_name in available_tools]
     hallucinated_tools = [tool_name for tool_name in tool_names if tool_name not in available_tools]
 
     argument_names = []
     for item in json_response:
-        if item["tool_name"] in valid_tools:
-            arguments = item.get("arguments", [])
-            for argument in arguments:
-                argument_name = argument.get("argument_name")
-                if argument_name:
-                    argument_names.append(item["tool_name"]+"/"+argument_name)
-
+        for key in item:
+            if item[key] in valid_tools:
+                try:
+                    arguments = item.get("arguments", [])
+                    for argument in arguments:
+                        argument_name = argument.get("argument_name")
+                        if argument_name:
+                            argument_names.append(item["tool_name"]+"/"+argument_name)
+                except AttributeError:
+                    pass
     # valid_args = [arg_name for arg_name in argument_names if arg_name in merged_arguments]
     hallucinated_args = [arg_name for arg_name in argument_names if arg_name not in available_arguments]
 
     # check the validity of argument values using arg_allowed_values_dict
-    json_args_dict = {}
+     json_args_dict = {}
     for item in json_response:
-        if item["tool_name"] in available_tools:
-            arguments = item.get("arguments", [])
-            for argument in arguments:
-                argument_name = argument.get("argument_name")
-                if argument_name:
-                    json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
-                concat_arg = item["tool_name"] + "/" + argument_name
-                argument_names.append(concat_arg)
-                if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
-                    arg_val = argument.get("argument_value")
-                    if type(arg_val) is not list:
-                        l = []
-                        l.append(arg_val)
-                        argument["argument_value"] = l
+        for key in item:
+            if item[key] in available_tools:
+                try:
+                    arguments = item.get("arguments", [])
+                    for argument in arguments:
+                        argument_name = argument.get("argument_name")
+                        if argument_name:
+                            json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
+                        concat_arg = item["tool_name"] + "/" + argument_name
+                        argument_names.append(concat_arg)
+                        try:
+                            if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
+                                arg_val = argument.get("argument_value")
+                                if type(arg_val) is not list:
+                                    l = []
+                                    l.append(arg_val)
+                                    argument["argument_value"] = l
+                        except KeyError:
+                            pass
+                except AttributeError:
+                    pass
 
     hallucinated_args_values_prev = []
     for idx, item in enumerate(json_response):
-        if item["tool_name"] in available_tools:
-            arguments = item.get("arguments", [])
-            for argument in arguments:
-                argument_name = argument.get("argument_name")
-                if argument_name:
-                    json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
-                if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0]) >= idx):
-                  hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
+        for key in item:
+            if item[key] in available_tools:
+                try:
+                    arguments = item.get("arguments", [])
+                    for argument in arguments:
+                        argument_name = argument.get("argument_name")
 
-    hallucinated_args_values = [] 
+                        if argument_name:
+                            json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
+                        if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0])):
+                          hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
+                except AttributeError:
+                    pass
+
+    hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
-        if arg_name in arg_allowed_values_dict:
-            if arg_value not in arg_allowed_values_dict[arg_name]:
-                hallucinated_args_values.append((arg_name, arg_value))
+        if arg_name in allowed_args_dict:
+            if type(arg_value) is not list:
+                if arg_value not in allowed_args_dict[arg_name]:
+                    hallucinated_args_values.append((arg_name, arg_value))
+            else:
+                for i in arg_value:
+                    if i not in allowed_args_dict[arg_name]:
+                        hallucinated_args_values.append((arg_name, i))
     return hallucinated_args, hallucinated_tools, hallucinated_args_values, hallucinated_args_values_prev
-
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response):
   Correction_prompt = ''
   Correction_prompt += f'There are following errors in your previous json response \n {json_response} \n'
@@ -220,13 +250,101 @@ def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, 
 
 def placeholder_check(json_response):
     argument_names = []
+    if type(json_response) is dict:
+        l = []
+        l.append(json_response)
+        json_response = l
     for item in json_response:
-        arguments = item.get("arguments", [])
-        print(arguments)
-        for argument in arguments:
-            argument_name = argument.get("argument_name")
-            argument_value = argument["argument_value"]
-            x = re.search("<.*>", str(argument_value))
+        try:
+            arguments = item.get("arguments", [])
+            for argument in arguments:
+                try:
+                    argument_name = argument.get("argument_name", [])
+                    argument_value = argument["argument_value"]
+                    x = re.search("<.*>", str(argument_value))
+                    if x:
+                        return 1
+                except KeyError:
+                    return 1
+        except AttributeError:
+            return 0
+    return 0
+
+
+def unsolvable_check(json_response):
+    for item in json_response:
+        for key in item:
+            if type(item[key]) is list:
+                return 0
+            arg = item[key]
+            x = re.search(".*cannot.*", arg)
             if x:
                 return 1
     return 0
+
+def complexity(output):
+    num_tools = 0
+    num_args = 0
+    tool_wt = 2
+    args_wt = 0.5
+    for tool in output:
+        num_tools += 1
+        arguments = tool.get("arguments", [])
+        for argument in arguments:
+            num_args += 1
+    return num_args*args_wt + num_tools*tool_wt
+
+def structure_check(json_response):
+    for i, item in enumerate(json_response):        #fixing tool_name issue
+        if 'tool_name' not in item:
+            if type(item) is dict:
+                first_key = list(item.keys())[0]
+                first_value = item.pop(first_key)
+                # Create a new dictionary with 'tool_name' and the rest of the key-value pairs
+                new_item = {'tool_name': first_value, **item}
+                json_response[i] = new_item
+        else:
+            item = 'tool_name'
+
+
+    restructured_json = []
+    for item in json_response:
+        d = {}
+        d['tool_name'] = item['tool_name']
+        x=[]
+        try:
+            for args in item['arguments']:
+                d_ = {}
+                d_['argument_name'] = args['argument_name']
+                d_['argument_value'] = args['argument_value']
+                x.append(d_)
+            d['arguments'] = x
+            restructured_json.append(d)
+        except (KeyError, TypeError) as e:
+            if 'arguments' in item:
+                if type(item['arguments']) is not list:
+                    x = []
+                    x.append(item['arguments'])
+                    item['arguments'] = x
+                # print(item['arguments'])]
+
+                for args in item['arguments']:
+                    # print(args)
+                    x_ = []
+                    n = {}
+                    keys = list(args.keys())
+                    # print(keys)
+                    for j in keys:
+                        d_ = {}
+                        d_['argument_name'] = j
+                        d_['argument_value'] = item['arguments'][0][j]
+                        # print(d_)
+                        x_.append(d_)
+                    n['tool_name'] = item['tool_name']
+                    n['arguments'] = x_
+                    restructured_json.append(n)
+                else:
+                    pass
+
+    print(restructured_json)
+    return restructured_json
