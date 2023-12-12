@@ -7,6 +7,7 @@ from retrieval import *
 from all_apis import *
 from prompts import *
 from update_api_toolset import *
+from mem_check import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
@@ -38,6 +39,12 @@ if "retrieval_vector_db" not in st.session_state:
 # Initialize session state for messages if not already present
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+if "PAST_QUERY" not in st.session_state:
+    st.session_state.PAST_QUERY = "NO PAST QUERIES"
+    st.session_state.PAST_RESPONSE = "NO PAST RESPONSES"
+    st.session_state.PREV_QUERY = ""
+    st.session_state.PREV_RESPONSE = ""
 
 # Function to clear the session state variable
 def clear_api_list_updated():
