@@ -250,6 +250,13 @@ def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, 
   Correction_prompt += "You have to give the corrected solution to the product manager's query by modifying the provided JSON. You have to remove hallucinations and only output the corrected JSON. \n"
   return Correction_prompt
 
+def correction_if_wrong_schema(exception, json_response)
+    Correction_prompt = 'The json you extracted in your response does not follow the appropriate json schema' + '\n'
+    Correction_prompt += f'Upon extracting your json response : \n {json_response} \n'
+    Correction_prompt += f'The following error is encountered : {exception}' + '\n'
+    Correction_prompt += "You have to give the corrected solution to the product manager's query by modifying the provided JSON. You have to remove the error and only output the corrected JSON."
+    return Correction_prompt
+
 def placeholder_check(json_response):
     argument_names = []
     if type(json_response) is dict:
