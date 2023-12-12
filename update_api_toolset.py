@@ -16,8 +16,16 @@ def API_CHOICE(n, tool_name, api_list):
 
 def generate_examples(tool_name, api_list, store, num_examples = 2, arg_name = None):
   APIs = API_CHOICE(2, tool_name, api_list)
-  few_shot_examples = random.sample(list(store.docstore._dict.values()), 2)
-  few_shot_examples = [few_shot_examples[0].page_content, few_shot_examples[1].page_content]
+  if len(list(store.docstore._dict.values()))>=2:
+    few_shot_examples = random.sample(list(store.docstore._dict.values()), 2)
+    few_shot_examples = [few_shot_examples[0].page_content, few_shot_examples[1].page_content]
+  elif len(list(store.docstore._dict.values()))==1:
+
+    few_shot_examples = random.sample(list(store.docstore._dict.values()), 1)
+    few_shot_examples = [few_shot_examples[0].page_content]
+  else:
+    few_shot_examples=[]
+    
   examples = []
   if arg_name is not None:
     MODIFIED_ARG = f'Now you must only use {APIs} and {tool_name} to generate a query, its reasoning and the finar answer. You, also must use the argument {arg_name} for the tool {tool_name} to generate the query. Now generate a query and give your output in the form of the following dictionary.'
