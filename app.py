@@ -58,7 +58,7 @@ def clear_api_list_updated():
         embedding=retrieval_embeddings,
         )
 
-file_path = r'C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Updated_API_list.json'
+# file_path = r'C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Updated_API_list.json'
 
 # Page navigation
 st.sidebar.title("Navigation")
