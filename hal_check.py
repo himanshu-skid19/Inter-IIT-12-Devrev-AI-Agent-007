@@ -309,6 +309,10 @@ def complexity(output):
     return num_args*args_wt + num_tools*tool_wt
 
 def structure_check(json_response):
+    if type(json_response) is dict:
+        l = []
+        l.append(json_response)
+        json_response = l
     for i, item in enumerate(json_response):        #fixing tool_name issue
         if 'tool_name' not in item:
             if type(item) is dict:
