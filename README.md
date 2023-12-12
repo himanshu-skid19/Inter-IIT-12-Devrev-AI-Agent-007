@@ -4,13 +4,17 @@
 Follow the steps to run the deployment
 1. Install the requirements.txt file using the following command.
 `pip install -r requirements.txt`
-2. Copy the path of Seed_Dataset.csv and paste it into:
+2. Use the following command to download Seed Dataset to your local current directory:
+   `gdown 19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R`
+3. Copy the path of Seed_Dataset.csv and paste it into:
    a. File name:app.py; retrieval_loader = CSVLoader(file_path = r"Your Path here", source_column = 'QUERY') and comment out the file path in line 61.
    b. retrieval.py; loader = CSVLoader(file_path = r"Your Path here")
-3. Add your API Keys:
+   
+4. Add your API Keys:
    a. os.environ['HUGGINGFACEHUB_API_TOKEN'] = "Your Hugging Face API Key here".
    b. os.environ['OPENAI_API_KEY'] = "Your OpenAI Key here".
    Get the Hugging Face API Keys from this page: https://huggingface.co/settings/tokens
+   
 5. Now To run the app execute the following command.
 `streamlit run app.py`
 
