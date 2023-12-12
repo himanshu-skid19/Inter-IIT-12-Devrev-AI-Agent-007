@@ -1,13 +1,21 @@
 # Devrev---AI-Agent-007
 ## Team 15
-install the requirements.txt file
+
+Follow the steps to run the deployment
+1. Install the requirements.txt file using the following command.
 `pip install -r requirements.txt`
-To run the app execute the following command.
+2. Copy the path of Seed_Dataset.csv and paste it into:
+   a. File name:app.py; retrieval_loader = CSVLoader(file_path = r"Your Path here", source_column = 'QUERY') and comment out the file path in line 61.
+   b. retrieval.py; loader = CSVLoader(file_path = r"Your Path here")
+3. Add your API Keys:
+   a. os.environ['HUGGINGFACEHUB_API_TOKEN'] = "Your Hugging Face API Key here".
+   b. os.environ['OPENAI_API_KEY'] = "Your OpenAI Key here".
+   Get the Hugging Face API Keys from this page: https://huggingface.co/settings/tokens
+5. Now To run the app execute the following command.
 `streamlit run app.py`
 
 
 Step 1: You'll initially land on the Chatbot page.
-![image](https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/106437020/b74542d4-12cf-4517-a54b-51438fdc2e4f)
 
 Navigate to Tools Management Page:
 
