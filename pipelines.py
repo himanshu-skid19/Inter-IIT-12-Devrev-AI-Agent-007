@@ -10,9 +10,9 @@ ENV_PUBLIC_KEY = "pk-lf-0304359e-b115-403e-8eb4-45429fbe037f"
 
 def dynamic_k(query):
   word_count = len(query.split())
-  if word_count <= 10:
+  if word_count <= 7:
     k = 1
-  elif word_count <= 20:
+  elif word_count <= 15:
     k = 2
   else:
     k = 3
