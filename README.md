@@ -1,64 +1,76 @@
 # Devrev---AI-Agent-007
 ## Team 15
 
-Follow the steps to run the deployment
-1. Install the requirements.txt file using the following command.
-`pip install -r requirements.txt`
-2. Use the following command to download Seed Dataset to your local current directory:
-   `gdown 19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R`
-3. Copy the path of Seed_Dataset.csv and paste it into:
-   a. File name:app.py; retrieval_loader = CSVLoader(file_path = r"Your Path here", source_column = 'QUERY') and comment out the file path in line 61.
-   b. retrieval.py; loader = CSVLoader(file_path = r"Your Path here")
-   
-4. Add your API Keys:
-   a. os.environ['HUGGINGFACEHUB_API_TOKEN'] = "Your Hugging Face API Key here".
-   b. os.environ['OPENAI_API_KEY'] = "Your OpenAI Key here".
-   Get the Hugging Face API Keys from this page: https://huggingface.co/settings/tokens
-   
-5. Now To run the app execute the following command.
-`streamlit run app.py`
+Devrev---AI-Agent-007 is a streamlined tool for deploying AI applications. Follow these steps to get started:
+
+### Installation and Setup
+
+1. **Install Dependencies:**
+   Install the required libraries using:
+```python
+pip install -r requirements.txt`
+```
+
+2. **Download Seed Dataset:**
+Use this command to download the Seed Dataset to your local directory:
+```python
+gdown 19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R`
+```
 
 
-Step 1: You'll initially land on the Chatbot page.
+3. **Configure File Paths:**
+- **app.py:**
+  Modify `retrieval_loader` with your CSV file path:
+  ```python
+  retrieval_loader = CSVLoader(file_path=r"Your Path here", source_column='QUERY')
+  ```
+  Comment out the file path in line 61.
+- **retrieval.py:**
+  Modify `loader` with your CSV file path:
+  ```python
+  loader = CSVLoader(file_path=r"Your Path here")
+  ```
 
-Navigate to Tools Management Page:
+4. **API Keys Setup:**
+Add your API keys:
+- Hugging Face API Key:
+  ```python
+  os.environ['HUGGINGFACEHUB_API_TOKEN'] = "Your Hugging Face API Key here"
+  ```
+- OpenAI API Key:
+  ```python
+  os.environ['OPENAI_API_KEY'] = "Your OpenAI Key here"
+  ```
+Get the Hugging Face API Keys from [here](https://huggingface.co/settings/tokens).
 
-Click on the radio button in the sidebar to access the Tools Management Page.
-Reset API Toolset:
+5. **Run the Application:**
+Execute the following command to run the app:
+```python
+streamlit run app.py
+```
 
-On the Tools Management Page, locate and click on the "Reset API toolset" button.
-Add New Tools:
+### Using the Application
 
-Utilize the "Add New Tool" form to add new tools to the API list.
-You can add multiple tools at once.
-Update Tool Name & Description:
+1. **Initial Setup:**
+Upon launching, you'll land on the Chatbot page.
 
-If you wish to update any tool name or description:
-Choose the tool from the drop-down list "Select a tool."
-Fill up the required fields for the tool.
-Click on the "Update tool" button.
-Delete Tool:
+2. **Navigate to Tools Management Page:**
+Click the radio button in the sidebar to access the Tools Management Page.
 
-To delete a tool:
-Choose the tool from the drop-down list "Select a tool."
-Click on the "Delete tool" button.
-Add New Arguments to a Tool:
+3. **Tool Management:**
+- **Reset API Toolset:** Click on "Reset API toolset" on the Tools Management Page.
+- **Add New Tools:** Use the "Add New Tool" form to add tools to the API list. Multiple tools can be added.
+- **Update Tool Details:** To update a tool's name or description, select it and make changes as needed.
+- **Delete Tool:** Select a tool and click "Delete tool" to remove it.
 
-Scroll to the corresponding form for adding new arguments to a tool.
-Fill in the argument name, description, allowed values (if present), and the argument type.
-Make sure to input allowed values as a list of strings (e.g., ['p0', 'p1', 'p2']).
-Update or Delete Arguments:
+4. **Argument Management:**
+- **Add New Arguments:** Fill in the details for new arguments in the provided form.
+- **Update/Delete Arguments:** Select an argument to update or delete it.
+- **Bulk Delete:** Choose multiple arguments to delete them at once.
 
-To update or delete arguments:
-Move to the following form, where the selected tool is mentioned below the heading.
-Select the argument from the "Select an argument" box.
-Add the new argument name, description, allowed values, and type.
-Click "Update argument" to update or "Delete argument" to delete.
-Delete Multiple Arguments:
+5. **Finalize:**
+Complete the necessary actions to fully utilize the interface.
 
-If you want to delete multiple arguments from a tool:
-Select all the required arguments from the "Select arguments to delete from the tool" drop-down list.
-Click the "Delete selected arguments" button to delete the selected arguments from the tool.
-Finalize:
+---
 
-Once you've completed the necessary actions, you have successfully used the interface.
+This README provides a comprehensive guide to set up and use the Devrev---AI-Agent-007 application.
