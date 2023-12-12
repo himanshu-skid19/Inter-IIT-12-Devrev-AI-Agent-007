@@ -1,3 +1,4 @@
+import ast
 import re
 from collections import OrderedDict
 
@@ -224,8 +225,12 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
 
                         if argument_name:
                             json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
-                        if ("$$PREV" in argument["argument_value"] and int(argument["argument_value"].split("[")[1].split("]")[0])):
-                          hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, argument["argument_value"]))
+                        # print("argument value ", argument['argument_value'])
+                        arg_list = ast.literal_eval(argument['argument_value'])
+                        for arg in arg_list:
+                            # print("arument 2, ", arg)
+                            if ("$$PREV" in arg and int(arg.split("[")[1].split("]")[0])):
+                              hallucinated_args_values_prev.append((item["tool_name"]+"/"+argument_name, arg))
                 except AttributeError:
                     pass
 
