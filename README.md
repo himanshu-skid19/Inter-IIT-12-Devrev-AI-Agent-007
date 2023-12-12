@@ -8,14 +8,14 @@ Devrev---AI-Agent-007 is a streamlined tool for deploying AI applications. Follo
 1. **Install Dependencies:**
    Install the required libraries using:
 ```python
-pip install -r requirements.txt`
+pip install -r requirements.txt
 ```
 
 
 2. **Download Seed Dataset:**
 Use this command to download the Seed Dataset to your local directory:
 ```python
-gdown 19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R`
+gdown 19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R
 ```
 
 
