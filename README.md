@@ -70,8 +70,14 @@ Click the radio button in the sidebar to access the Tools Management Page.
 
 4. **Argument Management:**
 - **Add New Arguments:** Fill in the details for new arguments in the provided form.
+- <img width="830" alt="image" src="https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/95518516/ae7d0aea-51dd-433d-9ec9-d112a2426328">
+
 - **Update/Delete Arguments:** Select an argument to update or delete it.
+- <img width="781" alt="image" src="https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/95518516/f149ba60-20ec-4b58-b36d-3fca358c3fe3">
+
 - **Bulk Delete:** Choose multiple arguments to delete them at once.
+  <img width="907" alt="image" src="https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/95518516/66389b21-7f34-4b23-9862-778bf9fee9a6">
+
 
 5. **Finalize:**
 Complete the necessary actions to fully utilize the interface.
