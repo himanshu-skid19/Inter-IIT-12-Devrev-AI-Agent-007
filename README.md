@@ -11,6 +11,7 @@ Devrev---AI-Agent-007 is a streamlined tool for deploying AI applications. Follo
 pip install -r requirements.txt`
 ```
 
+
 2. **Download Seed Dataset:**
 Use this command to download the Seed Dataset to your local directory:
 ```python
@@ -24,7 +25,7 @@ gdown 19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R`
   ```python
   retrieval_loader = CSVLoader(file_path=r"Your Path here", source_column='QUERY')
   ```
-  Comment out the file path in line 61.
+  ![image](https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/94075433/ba14afd2-7b15-49de-adff-86cb385527f7)
 - **retrieval.py:**
   Modify `loader` with your CSV file path:
   ```python
