@@ -9,12 +9,44 @@ To run the app execute the following command.
 Step 1: You'll initially land on the Chatbot page.
 ![image](https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/106437020/b74542d4-12cf-4517-a54b-51438fdc2e4f)
 
-You'll be displayed will the chatbot interface. Insert your OpenAI API key in the textbox present in the sidebar.
-Now visit the Tools Management Page by clicking on the radio button in the sidebar.
-First click on the Reset API toolset button. Use Add New Tool form to add new tools to the API list. You may add as many as tools required at once. 
-Further, if you wish to update any tool name & description, then choose the tool from the drop down list "Select a tool", and fill up the required fields and click Update tool or directly click on the delete tool button to delete the tool.
-To add new arguments to a tool, scroll to the corresponding form. In this form you should fill the argument name, argument description, allowed values of the argument if present, make sure to input them as a list of strings only, for example ['p0', 'p1', 'p2']. Also add the argument type. 
-Now, if the user wants to update or Delete arguments move to the following form and the selected tool will be mentioned below the heading then select the argument from the select an argument box then add the argument name to the new argument name at the argument description to the new argument description and at the new argument allowed values in the corresponding works also add the new argument type and then update the argument or else directly delete the argument using the delete button. 
-If the user wants to delete multiple arguments from tool then select all the required arguments from the Select arguments to delete from the tool drop down list. Now finally press the Delete selected arguments button to delete the selected arguments from the selected tool. 
+Navigate to Tools Management Page:
 
+Click on the radio button in the sidebar to access the Tools Management Page.
+Reset API Toolset:
 
+On the Tools Management Page, locate and click on the "Reset API toolset" button.
+Add New Tools:
+
+Utilize the "Add New Tool" form to add new tools to the API list.
+You can add multiple tools at once.
+Update Tool Name & Description:
+
+If you wish to update any tool name or description:
+Choose the tool from the drop-down list "Select a tool."
+Fill up the required fields for the tool.
+Click on the "Update tool" button.
+Delete Tool:
+
+To delete a tool:
+Choose the tool from the drop-down list "Select a tool."
+Click on the "Delete tool" button.
+Add New Arguments to a Tool:
+
+Scroll to the corresponding form for adding new arguments to a tool.
+Fill in the argument name, description, allowed values (if present), and the argument type.
+Make sure to input allowed values as a list of strings (e.g., ['p0', 'p1', 'p2']).
+Update or Delete Arguments:
+
+To update or delete arguments:
+Move to the following form, where the selected tool is mentioned below the heading.
+Select the argument from the "Select an argument" box.
+Add the new argument name, description, allowed values, and type.
+Click "Update argument" to update or "Delete argument" to delete.
+Delete Multiple Arguments:
+
+If you want to delete multiple arguments from a tool:
+Select all the required arguments from the "Select arguments to delete from the tool" drop-down list.
+Click the "Delete selected arguments" button to delete the selected arguments from the tool.
+Finalize:
+
+Once you've completed the necessary actions, you have successfully used the interface.
