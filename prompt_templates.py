@@ -8,6 +8,15 @@ os.environ['OPENAI_API_KEY'] = "sk-mq1ADeLT5KrDRzmvZ5CGT3BlbkFJP5f1dzZX4Sl6w3fDD
 # ENV_SECRET_KEY = userdata.get('LF-SECRET')
 # ENV_PUBLIC_KEY = userdata.get('LF-PUBLIC')
 
+system_prompt_classifier = PromptTemplate(
+    input_variables=["QUERY", "PREV_QUERY"], template= system_prompt_classifier_template,
+    output_key="cassification"
+)
+
+system_memory_prompt = PromptTemplate(
+    input_variables=["QUERY", "API_LIST", "RAG", "PAST_QUERY", "PAST_RESPONSE"], template= system_prompt_memory_template
+)
+
 system_prompt = PromptTemplate(
     input_variables=["QUERY", "API_LIST", "RAG"], template= system_prompt_template
 )
@@ -20,11 +29,21 @@ generation_prompt = PromptTemplate(
   )
 
 memory = ConversationBufferWindowMemory(
-    memory_key="chat_history", input_key = "QUERY", k = 2,
+    memory_key="chat_history", input_key = "QUERY", k = 1,
     return_messages=True
 )
 llm = ChatOpenAI(temperature = 0.0, model =  "gpt-3.5-turbo-1106")
 
+
+mem_chain = LLMChain(llm=llm,
+                     prompt=system_prompt_classifier,
+                     memory = memory,
+                     verbose=True)
+
+query_chain_memory = LLMChain(llm=llm,
+                        prompt=system_memory_prompt,
+                        memory = memory,
+                        verbose=True)
 
 query_chain = LLMChain(llm=llm,
                        prompt=system_prompt,
