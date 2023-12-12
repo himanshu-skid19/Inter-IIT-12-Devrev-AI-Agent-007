@@ -166,8 +166,13 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
             item = 'tool_name'
 
     tool_names = [item['tool_name'] for item in json_response]
+    print(f"tool_names:{tool_names}")
+    print(f"available_tools:{available_tools}")
+    print(f"available_arguments:{available_arguments}")
     valid_tools = [tool_name for tool_name in tool_names if tool_name in available_tools]
+    print(f"valid_tools:{valid_tools}")
     hallucinated_tools = [tool_name for tool_name in tool_names if tool_name not in available_tools]
+    print(f"hallucinated_tools:{hallucinated_tools}")
     argument_names = []
 
     for item in json_response:

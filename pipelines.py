@@ -18,7 +18,7 @@ def dynamic_k(query):
     k = 3
   return k
 
-def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_values_dict, args_in_list_dict, vector_db):
+def pipeline(query, API_LIST, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict, vector_db):
   handler = CallbackHandler(ENV_PUBLIC_KEY, ENV_SECRET_KEY, ENV_HOST)
   print(f"PreviousQuery: {st.session_state.PREV_QUERY}")
   print(f"PreviousResponse: {st.session_state.PREV_RESPONSE}")
