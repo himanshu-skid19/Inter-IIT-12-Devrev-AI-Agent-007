@@ -33,10 +33,12 @@ api_weights = {'works_list': 0,  'prioritize_objects' : 0, 'add_work_items_to_sp
 api_list = list(api_weights.keys())
 
 # Function to add a new tool
-def add_tool(api_list, name, description, available_tools, available_arguments):
+def add_tool(api_list, name, description, available_tools, available_arguments, store):
     available_tools.append(name)
     api_list.append({"name": name, "description": description, "arguments": []})
     available_arguments.append(f"{name}/")
+    example = generate_examples(name, api_list, store)
+    add_to_vector_store(store, example)
     return api_list, available_tools, available_arguments
 
 def delete_tool(api_list, tool_name, available_tools, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
@@ -56,8 +58,8 @@ def update_tool(api_list, old_tool_name, new_tool_name, new_description, availab
             tool['name'] = new_tool_name
             tool['description'] = new_description
             break
-    # example = generate_examples(new_tool_name, api_list, store)
-    # add_to_vector_store(store, example)
+    example = generate_examples(new_tool_name, api_list, store, num_examples = 4)
+    add_to_vector_store(store, example)
     available_tools.remove(old_tool_name)
     available_tools.append(new_tool_name)
     available_arguments = [s.replace(old_tool_name, new_tool_name, 1) if s.startswith(old_tool_name) else s for s in available_arguments]
@@ -75,6 +77,7 @@ def update_tool(api_list, old_tool_name, new_tool_name, new_description, availab
 
 # Function to add an argument to a tool
 def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, arg_allowed_values, available_arguments, arg_allowed_values_dict, args_in_list_dict, store):
+    delete_tool_examples(store, tool_name)
     for tool in api_list:
       if tool['name'] == tool_name:
         tool['arguments'].append({
@@ -87,7 +90,7 @@ def add_argument(api_list, tool_name, arg_name, arg_desc, arg_type, arg_allowed_
       args_in_list_dict[f'{tool_name}/{arg_name}'] = 1
     else:
       args_in_list_dict[f'{tool_name}/{arg_name}'] = 0
-    example = generate_examples(tool_name, api_list, store, arg_name = arg_name)
+    example = generate_examples(tool_name, api_list, store, num_examples = 4)
     add_to_vector_store(store, example)
     available_arguments.append(f"{tool_name}/{arg_name}")
     if len(arg_allowed_values) is not 0:
@@ -123,8 +126,8 @@ def update_argument(api_list, tool_name, old_arg_name, new_arg_name, new_arg_des
                     arg['argument_type'] = new_arg_type
                     break
             break
-    # examples = generate_examples(tool_name, api_list, store, arg_name = new_arg_name)
-    # add_to_vector_store(store, examples)
+    examples = generate_examples(tool_name, api_list, store, arg_name = new_arg_name)
+    add_to_vector_store(store, examples)
     available_arguments.remove(f"{tool_name}/{old_arg_name}")
     available_arguments.append(f"{tool_name}/{new_arg_name}")
     if f"{tool_name}/{old_arg_name}" in arg_allowed_values_dict:
