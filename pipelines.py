@@ -8,6 +8,16 @@ ENV_HOST = "https://cloud.langfuse.com"
 ENV_SECRET_KEY = "sk-lf-d86b4406-8aa2-49e0-829f-8367aa67c98e"
 ENV_PUBLIC_KEY = "pk-lf-0304359e-b115-403e-8eb4-45429fbe037f"
 
+def dynamic_k(query):
+  word_count = len(query.split())
+  if word_count <= 10:
+    k = 1
+  elif word_count <= 20:
+    k = 2
+  else:
+    k = 3
+  return k
+
 def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_values_dict, args_in_list_dict, vector_db):
   handler = CallbackHandler(ENV_PUBLIC_KEY, ENV_SECRET_KEY, ENV_HOST)
   print(f"PreviousQuery: {st.session_state.PREV_QUERY}")
@@ -18,8 +28,11 @@ def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_
   done = False
   max_reprompts = 1
   cntr = 1
-  docs = vector_db.max_marginal_relevance_search(query,k=3)
-  RAG_examples = f'{docs[0].page_content}' + '\n' + f'{docs[1].page_content}' + '\n' + f'{docs[2].page_content}'
+  num_examples = dynamic_k(query)
+  docs = vector_db.max_marginal_relevance_search(query, k = num_examples)
+  RAG_examples = ''
+  for i in range(num_examples)
+    RAG_examples += f'{docs[i].page_content}' + '\n'
   classification = False
   if(st.session_state.PREV_QUERY!=""):
     if(st.session_state.PAST_QUERY=="NO PAST QUERIES"):
