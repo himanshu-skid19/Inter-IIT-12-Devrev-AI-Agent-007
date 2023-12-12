@@ -31,7 +31,7 @@ def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_
   num_examples = dynamic_k(query)
   docs = vector_db.max_marginal_relevance_search(query, k = num_examples)
   RAG_examples = ''
-  for i in range(num_examples)
+  for i in range(num_examples):
     RAG_examples += f'{docs[i].page_content}' + '\n'
   classification = False
   if(st.session_state.PREV_QUERY!=""):
