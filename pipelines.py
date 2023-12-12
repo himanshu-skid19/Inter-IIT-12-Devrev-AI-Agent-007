@@ -88,13 +88,13 @@ def pipeline(query, API_LIST, available_arguments, available_tools, arg_allowed_
 
   print(f"Response formatted:{resp_formatted}")
   try:
-    json_response = ast.literal_eval(json_response)
+    json_response = ast.literal_eval(resp_formatted)
   except Exception as e:
-    Correction_prompt = correction_if_wrong_schema(e, json_response)
-    json_response = reprompt_chain.run(QUERY=query, API_LIST=API_LIST, CORRECTION_PROMPT=Correction_prompt,
+    Correction_prompt = correction_if_wrong_schema(e, resp_formatted)
+    resp_formatted = reprompt_chain.run(QUERY=query, API_LIST=API_LIST, CORRECTION_PROMPT=Correction_prompt,
                                        callbacks=[handler])
     try:
-      json_response = ast.literal_eval(json_response)
+      json_response = ast.literal_eval(resp_formatted)
     except:
       return []
   print(f"3. JSON decoded output- {cntr} ##################")
