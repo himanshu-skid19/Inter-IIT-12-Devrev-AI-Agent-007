@@ -32,25 +32,25 @@ memory = ConversationBufferWindowMemory(
     memory_key="chat_history", input_key = "QUERY", k = 1, 
     return_messages=True
 )
-llm = ChatOpenAI(temperature = 0.0, model =  "gpt-3.5-turbo-1106")
+llm_gpt_3_5 = ChatOpenAI(temperature = 0.0, model =  "gpt-3.5-turbo-1106")
+llm_gpt_4 = ChatOpenAI(temperature = 0.0, model =  "gpt-4")
 
-
-mem_chain = LLMChain(llm=llm,
+mem_chain = LLMChain(llm=llm_gpt_3_5,
                      prompt=system_prompt_classifier,
                      memory = memory,
                      verbose=True)
 
-query_chain_memory = LLMChain(llm=llm,
+query_chain_memory = LLMChain(llm=llm_gpt_3_5,
                         prompt=system_memory_prompt,
                         memory = memory,
                         verbose=True)
 
-query_chain = LLMChain(llm=llm,
+query_chain = LLMChain(llm=llm_gpt_3_5,
                        prompt=system_prompt,
                        memory = memory,
                        verbose=True)
 
-format_chain = LLMChain(llm=llm,
+format_chain = LLMChain(llm=llm_gpt_3_5,
                         prompt=follow_up_prompt,
                         memory = memory,
                         verbose=True)
@@ -63,7 +63,7 @@ reprompt = PromptTemplate(
     input_variables=["QUERY", "API_LIST", "CORRECTION_PROMPT", "chat_history"], template= reprompt_template
 )
 
-reprompt_chain = LLMChain(llm=llm,
+reprompt_chain = LLMChain(llm=llm_gpt_4,
                         prompt=reprompt,
                         output_key = 'new_response',
                         memory = memory,
