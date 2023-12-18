@@ -179,14 +179,14 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
     for item in json_response:
         for key in item:
             if item[key] in valid_tools:
-                try:
+                # try:
                     arguments = item.get("arguments", [])
                     for argument in arguments:
                         argument_name = argument.get("argument_name")
                         if argument_name:
                             argument_names.append(item["tool_name"]+"/"+argument_name)
-                except AttributeError:
-                    pass
+                # except AttributeError:
+                    # pass
     # valid_args = [arg_name for arg_name in argument_names if arg_name in merged_arguments]
     hallucinated_args = [arg_name for arg_name in argument_names if arg_name not in available_arguments]
     # check the validity of argument values using allowed_arg_values_dict
