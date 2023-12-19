@@ -13,10 +13,7 @@ pip install -r requirements.txt
 
 
 2. **Download Seed Dataset:**
-Use this command to download the Seed Dataset to your local directory:
-```python
-gdown 19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R
-```
+Download from this link: [here](https://drive.google.com/file/d/19aAuy_SHqclSuHqtC8rR6Thgne6QgM7R/view?usp=sharing)
 
 
 3. **Configure File Paths:**
