@@ -9,4 +9,3 @@ chromadb
 sentence_transformers
 simplejson
 faiss-cpu
-gdown
