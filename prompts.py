@@ -89,6 +89,7 @@ EXAMPLES END\n\n
 Query : {QUERY}
 
 '''
+
 follow_up_prompt_template = '''
 {chat_history}
 From your solution extract a list of JSONs. Return only the list of JSONs. 

@@ -1,6 +1,6 @@
 from imports import *
 
-loader = CSVLoader(file_path=r'C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Seed_Dataset.csv')
+loader = CSVLoader(file_path=r'Seed_Dataset.csv')
 data = loader.load()
 
 embeddings = HuggingFaceEmbeddings()

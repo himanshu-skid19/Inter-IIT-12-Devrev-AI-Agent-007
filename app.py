@@ -11,7 +11,7 @@ from mem_check import *
 warnings.filterwarnings('ignore')
 
 # retrieval examples
-retrieval_loader = CSVLoader(file_path=r'C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Seed_Dataset.csv', source_column = 'QUERY')
+retrieval_loader = CSVLoader(file_path=r'Seed_Dataset.csv', source_column = 'QUERY')
 retrieval_data = retrieval_loader.load()
 retrieval_embeddings = HuggingFaceEmbeddings()
 
@@ -58,7 +58,7 @@ def clear_api_list_updated():
         embedding=retrieval_embeddings,
         )
 
-# file_path = r'C:\\Users\\himan\\PycharmProjects\\Devrev-AI-Agent-007\\Updated_API_list.json'
+# file_path = r'Updated_API_list.json'
 
 # Page navigation
 st.sidebar.title("Navigation")
@@ -85,7 +85,10 @@ if page == "Chatbot":
             message_placeholder = st.empty()
             json_answer = pipeline(query, st.session_state.api_list_updated, st.session_state.available_tools, st.session_state.available_arguments, st.session_state.arg_allowed_values_dict, st.session_state.args_in_list_dict, st.session_state.retrieval_vector_db) # allowed args dict ka placeholder modify karna bacha
             full_response = json_answer
-            message_placeholder.json(full_response)
+            try:
+                message_placeholder.json(full_response)
+            except:
+                message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 elif page == "Tool Management":

@@ -3,7 +3,7 @@ from prompts import *
 
 
 os.environ['HUGGINGFACEHUB_API_TOKEN'] = "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"
-os.environ['OPENAI_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = "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"
 # ENV_HOST = "https://cloud.langfuse.com"
 # ENV_SECRET_KEY = userdata.get('LF-SECRET')
 # ENV_PUBLIC_KEY = userdata.get('LF-PUBLIC')

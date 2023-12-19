@@ -180,11 +180,11 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
         for key in item:
             if item[key] in valid_tools:
                 # try:
-                    arguments = item.get("arguments", [])
-                    for argument in arguments:
-                        argument_name = argument.get("argument_name")
-                        if argument_name:
-                            argument_names.append(item["tool_name"]+"/"+argument_name)
+                arguments = item.get("arguments", [])
+                for argument in arguments:
+                    argument_name = argument.get("argument_name")
+                    if argument_name:
+                        argument_names.append(item["tool_name"]+"/"+argument_name)
                 # except AttributeError:
                     # pass
     # valid_args = [arg_name for arg_name in argument_names if arg_name in merged_arguments]
@@ -194,49 +194,49 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
     for item in json_response:
         for key in item:
             if item[key] in available_tools:
-                try:
-                    arguments = item.get("arguments", [])
-                    for argument in arguments:
-                        argument_name = argument.get("argument_name")
-                        if argument_name:
-                            json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
+                # try:
+                arguments = item.get("arguments", [])
+                for argument in arguments:
+                    argument_name = argument.get("argument_name")
+                    if argument_name:
+                        json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
                         concat_arg = item["tool_name"] + "/" + argument_name
                         argument_names.append(concat_arg)
-                        try:
-                            if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
-                                arg_val = argument.get("argument_value")
-                                if type(arg_val) is not list:
-                                    l = []
-                                    l.append(arg_val)
-                                    argument["argument_value"] = l
-                        except KeyError:
-                            pass
-                except AttributeError:
-                    pass
+                        # try:
+                        if args_in_list_dict[concat_arg] == 1: ## fixes the arguments that are supposed to be in a list format but are not
+                            arg_val = argument.get("argument_value")
+                            if type(arg_val) is not list:
+                                l = []
+                                l.append(arg_val)
+                                argument["argument_value"] = l
+                #         except KeyError:
+                #             pass
+                # except AttributeError:
+                #     pass
 
     hallucinated_args_values_prev = []
     for idx, item in enumerate(json_response):
         for key in item:
             if item[key] in available_tools:
-                try:
-                    arguments = item.get("arguments", [])
-                    for argument in arguments:
-                        argument_name = argument.get("argument_name")
+                # try:
+                arguments = item.get("arguments", [])
+                for argument in arguments:
+                    argument_name = argument.get("argument_name")
 
-                        if argument_name:
-                            json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
+                    if argument_name:
+                        json_args_dict[item["tool_name"]+"/"+argument_name] = argument["argument_value"]
                         # print("argument value ", argument['argument_value'])
-                        try:
-                            print("argumetn value", argument['argument_value'])
-                            arg_list = ast.literal_eval(argument['argument_value'])
-                            for arg in arg_list:
+                        # try:
+                        print("argument value", argument['argument_value'])
+                        arg_list = ast.literal_eval(argument['argument_value'])
+                        for arg in arg_list:
                                 # print("arument 2, ", arg)
-                                if ("$$PREV" in arg and int(arg.split("[")[1].split("]")[0])):
-                                    hallucinated_args_values_prev.append((item["tool_name"] + "/" + argument_name, arg))
-                        except:
-                            pass
-                except AttributeError:
-                    pass
+                            if ("$$PREV" in arg and int(arg.split("[")[1].split("]")[0])):
+                                hallucinated_args_values_prev.append((item["tool_name"] + "/" + argument_name, arg))
+                #         except:
+                #             pass
+                # except AttributeError:
+                #     pass
 
     hallucinated_args_values = []
     for arg_name, arg_value in json_args_dict.items():
@@ -252,7 +252,7 @@ def find_hallucinations(json_response, arg_allowed_values_dict, available_tools,
 
 def correction(hallucinated_args, hallucinated_args_values, hallucinated_tools, hallucinated_args_values_prev, json_response):
   Correction_prompt = ''
-  Correction_prompt += f'There are following errors in your previous json response \n {json_response} \n'
+  Correction_prompt += f'These are the following errors in your previous json response \n {json_response} \n'
   for i in hallucinated_args:
     Correction_prompt += f"The argument {i} is used but is not present in the provided API list. \n"
   for i in hallucinated_tools:
@@ -278,19 +278,19 @@ def placeholder_check(json_response):
         l.append(json_response)
         json_response = l
     for item in json_response:
-        try:
-            arguments = item.get("arguments", [])
-            for argument in arguments:
-                try:
-                    argument_name = argument.get("argument_name", [])
-                    argument_value = argument["argument_value"]
-                    x = re.search("<.*>", str(argument_value))
-                    if x:
-                        return 1
-                except KeyError:
+        # try:
+        arguments = item.get("arguments", [])
+        for argument in arguments:
+            # try:
+                argument_name = argument.get("argument_name", [])
+                argument_value = argument["argument_value"]
+                x = re.search("<.*>", str(argument_value))
+                if x:
                     return 1
-        except AttributeError:
-            return 0
+        #         except KeyError:
+        #             return 1
+        # except AttributeError:
+        #     return 0
     return 0
 
 
