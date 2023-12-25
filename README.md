@@ -1,7 +1,7 @@
-# Devrev---AI-Agent-007
+# Inter-IIT-12-Devrev-AI-Agent-007
 ## Team 15
 
-Devrev---AI-Agent-007 is a streamlined tool for deploying AI applications. Follow these steps to get started:
+Devrev-AI-Agent-007 is a streamlined tool for deploying AI applications. Follow these steps to get started:
 
 ### Installation and Setup
 
