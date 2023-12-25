@@ -70,5 +70,3 @@ Click the radio button in the sidebar to access the Tools Management Page.
 Complete the necessary actions to fully utilize the interface.
 
 ---
-
-This README provides a comprehensive guide to set up and use the Devrev---AI-Agent-007 application.
