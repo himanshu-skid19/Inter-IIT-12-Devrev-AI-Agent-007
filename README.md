@@ -15,6 +15,11 @@ The set of tools T is dynamic, and new tools can be added, and existing ones cou
 ## Our Approach
 ![Screenshot 2024-06-08 225742](https://github.com/himanshu-skid19/Inter-IIT-12-Devrev-AI-Agent-007/assets/118837763/637b0c8b-041d-4500-8842-dae5314983ec)
 
+## Pipeline Overview
+Our final pipeline includes the following parts:
+#### Retrieval-ICL
+Retrieval of semantically similar query-answer pairs to serve as few-shot examples for the LLM.
+
 ## Team 15
 
 Devrev-AI-Agent-007 is a streamlined tool for deploying AI applications. Follow these steps to get started:
