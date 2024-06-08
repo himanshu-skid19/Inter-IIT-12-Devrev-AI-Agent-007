@@ -11,37 +11,39 @@ A Language model L has a set of tools T, and a user query Q is given. To answer 
 
 The set of tools T is dynamic, and new tools can be added, and existing ones could be modified or removed and the agent needs to be able to handle it gracefully.
 
-## Examples
+### Examples
 
 | Query                                                                                         | Output                                                                                           |
 |-----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | Summarize work items similar to `don:core:dvrv-us-1:devo/0:issue/1`                           | Unset                                                                                            |
-|                                                                                               | ```                                                                                              |
+|                                                                                               | ```json                                                                                          |
 |                                                                                               | [                                                                                                 |
-|                                                                                               | {                                                                                                 |
-|                                                                                               | "tool_name": "get_similar_work_items",                                                            |
-|                                                                                               | "arguments": [                                                                                    |
-|                                                                                               | {                                                                                                 |
-|                                                                                               | "argument_name": "work_id",                                                                       |
-|                                                                                               | "argument_value": "don:core:dvrv-us-1:devo/0:issue/1"                                             |
-|                                                                                               | }                                                                                                 |
-|                                                                                               | ]                                                                                                 |
-|                                                                                               | },                                                                                                |
-|                                                                                               | {                                                                                                 |
-|                                                                                               | "tool_name": "summarize_objects",                                                                 |
-|                                                                                               | "arguments": [                                                                                    |
-|                                                                                               | {                                                                                                 |
-|                                                                                               | "argument_name": "objects",                                                                       |
-|                                                                                               | "argument_value": "$$PREV[0]"                                                                     |
-|                                                                                               | }                                                                                                 |
-|                                                                                               | ]                                                                                                 |
-|                                                                                               | }                                                                                                 |
+|                                                                                               |   {                                                                                               |
+|                                                                                               |     "tool_name": "get_similar_work_items",                                                        |
+|                                                                                               |     "arguments": [                                                                                |
+|                                                                                               |       {                                                                                           |
+|                                                                                               |         "argument_name": "work_id",                                                               |
+|                                                                                               |         "argument_value": "don:core:dvrv-us-1:devo/0:issue/1"                                     |
+|                                                                                               |       }                                                                                           |
+|                                                                                               |     ]                                                                                             |
+|                                                                                               |   },                                                                                              |
+|                                                                                               |   {                                                                                               |
+|                                                                                               |     "tool_name": "summarize_objects",                                                             |
+|                                                                                               |     "arguments": [                                                                                |
+|                                                                                               |       {                                                                                           |
+|                                                                                               |         "argument_name": "objects",                                                               |
+|                                                                                               |         "argument_value": "$$PREV[0]"                                                             |
+|                                                                                               |       }                                                                                           |
+|                                                                                               |     ]                                                                                             |
+|                                                                                               |   }                                                                                               |
 |                                                                                               | ]                                                                                                 |
 |                                                                                               | ```                                                                                              |
 | What is the meaning of life?                                                                  | Unset                                                                                            |
-|                                                                                               | ```                                                                                              |
+|                                                                                               | ```json                                                                                          |
 |                                                                                               | []                                                                                               |
 |                                                                                               | ```                                                                                              |
+
+
 
 
 
