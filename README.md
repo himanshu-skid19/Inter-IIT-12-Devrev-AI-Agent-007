@@ -1,4 +1,4 @@
-# Inter-IIT-12-Devrev-AI-Agent-007
+# Inter-IIT-12-Devrev-AI-Agent-007 (Team 15)
 
 This is a solution for DevRev's Problem Statement at the 12th Inter IIT TechMeet aiming adepty address domain-specific user queries.
 
@@ -27,10 +27,6 @@ Hallucination Check - We detect all forseeable hallucinations that may occur.
 Corrective Reprompting - If hallucinations are detected, we ensure they are removed reprompting the LLM.
 
 Memory - To effectively manage the conversational aspects of the query.
-
-## Team 15
-
-Devrev-AI-Agent-007 is a streamlined tool for deploying AI applications. Follow these steps to get started:
 
 ### Installation and Setup
 
