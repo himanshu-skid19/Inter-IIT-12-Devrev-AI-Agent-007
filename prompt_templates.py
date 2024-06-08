@@ -2,8 +2,8 @@ from imports import *
 from prompts import *
 
 
-os.environ['HUGGINGFACEHUB_API_TOKEN'] = "YOUR API KEY"
-os.environ['OPENAI_API_KEY'] = "YOUR API KEY"
+os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["hf"]
+os.environ['OPENAI_API_KEY'] = st.secrets["openai"]
 # ENV_HOST = "https://cloud.langfuse.com"
 # ENV_SECRET_KEY = userdata.get('LF-SECRET')
 # ENV_PUBLIC_KEY = userdata.get('LF-PUBLIC')
