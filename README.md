@@ -18,7 +18,8 @@ The set of tools T is dynamic, and new tools can be added, and existing ones cou
 ## Pipeline Overview
 Our final pipeline includes the following parts:
 
-Retrieval-ICL - Retrieval of semantically similar query-answer pairs to serve as few-shot examples for the LLM.
+####Retrieval-ICL - 
+Retrieval of semantically similar query-answer pairs to serve as few-shot examples for the LLM.
 
 Chain-of-Thought Prompting - COT prompting was used to enhance the reasoning capabilities of the LLM.
 
