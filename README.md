@@ -1,4 +1,7 @@
 # Inter-IIT-12-Devrev-AI-Agent-007
+
+We developed a Large Language Model (LLM) powered chatbot, augmented by a set of tools, each accompanied by its detailed description. The chatbot intelligently recommends a subset of these tools, specifying the arguments for their utilization, and providing guidance on how to combine them effectively to address user queries. Additionally, our solution incorporates features facilitating the seamless addition and modification of tools within our toolset. 
+
 ## Team 15
 
 Devrev-AI-Agent-007 is a streamlined tool for deploying AI applications. Follow these steps to get started:
