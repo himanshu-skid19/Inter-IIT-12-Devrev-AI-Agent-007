@@ -11,6 +11,8 @@ A Language model L has a set of tools T, and a user query Q is given. To answer 
 
 The set of tools T is dynamic, and new tools can be added, and existing ones could be modified or removed and the agent needs to be able to handle it gracefully.
 
+## Examples
+
 | Query                                                                                         | Output                                                                                           |
 |-----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | Summarize work items similar to `don:core:dvrv-us-1:devo/0:issue/1`                           | Unset                                                                                            |
@@ -40,7 +42,7 @@ The set of tools T is dynamic, and new tools can be added, and existing ones cou
 |                                                                                               | ```                                                                                              |
 |                                                                                               | []                                                                                               |
 |                                                                                               | ```                                                                                              |
-| Prioritize my P0 issues and add them to the current sprint                                    | Unset                                                                                            |
+
 
 
 ## Our Approach
