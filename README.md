@@ -11,41 +11,6 @@ A Language model L has a set of tools T, and a user query Q is given. To answer 
 
 The set of tools T is dynamic, and new tools can be added, and existing ones could be modified or removed and the agent needs to be able to handle it gracefully.
 
-### Examples
-
-| Query                                                                                         | Output                                                                                           |
-|-----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| Summarize work items similar to `don:core:dvrv-us-1:devo/0:issue/1`                           | Unset                                                                                            |
-|                                                                                               | ```json                                                                                          |
-|                                                                                               | [                                                                                                 |
-|                                                                                               |   {                                                                                               |
-|                                                                                               |     "tool_name": "get_similar_work_items",                                                        |
-|                                                                                               |     "arguments": [                                                                                |
-|                                                                                               |       {                                                                                           |
-|                                                                                               |         "argument_name": "work_id",                                                               |
-|                                                                                               |         "argument_value": "don:core:dvrv-us-1:devo/0:issue/1"                                     |
-|                                                                                               |       }                                                                                           |
-|                                                                                               |     ]                                                                                             |
-|                                                                                               |   },                                                                                              |
-|                                                                                               |   {                                                                                               |
-|                                                                                               |     "tool_name": "summarize_objects",                                                             |
-|                                                                                               |     "arguments": [                                                                                |
-|                                                                                               |       {                                                                                           |
-|                                                                                               |         "argument_name": "objects",                                                               |
-|                                                                                               |         "argument_value": "$$PREV[0]"                                                             |
-|                                                                                               |       }                                                                                           |
-|                                                                                               |     ]                                                                                             |
-|                                                                                               |   }                                                                                               |
-|                                                                                               | ]                                                                                                 |
-|                                                                                               | ```                                                                                              |
-| What is the meaning of life?                                                                  | Unset                                                                                            |
-|                                                                                               | ```json                                                                                          |
-|                                                                                               | []                                                                                               |
-|                                                                                               | ```                                                                                              |
-
-
-
-
 
 ## Our Approach
 ![Screenshot 2024-06-08 225742](https://github.com/himanshu-skid19/Inter-IIT-12-Devrev-AI-Agent-007/assets/118837763/637b0c8b-041d-4500-8842-dae5314983ec)
