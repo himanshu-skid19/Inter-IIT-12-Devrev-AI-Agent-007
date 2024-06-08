@@ -95,4 +95,6 @@ Click the radio button in the sidebar to access the Tools Management Page.
 5. **Finalize:**
 Complete the necessary actions to fully utilize the interface.
 
+## Contributors
+- [Parth-Agarwal216](https://github.com/Parth-Agarwal216)
 ---
