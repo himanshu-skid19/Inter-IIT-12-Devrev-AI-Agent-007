@@ -18,16 +18,16 @@ The set of tools T is dynamic, and new tools can be added, and existing ones cou
 ## Pipeline Overview
 Our final pipeline includes the following parts:
 
-####Retrieval-ICL - 
+#### Retrieval-ICL - 
 Retrieval of semantically similar query-answer pairs to serve as few-shot examples for the LLM.
 
-Chain-of-Thought Prompting - COT prompting was used to enhance the reasoning capabilities of the LLM.
+#### Chain-of-Thought Prompting - COT prompting was used to enhance the reasoning capabilities of the LLM.
 
-Hallucination Check - We detect all forseeable hallucinations that may occur.
+#### Hallucination Check - We detect all forseeable hallucinations that may occur.
 
-Corrective Reprompting - If hallucinations are detected, we ensure they are removed reprompting the LLM.
+#### Corrective Reprompting - If hallucinations are detected, we ensure they are removed reprompting the LLM.
 
-Memory - To effectively manage the conversational aspects of the query.
+#### Memory - To effectively manage the conversational aspects of the query.
 
 ### Installation and Setup
 
