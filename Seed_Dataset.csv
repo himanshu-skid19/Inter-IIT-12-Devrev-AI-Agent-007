@@ -1,0 +1,263 @@
+QUERY,REASONING
+Query:Summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1,"We need to summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1 which we can see is an ID (a unique identifier for an issue) so we will first call the ""get_similar_work_items"" API with argument name : ""work_id"" and argument_value: ""don:core:dvrv-us-1:devo/0:issue/1"" since we need to get similar issues. 
+
+Next,   we will call the ""summarize_objects"" API with argument_name: ""objects"" and argument_value: ""$$PREV[0]"" since we need to then summarize the issues and we can refer the value of the ith chain using ""$$PREV[0]"". Therefore, the answer is: [(tool_name: get_similar_work_items, argument_name: work_id, argument_value: don:core:dvrv-us-1:devo/0:issue/1), (tool_name: summarize_objects), (argument_name: objects, argument_value: $$PREV[0]),]"
+Query: Prioritize my P0 issues and add them to the current sprint,"To prioritize your P0 issues and add them to the current sprint, we need to perform the following steps using the provided APIs:
+
+1. **Identify the User:** First, we need to identify who ""my"" refers to in the query. We will use the `who_am_i` API to get the ID of the current user.
+   - Tool Name: `who_am_i`
+   - Arguments: []
+
+2. **List P0 Issues Owned by the User:** Next, we need to list all the P0 issues that are owned by the user. We will use the `works_list` API with three arguments:
+   - Tool Name: `works_list`
+   - Arguments: 
+     - (argument_name: `owned_by`, argument_value: `$$PREV[0]`)
+     - (argument_name: `issue.priority`, argument_value: `['p0']`)
+     - (argument_name: `type`, argument_value: `['issue']`)
+
+3. **Prioritize the Retrieved Issues:** Once we have the list of P0 issues, we need to prioritize them. We will use the `prioritize_objects` API with the list of issues obtained from the previous step.
+   - Tool Name: `prioritize_objects`
+   - Arguments: 
+     - (argument_name: `objects`, argument_value: `$$PREV[1]`)
+
+4. **Get Current Sprint ID:** To add these issues to the current sprint, we first need to know the ID of the current sprint. We will use the `get_sprint_id` API.
+   - Tool Name: `get_sprint_id`
+   - Arguments: []
+
+5. **Add Prioritized Issues to the Current Sprint:** Finally, we will use the `add_work_items_to_sprint` API to add the prioritized P0 issues to the current sprint. We will use two arguments: the list of prioritized work IDs and the sprint ID.
+   - Tool Name: `add_work_items_to_sprint`
+   - Arguments: 
+     - (argument_name: `work_ids`, argument_value: `$$PREV[2]`)
+     - (argument_name: `sprint_id`, argument_value: `$$PREV[3]`)
+
+Therefore, the answer is:
+- [(tool_name: `who_am_i`, arguments: []),
+- (tool_name: `works_list`, arguments: [(argument_name: `owned_by`, argument_value: `$$PREV[0]`), (argument_name: `issue.priority`, argument_value: `['p0']`), (argument_name: `type`, argument_value: `['issue']`)]),
+- (tool_name: `prioritize_objects`, arguments: [(argument_name: `objects`, argument_value: `$$PREV[1]`)]),
+- (tool_name: `get_sprint_id`, arguments: []),
+- (tool_name: `add_work_items_to_sprint`, arguments: [(argument_name: `work_ids`, argument_value: `$$PREV[2]`), (argument_name: `sprint_id`, argument_value: `$$PREV[3]`)])]"
+"Query: Summarize high severity tickets from the customer UltimateCustomer
+","To summarize high severity tickets from the customer named ""UltimateCustomer,"" we need to follow these steps:
+
+1. First, we need to identify the ID of the object (in this case, the customer ""UltimateCustomer"") using the `search_object_by_name` API. This is because we need the ID to filter tickets related to this customer. So, we will call `search_object_by_name` with the argument `(argument_name: query, argument_value: UltimateCustomer)`.
+
+2. Next, we will use the `works_list` API to retrieve the list of high severity tickets related to ""UltimateCustomer."" For this, we need three arguments: 
+   - `(argument_name: ticket.severity, argument_value: high)` to filter for high severity tickets,
+   - `(argument_name: ticket.source_channel, argument_value: $$PREV[0])` to filter tickets related to ""UltimateCustomer"" (using the ID retrieved from the previous step),
+   - `(argument_name: type, argument_value: ticket)` to ensure we are only retrieving tickets.
+
+3. Finally, we need to summarize the retrieved tickets. We do this by calling the `summarize_objects` API with the argument `(argument_name: objects, argument_value: $$PREV[1])`, where `$$PREV[1]` refers to the list of high severity tickets related to ""UltimateCustomer.""
+
+Therefore, the answer is: 
+- [(tool_name: search_object_by_name, arguments= [(argument_name: query, argument_value: UltimateCustomer)]), 
+- (tool_name: works_list, arguments= [(argument_name: ticket.severity, argument_value: high), (argument_name: ticket.source_channel, argument_value: $$PREV[0]), (argument_name: type, argument_value: ticket)]), 
+- (tool_name: summarize_objects, arguments= [(argument_name: objects, argument_value: $$PREV[1])])]
+"
+"Query: What are my all issues in the triage stage under part FEAT-123? Summarize them. 
+
+","Since the query has specified that we have find the issues of the person sending the query, we need to call the ""whoami"" API first to identify the person. After that we need to call the ""works_list"" API to get all the issues with three arguments here since we: 1) have to get the tools in triage stage, 2) identify tools under part ""FEAT-123"", 3) Identify the matching tools that are owned by the person asking the query. Therefore, the three arguments are (with the format: (argument_name, argument_value)): 1) (stage.name, triage) 2) (applies_to_part, FEAT-123) 3) (owned_by, $$PREV[0]).  Finally, we will call the ""summarize_objects"" tool with argument_name: ""objects"" and argument_value: '""$$PREV[1]"" since we are tasked to summarize all these issues. Thus the answer is : [(tool_name: whoami, arguments =[ ], (tool_name: works_list, arguments= ([argument_name: stage.name, argument_value: triage], [argument_name:applies_to_part, argument_value: FEAT-123], [argument_name: owned_by, argument_value: $$PREV[0]]),(tool_name: summarize_objects, (arguments = ([argument_name: objects, argument_value: $$PREV[0]),])]"
+"Query:List all high severity tickets coming in from slack from customer Cust123 and generate a summary of them. 
+","To solve this task, we need to perform the following steps:
+
+1. **Find the ID of the customer ""Cust123""**: Since we need to filter tickets by a specific customer, we first need to identify the ID of ""Cust123"". We can do this by calling the `search_object_by_name` API with the argument `(query, Cust123)`.
+
+2. **List all high severity tickets from Slack related to ""Cust123""**: After obtaining the customer ID, we need to list the tickets. For this, we call the `works_list` API with three arguments: `(ticket.severity, high)`, `(ticket.source_channel, slack)`, and `(reported_by, $$PREV[0])`. Here, `$$PREV[0]` refers to the output of the first API call, which is the ID of ""Cust123"".
+
+3. **Generate a summary of these tickets**: Finally, we will call the `summarize_objects` API to summarize the tickets. The argument for this call is `(objects, $$PREV[1])`, where `$$PREV[1]` refers to the list of tickets obtained from the `works_list` API.
+
+Therefore, the answer is:
+
+1. \[(tool_name: search_object_by_name, arguments: \[(argument_name: query, argument_value: Cust123)\])\],
+2. \[(tool_name: works_list, arguments: \[(argument_name: ticket.severity, argument_value: high), (argument_name: ticket.source_channel, argument_value: slack), (argument_name: reported_by, argument_value: $$PREV[0])\])\],
+3. \[(tool_name: summarize_objects, arguments: \[(argument_name: objects, argument_value: $$PREV[1])\])\]."
+"Query: Given a customer meeting transcript T, create action items and add them to my current sprint ","To solve the given task, we need to follow these steps:
+
+1. **Extract Actionable Tasks from Meeting Transcript**: First, we need to extract actionable tasks from the given customer meeting transcript. We will use the `create_actionable_tasks_from_text` API with the argument `text` set to the transcript \(T\).
+
+
+2. **Get Current Sprint ID**: To add the tasks to the current sprint, we need to identify the current sprint. We will use the `get_sprint_id` API for this.
+
+3. **Add Extracted Tasks to Sprint**: Finally, we will add the extracted tasks to the identified sprint. We will use the `add_work_items_to_sprint` API with two arguments: `work_ids` set to the result of the `create_actionable_tasks_from_text` API (using $$PREV[0]), and `sprint_id` set to the result of the `get_sprint_id` API (using $$PREV[2]).
+
+Therefore, the answer is:
+1. \[(tool_name: create_actionable_tasks_from_text, argument_name: text, argument_value: T)\],
+2. \[(tool_name: get_sprint_id, arguments: [ ])\],
+3. \[(tool_name: add_work_items_to_sprint, arguments: [\[argument_name: work_ids, argument_value: $$PREV[0]\], \[argument_name: sprint_id, argument_value: $$PREV[2]\]])\]."
+Query: What are all the low severity tickets created by InferiorCustomer which needs a response? Generate a summary of them.,"To solve this task, we will need to use multiple APIs in sequence. 
+
+First, we will call the `search_object_by_name` API to find the ID of ""InferiorCustomer"". We will use the argument `query` with the value ""InferiorCustomer"".
+
+Next, we need to retrieve all the low severity tickets created by ""InferiorCustomer"" which need a response. For this, we will use the `works_list` API with three arguments:
+1. `created_by` with the value of $$PREV[0] to refer to the ID of ""InferiorCustomer"".
+2. `ticket.severity` with the value ""low"".
+3. `ticket.needs_response` with the value `true`.
+
+Finally, we will summarize these tickets. We use the `summarize_objects` API with the argument `objects` set to the value of $$PREV[1], which refers to the list of tickets retrieved in the previous step.
+
+Therefore, the answer is:
+1. (tool_name: search_object_by_name, arguments = [argument_name: query, argument_value: InferiorCustomer]),
+2. (tool_name: works_list, arguments = [argument_name: created_by, argument_value: $$PREV[0]], [argument_name: ticket.severity, argument_value: low], [argument_name: ticket.needs_response, argument_value: true]),
+3. (tool_name: summarize_objects, arguments = [argument_name: objects, argument_value: $$PREV[1]])."
+"Query: Find work items that need a response and are associated with Rev organizations ""Walter LTD"" and ""Hank Products."" List them and summarize their details.","To address the query ""Find work items that need a response and are associated with Rev organizations 'Walter LTD' and 'Hank Products.' List them and summarize their details,"" we need to execute a sequence of API calls with specific arguments. Here is the ordered list of APIs and their corresponding arguments needed to solve this task:
+
+1. **API Call:** `works_list`
+   - **Arguments:**
+     - `ticket.needs_response`: `true`
+     - `ticket.rev_org`: `[""Walter LTD"", ""Hank Products""]`
+   - This API call will retrieve a list of work items that require a response and are associated with the specified Rev organizations, ""Walter LTD"" and ""Hank Products.""
+
+2. **API Call:** `summarize_objects`
+   - **Arguments:**
+     - `objects`: `$$PREV[0]`
+   - This API call uses the output from the first API call to summarize the details of the retrieved work items.
+
+Therefore, the answer is: 
+1. [(tool_name: works_list, arguments= ([argument_name: ticket.needs_response, argument_value: true], [argument_name: ticket.rev_org, argument_value: [""Walter LTD"", ""Hank Products""]))]
+2. [(tool_name: summarize_objects, arguments= ([argument_name: objects, argument_value: $$PREV[0]),])]
+
+This sequence of API calls will effectively find and summarize the required work items."
+"Query: Get the ID of the current sprint and add the work items with IDs ""WK-123"" and ""WK-456"" to it.
+","To solve the task of getting the ID of the current sprint and adding the work items with IDs ""WK-123"" and ""WK-456"" to it, we need to sequentially call two APIs.
+
+First, we call the `get_sprint_id` API to retrieve the ID of the current sprint. This API does not require any arguments.
+
+Next, we use the `add_work_items_to_sprint` API to add the specified work items to the sprint. This requires two arguments:
+1. `work_ids`: The IDs of the work items to be added to the sprint. In this case, the values are [""WK-123"", ""WK-456""].
+2. `sprint_id`: The ID of the sprint to which the items should be added. Here, we use the sprint ID obtained from the first API call, referenced as `$$PREV[0]`.
+
+Therefore, the solution is:
+1. [(tool_name: get_sprint_id, arguments: [])]
+2. [(tool_name: add_work_items_to_sprint, arguments: [(argument_name: work_ids, argument_value: [""WK-123"", ""WK-456""]), (argument_name: sprint_id, argument_value: $$PREV[0])])]"
+"Query: List the first 10 work items owned by user Jonathan in the ""Development"" stage and summarize them.","To solve the task of listing the first 10 work items owned by user Jonathan in the ""Development"" stage and summarizing them, we need to use the following APIs and their arguments:
+
+1. **API Call:** `works_list`
+   - **Arguments:**
+     - `(argument_name: owned_by, argument_value: [""Jonathan""])` – To filter work items owned by Jonathan.
+     - `(argument_name: stage.name, argument_value: [""Development""])` – To filter work items in the Development stage.
+     - `(argument_name: limit, argument_value: 10)` – To limit the result to the first 10 work items.
+
+2. **API Call:** `summarize_objects`
+   - **Arguments:**
+     - `(argument_name: objects, argument_value: $$PREV[0])` – To summarize the list of work items retrieved from the previous API call.
+
+Therefore, the answer is: 
+- [(tool_name: works_list, arguments= ([argument_name: owned_by, argument_value: [""Jonathan""]], [argument_name: stage.name, argument_value: [""Development""]], [argument_name: limit, argument_value: 10])), 
+- (tool_name: summarize_objects, arguments= ([argument_name: objects, argument_value: $$PREV[0]))]"
+Query: List all tickets owned by user Bob Smith in the Customer Support stage where the work item needs a response and provide a summary of these tickets.,"For this task, we need to list and summarize all tickets owned by ""Bob Smith"" in the ""Customer Support"" stage that need a response. We will use the following sequence of APIs and arguments:
+
+1. **API Call:** `works_list`
+   - **Arguments:**
+     - `(owned_by, [""Bob Smith""])`: To filter tickets owned by Bob Smith.
+     - `(stage.name, [""Customer Support""])`: To filter tickets in the Customer Support stage.
+     - `(ticket.needs_response, true)`: To filter tickets that need a response.
+     - `(type, [""ticket""])`: To specify that we are looking for tickets.
+
+2. **API Call:** `summarize_objects`
+   - **Arguments:**
+     - `(objects, $$PREV[0])`: To summarize the tickets retrieved from the previous API call.
+
+The sequence of API calls and arguments would be:
+1. `[(tool_name: works_list, arguments: [ (argument_name: owned_by, argument_value: [""Bob Smith""]), (argument_name: stage.name, argument_value: [""Customer Support""]), (argument_name: ticket.needs_response, argument_value: true), (argument_name: type, argument_value: [""ticket""])])],`
+2. `[(tool_name: summarize_objects, arguments: [(argument_name: objects, argument_value: $$PREV[0])])]`
+
+This sequence will first retrieve the relevant tickets and then provide a summary of them."
+"Query: Filter out work items associated with Rev organizations ""Apache""  and ""Nvidia,"" which do not need a response and generate a summary for them. Using this summary, create actions from them and add them to my current sprint.","To solve this task, we need to perform several steps using the given APIs:
+
+1. **Filter work items associated with Rev organizations ""Apache"" and ""Nvidia"" which do not need a response:** 
+   - We will use the `works_list` API with the following arguments:
+     - `(ticket.rev_org, [""Apache"", ""Nvidia""])` to filter by the specified Rev organizations.
+     - `(ticket.needs_response, false)` to filter out tickets that do not need a response.
+
+2. **Generate a summary of these filtered work items:** 
+   - We will then use the `summarize_objects` API with the argument:
+     - `(objects, $$PREV[0])` to summarize the objects obtained from the previous API call.
+
+3. **Create actions from the generated summary:** 
+   - Next, we call the `create_actionable_tasks_from_text` API with the argument:
+     - `(text, $$PREV[1])` to create tasks based on the summary text from the previous step.
+
+4. **Add these actions to the current sprint:** 
+   - To accomplish this, we first need to get the ID of the current sprint using the `get_sprint_id` API with no arguments.
+   - Then, we use the `add_work_items_to_sprint` API with the following arguments:
+     - `(work_ids, $$PREV[2])` to add the work items (tasks) created in the previous step.
+     - `(sprint_id, $$PREV[3])` to specify the current sprint ID obtained from the `get_sprint_id` API.
+
+Therefore, the answer is:
+- [(tool_name: works_list, arguments: [(argument_name: ticket.rev_org, argument_value: [""Apache"", ""Nvidia""]), (argument_name: ticket.needs_response, argument_value: false)]),
+- (tool_name: summarize_objects, arguments: [(argument_name: objects, argument_value: $$PREV[0])]),
+- (tool_name: create_actionable_tasks_from_text, arguments: [(argument_name: text, argument_value: $$PREV[1])]),
+- (tool_name: get_sprint_id, arguments: []),
+- (tool_name: add_work_items_to_sprint, arguments: [(argument_name: work_ids, argument_value: $$PREV[2]), (argument_name: sprint_id, argument_value: $$PREV[3])])]"
+"Query: Find and summarize any urgent issues related to my project ""Gladeus""?","To find and summarize any urgent issues related to the project ""Gladeus"", we need to perform a series of API calls:
+
+1. **who_am_i:** First, we need to identify the user making the request. This step is crucial as it ensures that the subsequent actions are tailored to the specific user.
+   - Arguments: None
+
+2. **works_list:** After identifying the user, we need to retrieve a list of work items that match the specified criteria, in this case, urgent issues related to the project ""Gladeus"".
+   - Arguments:
+     - `owned_by`: To filter work items owned by the user identified in the first step. Argument value: `$$PREV[0]` (ID of the current user).
+     - `applies_to_part`: To filter work items related to the project ""Gladeus"". Argument value: ""Gladeus"".
+     - `issue.priority`: To filter issues by urgency. Argument value: [""p0""] (assuming p0 indicates the highest priority).
+
+3. **summarize_objects:** After retrieving the list of urgent issues related to ""Gladeus"", we need to summarize this list to provide a concise overview.
+   - Arguments:
+     - `objects`: The list of urgent issues related to ""Gladeus"" obtained from the previous API call. Argument value: `$$PREV[1]`.
+
+Therefore, the solution is:
+1. [(tool_name: who_am_i, arguments: [])],
+2. [(tool_name: works_list, arguments: [(argument_name: owned_by, argument_value: $$PREV[0]), (argument_name: applies_to_part, argument_value: ""Gladeus""), (argument_name: issue.priority, argument_value: [""p0""])]),
+3. [(tool_name: summarize_objects, arguments: [(argument_name: objects, argument_value: $$PREV[1])])]."
+Query: Identify and generate a summary of high-severity tickets originating from 'Slack' by customers with the tag 'VIP'.,"To solve this task, we need to identify high-severity tickets originating from 'Slack' and tagged as 'VIP' and then generate a summary of these tickets. Here's how we can achieve this using the given APIs:
+
+1. **Call the `works_list` API** to retrieve a list of work items that match our criteria. We need to use the following arguments:
+   - `ticket.severity` with the argument value `high` to filter tickets by high severity.
+   - `ticket.source_channel` with the argument value `Slack` to filter tickets originating from Slack.
+   - `ticket.rev_org` with a placeholder value `$$PREV[0]` which will be determined in the next step.
+
+2. **Before calling `works_list`, we need to identify the Rev organization ID for customers tagged as 'VIP'**. For this, we use the `search_object_by_name` API with the following arguments:
+   - `query` with the argument value `VIP` to search for the Rev organization ID associated with VIP customers.
+
+3. **Finally, call the `summarize_objects` API** to summarize the list of tickets obtained. We use the following argument:
+   - `objects` with the argument value `$$PREV[1]` to summarize the tickets obtained from the `works_list` call.
+
+Therefore, the answer is:
+1. [(tool_name: search_object_by_name, argument_name: query, argument_value: VIP),
+2. (tool_name: works_list, arguments: [(argument_name: ticket.severity, argument_value: high), (argument_name: ticket.source_channel, argument_value: Slack), (argument_name: ticket.rev_org, argument_value: $$PREV[0])]),
+3. (tool_name: summarize_objects, arguments: [(argument_name: objects, argument_value: $$PREV[1])])]."
+Query: Find all tasks created by me and generate a summary. Add the summarized tasks to the current sprint.,"To solve this task, we need to follow these steps:
+
+1. **Identify the User**: Since the tasks need to be filtered by the ones created by the user, we first need to identify the user. We'll use the `who_am_i` API for this purpose.
+
+2. **List the Tasks Created by the User**: Next, we need to retrieve all tasks that were created by the user. We'll use the `works_list` API with the arguments:
+   - `created_by` set to the result of the `who_am_i` API to filter tasks created by the user.
+   - `type` set to ""task"" since we are only interested in tasks.
+
+3. **Summarize the Tasks**: Once we have the list of tasks, we need to summarize them. We'll use the `summarize_objects` API with the `objects` argument set to the result of the `works_list` API.
+
+4. **Get the Current Sprint ID**: To add these tasks to the current sprint, we first need to know the ID of the current sprint. We use the `get_sprint_id` API for this.
+
+5. **Add Summarized Tasks to the Sprint**: Finally, we'll use the `add_work_items_to_sprint` API with the arguments:
+   - `work_ids` set to the result of the `summarize_objects` API.
+   - `sprint_id` set to the result of the `get_sprint_id` API.
+
+Therefore, the answer is:
+1. `[(tool_name: who_am_i, arguments: [])]`
+2. `[(tool_name: works_list, arguments: [(argument_name: created_by, argument_value: $$PREV[0]), (argument_name: type, argument_value: task)])]`
+3. `[(tool_name: summarize_objects, arguments: [(argument_name: objects, argument_value: $$PREV[1])])]`
+4. `[(tool_name: get_sprint_id, arguments: [])]`
+5. `[(tool_name: add_work_items_to_sprint, arguments: [(argument_name: work_ids, argument_value: $$PREV[2]), (argument_name: sprint_id, argument_value: $$PREV[3])])]`"
+Query: Get the ID of the current sprint and add all tasks assigned to user DEVU-789 to it.,"To solve this task, we need to perform a series of API calls in sequence. The first step is to identify the current sprint, which we can achieve by using the `get_sprint_id` API. This API does not require any arguments.
+
+Next, we need to find all tasks assigned to the user ""DEVU-789"". For this, we will use the `works_list` API. The relevant arguments for this API are `owned_by` (to filter tasks assigned to ""DEVU-789"") and `type` (to filter for tasks only). 
+
+Finally, we need to add these tasks to the current sprint. We will use the `add_work_items_to_sprint` API for this, where `work_ids` will be the list of tasks we found, and `sprint_id` will be the ID of the current sprint we obtained earlier.
+
+Therefore, the answer is:
+
+1. Call `get_sprint_id` API (No arguments needed).
+2. Call `works_list` API with the arguments:
+   - `owned_by`: ""DEVU-789""
+   - `type`: ""task""
+3. Call `add_work_items_to_sprint` API with the arguments:
+   - `work_ids`: $$PREV[1]
+   - `sprint_id`: $$PREV[0]"
