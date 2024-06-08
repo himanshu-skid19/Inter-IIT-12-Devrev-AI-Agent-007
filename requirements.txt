@@ -9,3 +9,6 @@ chromadb
 sentence_transformers
 simplejson
 faiss-cpu
+langchain-community 
+langchain-core
+langchain_huggingface
