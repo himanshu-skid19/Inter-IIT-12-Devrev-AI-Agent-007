@@ -1,6 +1,15 @@
 # Inter-IIT-12-Devrev-AI-Agent-007
 
-We developed a Large Language Model (LLM) powered chatbot, augmented by a set of tools, each accompanied by its detailed description. The chatbot intelligently recommends a subset of these tools, specifying the arguments for their utilization, and providing guidance on how to combine them effectively to address user queries. Additionally, our solution incorporates features facilitating the seamless addition and modification of tools within our toolset. 
+This is a solution for DevRev's Problem Statement at the 12th Inter IIT TechMeet aiming adepty address domain-specific user queries.
+
+We developed a Large Language Model (LLM) powered chatbot, augmented by a set of tools (APIs), each accompanied by its detailed description. The chatbot intelligently recommends subset of tools that best match the unique context of the query, specifying precise tool arguments, and sequencing tool execution intelligently. Additionally, our solution incorporates features facilitating the seamless addition and modification of tools within our toolset. 
+
+We optimize the pipeline for performance, latency, and resource usage. The dynamically changing toolset and vastly different user queries make this task challenging. We analyse the performance of different LLMs and prompting strategies, and propose novel methods for handling LLM hallucinations. We also propose a new synthetic data generation methodology which we used to generate novel queries, enabling us to better understand the user's needs.
+
+## Problem Statement
+A Language model L has a set of tools T, and a user query Q is given. To answer query Q, we need to use existing tools. You need to output the subset of tools to be used to answer the query, the arguments that these tools should be called with, and how to compose the tools to answer the query. The user queries are conversational.
+
+The set of tools T is dynamic, and new tools can be added, and existing ones could be modified or removed and the agent needs to be able to handle it gracefully.
 
 ## Team 15
 
