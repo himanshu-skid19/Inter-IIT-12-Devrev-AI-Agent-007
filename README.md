@@ -22,7 +22,8 @@ Download from this link: [here](https://drive.google.com/file/d/19aAuy_SHqclSuHq
   ```python
   retrieval_loader = CSVLoader(file_path=r"Your Path here", source_column='QUERY')
   ```
-  ![image](https://github.com/himanshu-skid19/Devrev-AI-Agent-007/assets/94075433/ba14afd2-7b15-49de-adff-86cb385527f7)
+![image](https://github.com/himanshu-skid19/Inter-IIT-12-Devrev-AI-Agent-007/assets/114365148/db799b02-8853-4084-b1df-765700713198)
+
 - **retrieval.py:**
   Modify `loader` with your CSV file path:
   ```python
